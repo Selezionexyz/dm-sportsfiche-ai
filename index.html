@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DM Sports AI - Générateur de fiches produit pour sportswear">
-    <title>DM Sports AI - Générateur de Fiches Produit</title>
+    <meta name="description" content="DM Sports - Générateur professionnel de fiches produit sportswear">
+    <title>DM Sports - Générateur de Fiches Produit</title>
     
     <style>
         * {
@@ -14,95 +14,142 @@
         }
 
         :root {
-            --black: #000000;
-            --white: #ffffff;
-            --red: #ff0000;
-            --gray: #f5f5f5;
-            --border: #e0e0e0;
-            --text: #333333;
+            --dms-black: #000000;
+            --dms-white: #ffffff;
+            --dms-red: #e60012;
+            --dms-gray: #f5f5f5;
+            --dms-border: #e0e0e0;
+            --dms-text: #333333;
+            --dms-success: #4CAF50;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--gray);
-            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--dms-gray);
+            color: var(--dms-text);
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
+        /* Header */
         .header {
-            background: var(--white);
-            padding: 20px 0;
+            background: var(--dms-white);
+            padding: 15px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .logo-badge {
-            background: var(--red);
-            color: var(--white);
-            padding: 4px 12px;
+            background: var(--dms-red);
+            color: var(--dms-white);
+            padding: 5px 15px;
             border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
             font-size: 14px;
         }
 
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--dms-red);
+        }
+
+        /* Main Content */
         .main-content {
-            background: var(--white);
-            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .form-panel {
+            background: var(--dms-white);
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
         }
 
+        .preview-panel {
+            background: var(--dms-white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        /* Section Headers */
         .section {
-            margin-bottom: 40px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
+            margin-bottom: 35px;
         }
 
         .section-header {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--dms-gray);
         }
 
         .section-number {
-            background: var(--red);
-            color: var(--white);
-            width: 35px;
-            height: 35px;
+            background: var(--dms-red);
+            color: var(--dms-white);
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            margin-right: 15px;
+            margin-right: 12px;
+            font-size: 16px;
         }
 
         .section-title {
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
         }
 
+        /* Form Elements */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
 
@@ -118,126 +165,117 @@
         .form-group label {
             font-weight: 600;
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            color: var(--text);
+            letter-spacing: 0.5px;
+            color: #666;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            padding: 12px 16px;
+            border: 2px solid var(--dms-border);
+            border-radius: 8px;
             font-size: 15px;
             width: 100%;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            background: var(--dms-white);
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--red);
+            border-color: var(--dms-red);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(230, 0, 18, 0.1);
         }
 
         .form-group textarea {
-            min-height: 120px;
+            min-height: 100px;
             resize: vertical;
         }
 
         .required {
-            color: var(--red);
+            color: var(--dms-red);
         }
 
-        .upload-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
+        /* Upload Box */
         .upload-box {
-            border: 2px dashed var(--border);
-            border-radius: 8px;
-            padding: 40px 20px;
+            border: 2px dashed var(--dms-border);
+            border-radius: 12px;
+            padding: 40px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            background: var(--gray);
+            background: var(--dms-gray);
             position: relative;
             overflow: hidden;
         }
 
         .upload-box:hover {
-            border-color: var(--red);
+            border-color: var(--dms-red);
             background: #fff5f5;
+            transform: translateY(-2px);
         }
 
         .upload-box.has-file {
-            border-color: #4CAF50;
+            border-color: var(--dms-success);
             background: #f1f8f4;
         }
 
         .upload-icon {
             font-size: 48px;
             margin-bottom: 10px;
-            opacity: 0.5;
-        }
-
-        .upload-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .upload-text strong {
-            display: block;
-            color: var(--text);
-            margin-bottom: 5px;
+            opacity: 0.7;
         }
 
         input[type="file"] {
             display: none;
         }
 
+        /* Sizes and Colors */
         .sizes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
             gap: 10px;
-            margin-bottom: 20px;
+            margin-top: 15px;
         }
 
         .size-box {
-            border: 1px solid var(--border);
+            border: 2px solid var(--dms-border);
             padding: 12px;
             text-align: center;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: all 0.3s;
-            font-weight: 500;
+            font-weight: 600;
+            background: var(--dms-white);
         }
 
         .size-box:hover {
-            border-color: var(--red);
+            border-color: var(--dms-red);
+            transform: translateY(-2px);
         }
 
         .size-box.selected {
-            background: var(--red);
-            color: var(--white);
-            border-color: var(--red);
+            background: var(--dms-red);
+            color: var(--dms-white);
+            border-color: var(--dms-red);
         }
 
         .colors-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-top: 15px;
         }
 
         .color-box {
-            width: 45px;
-            height: 45px;
-            border: 2px solid var(--border);
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--dms-border);
             border-radius: 50%;
             cursor: pointer;
             position: relative;
@@ -245,12 +283,13 @@
         }
 
         .color-box:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .color-box.selected {
-            border-color: var(--red);
-            border-width: 3px;
+            border-color: var(--dms-red);
+            border-width: 4px;
         }
 
         .color-box.selected::after {
@@ -261,102 +300,42 @@
             transform: translate(-50%, -50%);
             color: white;
             font-weight: bold;
-            text-shadow: 0 0 3px rgba(0,0,0,0.8);
+            font-size: 20px;
+            text-shadow: 0 0 4px rgba(0,0,0,0.8);
         }
 
-        .ai-settings {
-            background: var(--gray);
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .ai-settings h4 {
-            font-size: 16px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .tone-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .tone-option {
-            padding: 15px;
-            border: 1px solid var(--border);
-            background: var(--white);
-            text-align: center;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .tone-option:hover {
-            border-color: var(--red);
-        }
-
-        .tone-option.selected {
-            background: var(--red);
-            color: var(--white);
-            border-color: var(--red);
-        }
-
-        .channel-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .channel-option {
-            padding: 10px 20px;
-            border: 1px solid var(--border);
-            background: var(--white);
-            cursor: pointer;
-            border-radius: 25px;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .channel-option:hover {
-            border-color: var(--red);
-        }
-
-        .channel-option.selected {
-            background: var(--red);
-            color: var(--white);
-            border-color: var(--red);
-        }
-
+        /* Generate Button */
         .generate-btn {
-            background: var(--black);
-            color: var(--white);
-            padding: 20px 50px;
+            background: var(--dms-black);
+            color: var(--dms-white);
+            padding: 18px 40px;
             border: none;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
             border-radius: 50px;
             transition: all 0.3s;
-            display: block;
-            margin: 40px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
             letter-spacing: 1px;
+            margin-top: 30px;
         }
 
         .generate-btn:hover {
-            background: var(--red);
+            background: var(--dms-red);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(230, 0, 18, 0.3);
         }
 
         .generate-btn:disabled {
             background: #999;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
         .loading {
@@ -373,107 +352,77 @@
             to { transform: rotate(360deg); }
         }
 
-        .results {
-            margin-top: 40px;
-            padding: 30px;
-            background: var(--gray);
-            border-radius: 8px;
-            display: none;
-        }
-
-        .results.show {
-            display: block;
-        }
-
-        .result-header {
-            background: var(--black);
-            color: var(--white);
+        /* Preview Panel */
+        .preview-header {
+            background: var(--dms-black);
+            color: var(--dms-white);
             padding: 20px;
             margin: -30px -30px 30px;
-            border-radius: 8px 8px 0 0;
+            border-radius: 12px 12px 0 0;
             text-align: center;
         }
 
-        .result-content {
-            background: var(--white);
-            padding: 30px;
+        .preview-content {
+            padding: 20px;
+            background: #fafafa;
             border-radius: 8px;
             margin-bottom: 20px;
         }
 
-        .result-tabs {
-            display: flex;
-            gap: 10px;
+        .preview-empty {
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+
+        .preview-empty-icon {
+            font-size: 64px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
+            opacity: 0.3;
         }
 
-        .result-tab {
-            padding: 10px 20px;
-            background: var(--white);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .result-tab:hover {
-            border-color: var(--red);
-        }
-
-        .result-tab.active {
-            background: var(--red);
-            color: var(--white);
-            border-color: var(--red);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .export-grid {
+        /* Export Options */
+        .export-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
         }
 
         .export-btn {
-            padding: 15px;
-            border: 1px solid var(--border);
-            background: var(--white);
+            padding: 12px;
+            border: 2px solid var(--dms-border);
+            background: var(--dms-white);
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: all 0.3s;
             text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .export-btn:hover {
-            border-color: var(--red);
+            border-color: var(--dms-red);
             background: #fff5f5;
+            transform: translateY(-2px);
         }
 
-        .export-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--black);
-            color: var(--white);
-            padding: 15px 25px;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            bottom: 30px;
+            right: 30px;
+            background: var(--dms-black);
+            color: var(--dms-white);
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             display: none;
             z-index: 1000;
+            font-weight: 600;
         }
 
         .toast.show {
@@ -484,9 +433,24 @@
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
+                opacity: 0;
             }
             to {
                 transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-panel {
+                position: relative;
+                top: auto;
+                max-height: none;
             }
         }
 
@@ -495,445 +459,319 @@
                 padding: 10px;
             }
             
-            .main-content {
+            .form-panel,
+            .preview-panel {
                 padding: 20px;
             }
             
-            .form-grid {
-                grid-template-columns: 1fr;
+            .header-stats {
+                display: none;
             }
             
-            .generate-btn {
-                width: 100%;
-                padding: 15px;
+            .logo {
+                font-size: 24px;
             }
         }
     </style>
 </head>
+<body>
     <body>
     <header class="header">
         <div class="container">
-            <div class="logo">
-                DM'S SPORTS
-                <span class="logo-badge">AI PRO</span>
+            <div class="header-content">
+                <div class="logo">
+                    DM'S SPORTS
+                    <span class="logo-badge">AI PRO</span>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">28</div>
+                        <div>Marques</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">50+</div>
+                        <div>Catégories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">∞</div>
+                        <div>Fiches</div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
     <div class="container">
         <div class="main-content">
-            <!-- Section 1: Upload Images -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">1</div>
-                    <h2 class="section-title">Upload des images produit</h2>
-                </div>
-                
-                <div class="upload-grid">
+            <!-- Form Panel -->
+            <div class="form-panel">
+                <!-- Section 1: Images -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">1</div>
+                        <h2 class="section-title">Images produit</h2>
+                    </div>
+                    
                     <div class="upload-box" id="upload-main">
                         <input type="file" id="file-main" accept="image/*">
-                        <div class="upload-icon">📷</div>
+                        <div class="upload-icon">📸</div>
                         <div class="upload-text">
-                            <strong>Image principale</strong>
-                            Cliquez ou glissez
-                        </div>
-                    </div>
-                    
-                    <div class="upload-box" id="upload-secondary">
-                        <input type="file" id="file-secondary" accept="image/*" multiple>
-                        <div class="upload-icon">🖼️</div>
-                        <div class="upload-text">
-                            <strong>Images secondaires</strong>
-                            Jusqu'à 5 images
-                        </div>
-                    </div>
-                    
-                    <div class="upload-box" id="upload-detail">
-                        <input type="file" id="file-detail" accept="image/*">
-                        <div class="upload-icon">🔍</div>
-                        <div class="upload-text">
-                            <strong>Vue détaillée</strong>
-                            Logos, finitions
+                            <strong>Image principale</strong><br>
+                            <span style="font-size: 14px; color: #999;">Cliquez ou glissez une image</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Section 2: Product Information -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">2</div>
-                    <h2 class="section-title">Informations produit</h2>
-                </div>
-                
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Nom du produit <span class="required">*</span></label>
-                        <input type="text" id="product-name" placeholder="Ex: Air Max 270" required>
+                <!-- Section 2: Informations de base -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">2</div>
+                        <h2 class="section-title">Informations produit</h2>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Marque <span class="required">*</span></label>
-                        <select id="brand" required>
-                            <option value="">Sélectionner une marque</option>
-                            <optgroup label="Sportswear">
-                                <option value="adidas">Adidas</option>
-                                <option value="nike">Nike</option>
-                                <option value="puma">Puma</option>
-                                <option value="reebok">Reebok</option>
-                                <option value="new-balance">New Balance</option>
-                                <option value="asics">Asics</option>
-                                <option value="mizuno">Mizuno</option>
-                                <option value="under-armour">Under Armour</option>
-                                <option value="saucony">Saucony</option>
-                            </optgroup>
-                            <optgroup label="Fashion Sport">
-                                <option value="lacoste">Lacoste</option>
-                                <option value="boss">Boss</option>
-                                <option value="hugo">Hugo</option>
-                                <option value="calvin-klein">Calvin Klein</option>
-                                <option value="armani-ea7">Armani EA7</option>
-                                <option value="versace">Versace</option>
-                                <option value="karl-kani">Karl Kani</option>
-                                <option value="antony-morato">Antony Morato</option>
-                                <option value="eden-park">Eden Park</option>
-                                <option value="teddy-smith">Teddy Smith</option>
-                            </optgroup>
-                            <optgroup label="Streetwear">
-                                <option value="vans">Vans</option>
-                                <option value="converse">Converse</option>
-                                <option value="fila">Fila</option>
-                                <option value="ellesse">Ellesse</option>
-                                <option value="umbro">Umbro</option>
-                                <option value="sergio-tacchini">Sergio Tacchini</option>
-                                <option value="crocs">Crocs</option>
-                            </optgroup>
-                            <optgroup label="Outdoor">
-                                <option value="the-north-face">The North Face</option>
-                                <option value="timberland">Timberland</option>
-                            </optgroup>
-                        </select>
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label>Nom du produit <span class="required">*</span></label>
+                            <input type="text" id="product-name" placeholder="Ex: Air Max 270, Survêtement Core..." required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Marque <span class="required">*</span></label>
+                            <select id="brand" required>
+                                <option value="">Sélectionner une marque</option>
+                                <optgroup label="Sport Performance">
+                                    <option value="nike">Nike</option>
+                                    <option value="adidas">Adidas</option>
+                                    <option value="puma">Puma</option>
+                                    <option value="under-armour">Under Armour</option>
+                                    <option value="new-balance">New Balance</option>
+                                    <option value="asics">Asics</option>
+                                    <option value="reebok">Reebok</option>
+                                    <option value="mizuno">Mizuno</option>
+                                    <option value="saucony">Saucony</option>
+                                </optgroup>
+                                <optgroup label="Fashion Sport">
+                                    <option value="lacoste">Lacoste</option>
+                                    <option value="boss">Hugo Boss</option>
+                                    <option value="calvin-klein">Calvin Klein</option>
+                                    <option value="armani">Emporio Armani EA7</option>
+                                    <option value="polo-ralph-lauren">Polo Ralph Lauren</option>
+                                    <option value="tommy-hilfiger">Tommy Hilfiger</option>
+                                    <option value="gant">Gant</option>
+                                    <option value="fred-perry">Fred Perry</option>
+                                </optgroup>
+                                <optgroup label="Streetwear">
+                                    <option value="champion">Champion</option>
+                                    <option value="fila">Fila</option>
+                                    <option value="ellesse">Ellesse</option>
+                                    <option value="kappa">Kappa</option>
+                                    <option value="sergio-tacchini">Sergio Tacchini</option>
+                                    <option value="vans">Vans</option>
+                                    <option value="converse">Converse</option>
+                                </optgroup>
+                                <optgroup label="Outdoor">
+                                    <option value="the-north-face">The North Face</option>
+                                    <option value="columbia">Columbia</option>
+                                    <option value="timberland">Timberland</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Catégorie <span class="required">*</span></label>
+                            <select id="category" required>
+                                <option value="">Sélectionner une catégorie</option>
+                                <optgroup label="CHAUSSURES">
+                                    <option value="chaussures-running">Running</option>
+                                    <option value="chaussures-lifestyle">Lifestyle</option>
+                                    <option value="chaussures-basketball">Basketball</option>
+                                    <option value="chaussures-football">Football</option>
+                                    <option value="chaussures-tennis">Tennis</option>
+                                    <option value="chaussures-training">Training</option>
+                                </optgroup>
+                                <optgroup label="VÊTEMENTS HOMME">
+                                    <option value="homme-survetements">Survêtements</option>
+                                    <option value="homme-sweats">Sweats</option>
+                                    <option value="homme-tshirts">T-Shirts</option>
+                                    <option value="homme-polos">Polos</option>
+                                    <option value="homme-pantalons">Pantalons</option>
+                                    <option value="homme-shorts">Shorts</option>
+                                    <option value="homme-vestes">Vestes</option>
+                                    <option value="homme-doudounes">Doudounes</option>
+                                </optgroup>
+                                <optgroup label="VÊTEMENTS FEMME">
+                                    <option value="femme-survetements">Survêtements</option>
+                                    <option value="femme-sweats">Sweats</option>
+                                    <option value="femme-tshirts">T-Shirts</option>
+                                    <option value="femme-leggings">Leggings</option>
+                                    <option value="femme-brasseries">Brassières</option>
+                                    <option value="femme-robes">Robes</option>
+                                    <option value="femme-vestes">Vestes</option>
+                                </optgroup>
+                                <optgroup label="ENFANT">
+                                    <option value="enfant-chaussures">Chaussures</option>
+                                    <option value="enfant-survetements">Survêtements</option>
+                                    <option value="enfant-sweats">Sweats</option>
+                                    <option value="enfant-tshirts">T-Shirts</option>
+                                </optgroup>
+                                <optgroup label="ACCESSOIRES">
+                                    <option value="sacs">Sacs</option>
+                                    <option value="casquettes">Casquettes</option>
+                                    <option value="bonnets">Bonnets</option>
+                                    <option value="chaussettes">Chaussettes</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Genre <span class="required">*</span></label>
+                            <select id="gender" required>
+                                <option value="">Sélectionner</option>
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
+                                <option value="mixte">Mixte</option>
+                                <option value="enfant">Enfant</option>
+                                <option value="bebe">Bébé</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Prix (€) <span class="required">*</span></label>
+                            <input type="number" id="price" placeholder="89.99" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Prix barré (€)</label>
+                            <input type="number" id="old-price" placeholder="119.99" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Référence <span class="required">*</span></label>
+                            <input type="text" id="sku" placeholder="REF-001" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Code EAN</label>
+                            <input type="text" id="ean" placeholder="3700000000000">
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Catégorie <span class="required">*</span></label>
-                        <select id="category" required>
-                            <option value="">Sélectionner une catégorie</option>
-                            <optgroup label="HOMME">
-                                <option value="homme-chaussures">Chaussures Homme</option>
-                                <option value="homme-manteaux-doudounes">Manteaux / Doudounes Homme</option>
-                                <option value="homme-survetements">Survêtements Homme</option>
-                                <option value="homme-sweats">Sweats / Pulls / Gilets Homme</option>
-                                <option value="homme-chemises">Chemises Homme</option>
-                                <option value="homme-polos">Polos Homme</option>
-                                <option value="homme-tshirts">T-Shirts Homme</option>
-                                <option value="homme-pantalons">Pantalons Homme</option>
-                                <option value="homme-shorts">Shorts / Bermudas Homme</option>
-                                <option value="homme-shorts-bain">Shorts de bain Homme</option>
-                                <option value="homme-sous-vetements">Sous-vêtements Homme</option>
-                                <option value="homme-chaussettes">Chaussettes Homme</option>
-                                <option value="homme-sacs">Sacs et sacoches Homme</option>
-                                <option value="homme-portefeuilles">Portefeuilles Homme</option>
-                                <option value="homme-casquettes">Casquettes et Bobs Homme</option>
-                                <option value="homme-bonnets">Bonnets Homme</option>
-                                <option value="homme-echarpes">Écharpes Homme</option>
-                                <option value="homme-gants">Gants Homme</option>
-                            </optgroup>
-                            <optgroup label="FEMME">
-                                <option value="femme-chaussures">Chaussures Femme</option>
-                                <option value="femme-manteaux-doudounes">Manteaux / Doudounes Femme</option>
-                                <option value="femme-robes">Robes Femme</option>
-                                <option value="femme-sweats">Sweats Femme</option>
-                                <option value="femme-polos">Polos Femme</option>
-                                <option value="femme-tshirts">T-Shirts Femme</option>
-                                <option value="femme-pantalons">Pantalons Femme</option>
-                                <option value="femme-shorts">Shorts Femme</option>
-                                <option value="femme-chaussettes">Chaussettes Femme</option>
-                                <option value="femme-sacs">Sacs et Porte-monnaie Femme</option>
-                                <option value="femme-casquettes">Casquettes et Bobs Femme</option>
-                                <option value="femme-bonnets">Bonnets Femme</option>
-                                <option value="femme-echarpes">Écharpes Femme</option>
-                                <option value="femme-gants">Gants Femme</option>
-                            </optgroup>
-                            <optgroup label="ENFANT">
-                                <option value="enfant-chaussures">Chaussures Enfant</option>
-                                <option value="enfant-ensembles">Ensembles Enfant</option>
-                                <option value="enfant-sweats">Sweats Enfant</option>
-                                <option value="enfant-polos">Polos Enfant</option>
-                                <option value="enfant-tshirts">T-Shirts Enfant</option>
-                                <option value="enfant-pantalons">Pantalons Enfant</option>
-                                <option value="enfant-shorts">Shorts Enfant</option>
-                                <option value="enfant-robes">Robes Enfant</option>
-                                <option value="enfant-pyjamas">Pyjamas Enfant</option>
-                                <option value="enfant-vestes-doudounes">Vestes / Doudounes Enfant</option>
-                                <option value="enfant-sacs">Sacs et sacoches Enfant</option>
-                                <option value="enfant-casquettes">Casquettes Enfant</option>
-                                <option value="enfant-bonnets">Bonnets Enfant</option>
-                                <option value="enfant-gants">Gants Enfant</option>
-                                <option value="enfant-echarpes">Écharpe / Tour de cou Enfant</option>
-                            </optgroup>
-                            <optgroup label="BÉBÉ">
-                                <option value="bebe-chaussures">Chaussures Bébé</option>
-                                <option value="bebe-combinaisons-body">Combinaisons / Body Bébé</option>
-                                <option value="bebe-robes">Robes Bébé</option>
-                                <option value="bebe-ensembles">Ensembles Bébé</option>
-                                <option value="bebe-tshirts">T-shirts Bébé</option>
-                                <option value="bebe-pantalons-shorts">Pantalons / Shorts Bébé</option>
-                                <option value="bebe-sweats">Sweats Bébé</option>
-                                <option value="bebe-pyjamas">Pyjamas Bébé</option>
-                                <option value="bebe-vestes-doudounes">Vestes / Doudounes Bébé</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Sous-catégorie</label>
-                        <select id="subcategory">
-                            <option value="">Sélectionner (optionnel)</option>
-                            <optgroup label="Types de chaussures">
-                                <option value="running">Running / Course</option>
-                                <option value="basketball">Basketball</option>
-                                <option value="football">Football</option>
-                                <option value="training">Training / Fitness</option>
-                                <option value="lifestyle">Lifestyle / Casual</option>
-                                <option value="tennis">Tennis</option>
-                                <option value="skateboard">Skateboard</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Prix (€) <span class="required">*</span></label>
-                        <input type="number" id="price" placeholder="119.99" step="0.01" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Prix barré (€)</label>
-                        <input type="number" id="old-price" placeholder="149.99" step="0.01">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Référence / SKU <span class="required">*</span></label>
-                        <input type="text" id="sku" placeholder="AIR-270-BLK-001" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Code EAN</label>
-                        <input type="text" id="ean" placeholder="3700000000000">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Matière principale</label>
-                        <select id="material">
-                            <option value="">Sélectionner</option>
-                            <option value="cuir">Cuir véritable</option>
-                            <option value="synthetique">Synthétique</option>
-                            <option value="mesh">Mesh respirant</option>
-                            <option value="toile">Toile</option>
-                            <option value="coton">100% Coton</option>
-                            <option value="polyester">Polyester</option>
-                            <option value="nylon">Nylon</option>
-                            <option value="laine">Laine</option>
-                            <option value="mix">Mix matières</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Genre</label>
-                        <select id="gender">
-                            <option value="">Sélectionner</option>
-                            <option value="homme">Homme</option>
-                            <option value="femme">Femme</option>
-                            <option value="unisexe">Unisexe</option>
-                            <option value="garcon">Garçon</option>
-                            <option value="fille">Fille</option>
-                            <option value="bebe">Bébé</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group full">
-                        <label>Description courte</label>
-                        <textarea id="short-desc" placeholder="Résumé percutant en 2-3 lignes..."></textarea>
-                    </div>
-                    
-                    <div class="form-group full">
-                        <label>Caractéristiques principales</label>
-                        <textarea id="features" placeholder="• Technologie Air Max 270&#10;• Tige en mesh respirant&#10;• Semelle en caoutchouc&#10;• Logo réfléchissant"></textarea>
-                    </div>
-                </div>
-            </div>
-            <!-- Section 3: Sizes and Colors -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">3</div>
-                    <h2 class="section-title">Tailles et couleurs</h2>
-                </div>
-                
-                <h3 style="margin-bottom: 15px;">Tailles disponibles</h3>
-                <div class="sizes-grid" id="sizes-container">
-                    <!-- Généré dynamiquement -->
                 </div>
 
-                <h3 style="margin: 30px 0 15px;">Couleurs disponibles</h3>
-                <div class="colors-grid">
-                    <div class="color-box selected" style="background: #000000" data-color="Noir" title="Noir"></div>
-                    <div class="color-box" style="background: #FFFFFF; border-color: #ddd;" data-color="Blanc" title="Blanc"></div>
-                    <div class="color-box" style="background: #808080" data-color="Gris" title="Gris"></div>
-                    <div class="color-box" style="background: #C0C0C0" data-color="Argent" title="Argent"></div>
-                    <div class="color-box" style="background: #000080" data-color="Marine" title="Marine"></div>
-                    <div class="color-box" style="background: #0000FF" data-color="Bleu" title="Bleu"></div>
-                    <div class="color-box" style="background: #87CEEB" data-color="Bleu Ciel" title="Bleu Ciel"></div>
-                    <div class="color-box" style="background: #FF0000" data-color="Rouge" title="Rouge"></div>
-                    <div class="color-box" style="background: #8B0000" data-color="Bordeaux" title="Bordeaux"></div>
-                    <div class="color-box" style="background: #FFA500" data-color="Orange" title="Orange"></div>
-                    <div class="color-box" style="background: #FFFF00; border-color: #ddd;" data-color="Jaune" title="Jaune"></div>
-                    <div class="color-box" style="background: #FFD700" data-color="Or" title="Or"></div>
-                    <div class="color-box" style="background: #008000" data-color="Vert" title="Vert"></div>
-                    <div class="color-box" style="background: #90EE90" data-color="Vert Clair" title="Vert Clair"></div>
-                    <div class="color-box" style="background: #006400" data-color="Kaki" title="Kaki"></div>
-                    <div class="color-box" style="background: #FFC0CB" data-color="Rose" title="Rose"></div>
-                    <div class="color-box" style="background: #FF1493" data-color="Fuchsia" title="Fuchsia"></div>
-                    <div class="color-box" style="background: #800080" data-color="Violet" title="Violet"></div>
-                    <div class="color-box" style="background: #8B4513" data-color="Marron" title="Marron"></div>
-                    <div class="color-box" style="background: #F5DEB3" data-color="Beige" title="Beige"></div>
-                    <div class="color-box" style="background: linear-gradient(45deg, #FF0000, #0000FF, #FFFF00)" data-color="Multicolore" title="Multicolore"></div>
-                </div>
-
-                <h3 style="margin: 30px 0 15px;">Informations complémentaires</h3>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Poids (g)</label>
-                        <input type="number" id="weight" placeholder="350">
+                <!-- Section 3: Tailles et Couleurs -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">3</div>
+                        <h2 class="section-title">Tailles et couleurs</h2>
                     </div>
-                    <div class="form-group">
-                        <label>Pays de fabrication</label>
-                        <select id="country">
-                            <option value="">Sélectionner</option>
-                            <option value="vietnam">Vietnam</option>
-                            <option value="chine">Chine</option>
-                            <option value="indonesie">Indonésie</option>
-                            <option value="inde">Inde</option>
-                            <option value="bangladesh">Bangladesh</option>
-                            <option value="portugal">Portugal</option>
-                            <option value="italie">Italie</option>
-                            <option value="france">France</option>
-                            <option value="turquie">Turquie</option>
-                        </select>
+                    
+                    <label style="font-weight: 600; margin-bottom: 10px; display: block;">Tailles disponibles</label>
+                    <div class="sizes-grid" id="sizes-container">
+                        <!-- Généré dynamiquement -->
+                    </div>
+
+                    <label style="font-weight: 600; margin: 20px 0 10px; display: block;">Couleurs disponibles</label>
+                    <div class="colors-grid">
+                        <div class="color-box selected" style="background: #000000" data-color="Noir" title="Noir"></div>
+                        <div class="color-box" style="background: #FFFFFF; border-color: #ddd;" data-color="Blanc" title="Blanc"></div>
+                        <div class="color-box" style="background: #E5E5E5" data-color="Gris" title="Gris"></div>
+                        <div class="color-box" style="background: #1E3A8A" data-color="Marine" title="Marine"></div>
+                        <div class="color-box" style="background: #3B82F6" data-color="Bleu" title="Bleu"></div>
+                        <div class="color-box" style="background: #EF4444" data-color="Rouge" title="Rouge"></div>
+                        <div class="color-box" style="background: #10B981" data-color="Vert" title="Vert"></div>
+                        <div class="color-box" style="background: #F59E0B" data-color="Orange" title="Orange"></div>
+                        <div class="color-box" style="background: #EC4899" data-color="Rose" title="Rose"></div>
+                        <div class="color-box" style="background: #8B5CF6" data-color="Violet" title="Violet"></div>
+                        <div class="color-box" style="background: #92400E" data-color="Marron" title="Marron"></div>
+                        <div class="color-box" style="background: #D4D4D8" data-color="Argent" title="Argent"></div>
+                        <div class="color-box" style="background: #FCD34D" data-color="Or" title="Or"></div>
+                        <div class="color-box" style="background: linear-gradient(45deg, #FF0000, #0000FF, #FFFF00)" data-color="Multicolore" title="Multicolore"></div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Section 4: AI Settings -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">4</div>
-                    <h2 class="section-title">Paramètres IA</h2>
-                </div>
-                
-                <div class="ai-settings">
-                    <h4>Ton de voix</h4>
-                    <div class="tone-grid">
-                        <div class="tone-option selected" data-tone="sportif">⚡ Sportif</div>
-                        <div class="tone-option" data-tone="streetwear">🔥 Streetwear</div>
-                        <div class="tone-option" data-tone="premium">💎 Premium</div>
-                        <div class="tone-option" data-tone="technique">🔬 Technique</div>
-                        <div class="tone-option" data-tone="jeune">🎮 Jeune</div>
-                        <div class="tone-option" data-tone="classique">👔 Classique</div>
+                <!-- Section 4: Détails produit -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">4</div>
+                        <h2 class="section-title">Détails et caractéristiques</h2>
                     </div>
-
-                    <h4 style="margin-top: 25px;">Canaux de distribution</h4>
-                    <div class="channel-grid">
-                        <div class="channel-option selected" data-channel="website">🌐 Site Web</div>
-                        <div class="channel-option" data-channel="marketplace">🛒 Marketplace</div>
-                        <div class="channel-option" data-channel="amazon">📦 Amazon</div>
-                        <div class="channel-option" data-channel="instagram">📸 Instagram</div>
-                        <div class="channel-option" data-channel="facebook">👥 Facebook</div>
-                        <div class="channel-option" data-channel="google">🔍 Google Shopping</div>
-                    </div>
-
-                    <h4 style="margin-top: 25px;">Options avancées</h4>
+                    
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Longueur description</label>
-                            <select id="desc-length">
-                                <option value="court">Court (50-100 mots)</option>
-                                <option value="moyen" selected>Moyen (100-200 mots)</option>
-                                <option value="long">Long (200+ mots)</option>
+                            <label>Matière principale</label>
+                            <select id="material">
+                                <option value="">Sélectionner</option>
+                                <option value="coton">100% Coton</option>
+                                <option value="polyester">Polyester</option>
+                                <option value="coton-polyester">Coton/Polyester</option>
+                                <option value="mesh">Mesh respirant</option>
+                                <option value="cuir">Cuir</option>
+                                <option value="synthetique">Synthétique</option>
+                                <option value="nylon">Nylon</option>
+                                <option value="laine">Laine</option>
+                                <option value="elasthanne">Élasthanne</option>
                             </select>
                         </div>
+                        
                         <div class="form-group">
-                            <label>Focus SEO</label>
-                            <select id="seo-focus">
-                                <option value="conversion" selected>Conversion</option>
-                                <option value="referencement">Référencement</option>
-                                <option value="mixte">Mixte</option>
+                            <label>Saison</label>
+                            <select id="season">
+                                <option value="">Sélectionner</option>
+                                <option value="printemps-ete">Printemps/Été</option>
+                                <option value="automne-hiver">Automne/Hiver</option>
+                                <option value="toutes-saisons">Toutes saisons</option>
                             </select>
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label>Points forts (un par ligne)</label>
+                            <textarea id="features" placeholder="Technologie Dri-FIT&#10;Logo brodé&#10;Poches zippées&#10;Coupe ajustée&#10;Finitions premium"></textarea>
+                        </div>
+                        
+                        <div class="form-group full">
+                            <label>Description courte</label>
+                            <textarea id="short-desc" placeholder="Décrivez brièvement le produit..."></textarea>
                         </div>
                     </div>
                 </div>
 
                 <button class="generate-btn" id="generate-btn">
-                    ⚡ GÉNÉRER LA FICHE PRODUIT
+                    <span>⚡</span> GÉNÉRER LA FICHE PRODUIT
                 </button>
             </div>
-
-            <!-- Results Section -->
-            <div class="results" id="results">
-                <div class="result-header">
-                    <h2>✅ Fiche produit générée avec succès !</h2>
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <h3>📄 Aperçu de la fiche produit</h3>
                 </div>
                 
-                <div class="result-tabs">
-                    <button class="result-tab active" data-tab="preview">Aperçu</button>
-                    <button class="result-tab" data-tab="web">Site Web</button>
-                    <button class="result-tab" data-tab="marketplace">Marketplace</button>
-                    <button class="result-tab" data-tab="social">Réseaux Sociaux</button>
-                    <button class="result-tab" data-tab="seo">SEO</button>
+                <div id="preview-empty" class="preview-empty">
+                    <div class="preview-empty-icon">📝</div>
+                    <p>Remplissez le formulaire et cliquez sur<br>"Générer" pour voir l'aperçu</p>
                 </div>
-
-                <div class="result-content">
-                    <div class="tab-content active" id="preview-tab">
-                        <h3 id="result-title"></h3>
-                        <p id="result-brand"></p>
-                        <p id="result-price"></p>
-                        <div id="result-description"></div>
-                        <div id="result-features"></div>
+                
+                <div id="preview-content" style="display: none;">
+                    <div class="preview-content">
+                        <h2 id="preview-title"></h2>
+                        <div id="preview-details"></div>
+                        <div id="preview-description"></div>
+                        <div id="preview-features"></div>
+                        <div id="preview-specs"></div>
                     </div>
                     
-                    <div class="tab-content" id="web-tab">
-                        <div id="web-content"></div>
+                    <div class="export-options">
+                        <button class="export-btn" onclick="exportData('copy')">
+                            <span>📋</span> Copier
+                        </button>
+                        <button class="export-btn" onclick="exportData('html')">
+                            <span>🌐</span> HTML
+                        </button>
+                        <button class="export-btn" onclick="exportData('json')">
+                            <span>📄</span> JSON
+                        </button>
+                        <button class="export-btn" onclick="exportData('print')">
+                            <span>🖨️</span> Imprimer
+                        </button>
                     </div>
-                    
-                    <div class="tab-content" id="marketplace-tab">
-                        <div id="marketplace-content"></div>
-                    </div>
-                    
-                    <div class="tab-content" id="social-tab">
-                        <div id="social-content"></div>
-                    </div>
-                    
-                    <div class="tab-content" id="seo-tab">
-                        <div id="seo-content"></div>
-                    </div>
-                </div>
-
-                <div class="export-grid">
-                    <button class="export-btn" onclick="exportData('json')">
-                        <span class="export-icon">📄</span>
-                        <strong>JSON</strong>
-                    </button>
-                    <button class="export-btn" onclick="exportData('csv')">
-                        <span class="export-icon">📊</span>
-                        <strong>CSV</strong>
-                    </button>
-                    <button class="export-btn" onclick="exportData('copy')">
-                        <span class="export-icon">📋</span>
-                        <strong>Copier</strong>
-                    </button>
-                    <button class="export-btn" onclick="exportData('print')">
-                        <span class="export-icon">🖨️</span>
-                        <strong>Imprimer</strong>
-                    </button>
                 </div>
             </div>
         </div>
@@ -943,310 +781,512 @@
     <div class="toast" id="toast">
         <span id="toast-message"></span>
     </div>
-        <script>
-        // Upload functionality
-        function setupUpload(boxId, inputId) {
-            const box = document.getElementById(boxId);
-            const input = document.getElementById(inputId);
+<script>
+    // DM Sports Product Generator - JavaScript
+// Copiez ce code dans une balise <script> avant la fermeture de </body>
 
-            box.addEventListener('click', () => input.click());
+// Configuration des tailles par catégorie
+const SIZE_CONFIGS = {
+    'chaussures': {
+        homme: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48'],
+        femme: ['35', '36', '37', '38', '39', '40', '41', '42'],
+        enfant: ['25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38'],
+        bebe: ['16', '17', '18', '19', '20', '21', '22', '23', '24', '25']
+    },
+    'vetements': {
+        homme: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'],
+        femme: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+        enfant: ['4A', '6A', '8A', '10A', '12A', '14A', '16A'],
+        bebe: ['3M', '6M', '9M', '12M', '18M', '24M', '36M']
+    }
+};
 
-            box.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                box.style.borderColor = 'var(--red)';
-            });
+// Upload d'image
+function setupImageUpload() {
+    const uploadBox = document.getElementById('upload-main');
+    const fileInput = document.getElementById('file-main');
 
-            box.addEventListener('dragleave', () => {
-                box.style.borderColor = 'var(--border)';
-            });
+    uploadBox.addEventListener('click', () => fileInput.click());
 
-            box.addEventListener('drop', (e) => {
-                e.preventDefault();
-                box.style.borderColor = 'var(--border)';
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    handleFile(files[0], box);
-                }
-            });
+    uploadBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadBox.style.borderColor = 'var(--dms-red)';
+    });
 
-            input.addEventListener('change', (e) => {
-                if (e.target.files.length > 0) {
-                    handleFile(e.target.files[0], box);
-                }
-            });
+    uploadBox.addEventListener('dragleave', () => {
+        uploadBox.style.borderColor = 'var(--dms-border)';
+    });
+
+    uploadBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadBox.style.borderColor = 'var(--dms-border)';
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleImageFile(files[0]);
         }
+    });
 
-        function handleFile(file, box) {
-            if (file.type.startsWith('image/')) {
-                box.classList.add('has-file');
-                const text = box.querySelector('.upload-text strong');
-                text.textContent = '✅ ' + file.name;
-            }
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleImageFile(e.target.files[0]);
         }
+    });
+}
 
-        setupUpload('upload-main', 'file-main');
-        setupUpload('upload-secondary', 'file-secondary');
-        setupUpload('upload-detail', 'file-detail');
+function handleImageFile(file) {
+    if (file.type.startsWith('image/')) {
+        const uploadBox = document.getElementById('upload-main');
+        uploadBox.classList.add('has-file');
+        uploadBox.querySelector('strong').textContent = '✅ ' + file.name;
+        
+        // Créer un aperçu de l'image
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            window.uploadedImage = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
 
-        // Size management
-        function updateSizes() {
-            const category = document.getElementById('category').value;
-            const container = document.getElementById('sizes-container');
-            let sizes = [];
+// Gestion des tailles
+function updateSizes() {
+    const category = document.getElementById('category').value;
+    const gender = document.getElementById('gender').value;
+    const container = document.getElementById('sizes-container');
+    
+    let sizes = [];
+    
+    if (category.includes('chaussures')) {
+        sizes = SIZE_CONFIGS.chaussures[gender] || SIZE_CONFIGS.chaussures.homme;
+    } else {
+        sizes = SIZE_CONFIGS.vetements[gender] || SIZE_CONFIGS.vetements.homme;
+    }
+    
+    container.innerHTML = sizes.map(size => 
+        `<div class="size-box" data-size="${size}">${size}</div>`
+    ).join('');
+    
+    // Ajouter les événements de clic
+    document.querySelectorAll('.size-box').forEach(box => {
+        box.addEventListener('click', () => {
+            box.classList.toggle('selected');
+        });
+    });
+}
 
-            if (category.includes('chaussures')) {
-                if (category.includes('enfant')) {
-                    sizes = Array.from({length: 17}, (_, i) => (i + 25).toString());
-                } else if (category.includes('bebe')) {
-                    sizes = Array.from({length: 12}, (_, i) => (i + 16).toString());
-                } else {
-                    sizes = Array.from({length: 16}, (_, i) => (i + 36).toString());
-                }
-            } else if (category.includes('vetements') || category.includes('manteaux') || 
-                       category.includes('sweats') || category.includes('polos') || 
-                       category.includes('tshirts') || category.includes('chemises')) {
-                if (category.includes('enfant')) {
-                    sizes = ['2A', '3A', '4A', '5A', '6A', '8A', '10A', '12A', '14A', '16A'];
-                } else if (category.includes('bebe')) {
-                    sizes = ['0M', '1M', '3M', '6M', '9M', '12M', '18M', '24M', '36M'];
-                } else {
-                    sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
-                }
+// Gestion des couleurs
+document.querySelectorAll('.color-box').forEach(box => {
+    box.addEventListener('click', () => {
+        box.classList.toggle('selected');
+    });
+});
+
+// Toast notifications
+function showToast(message, duration = 3000) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-message').textContent = message;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, duration);
+}
+
+// Générateur de contenu produit
+class ProductContentGenerator {
+    constructor() {
+        this.tones = {
+            sport: {
+                intro: ['Performance exceptionnelle', 'Conçu pour les athlètes', 'Innovation sportive'],
+                descriptors: ['dynamique', 'performant', 'technique', 'innovant', 'respirant']
+            },
+            lifestyle: {
+                intro: ['Style urbain affirmé', 'L\'alliance du confort et du style', 'Design iconique'],
+                descriptors: ['tendance', 'confortable', 'polyvalent', 'moderne', 'élégant']
+            },
+            premium: {
+                intro: ['Qualité premium', 'Excellence et raffinement', 'Luxe sportif'],
+                descriptors: ['exclusif', 'haut de gamme', 'sophistiqué', 'prestigieux', 'raffiné']
             }
+        };
+    }
 
-            container.innerHTML = sizes.map(size => 
-                `<div class="size-box" data-size="${size}">${size}</div>`
-            ).join('');
-
-            // Add click handlers
-            document.querySelectorAll('.size-box').forEach(box => {
-                box.addEventListener('click', () => {
-                    box.classList.toggle('selected');
-                });
-            });
+    generateDescription(data) {
+        const tone = this.detectTone(data);
+        const intro = this.getRandomElement(this.tones[tone].intro);
+        const descriptors = this.tones[tone].descriptors;
+        
+        let description = `<h3>${data.name}</h3>`;
+        description += `<p class="intro"><strong>${intro}</strong></p>`;
+        
+        // Description principale
+        description += `<p>${this.generateMainDescription(data, descriptors)}</p>`;
+        
+        // Caractéristiques techniques
+        if (data.features) {
+            description += this.generateFeatures(data.features);
         }
+        
+        // Informations produit
+        description += this.generateProductInfo(data);
+        
+        // Guide des tailles et entretien
+        description += this.generateCareGuide(data);
+        
+        return description;
+    }
 
-        document.getElementById('category').addEventListener('change', updateSizes);
-
-        // Color selection
-        document.querySelectorAll('.color-box').forEach(box => {
-            box.addEventListener('click', () => {
-                box.classList.toggle('selected');
-            });
-        });
-
-        // Tone selection
-        document.querySelectorAll('.tone-option').forEach(option => {
-            option.addEventListener('click', () => {
-                document.querySelectorAll('.tone-option').forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-            });
-        });
-
-        // Channel selection
-        document.querySelectorAll('.channel-option').forEach(option => {
-            option.addEventListener('click', () => {
-                option.classList.toggle('selected');
-            });
-        });
-
-        // Tab functionality
-        document.querySelectorAll('.result-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabName = tab.dataset.tab;
-                
-                document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(`${tabName}-tab`).classList.add('active');
-            });
-        });
-
-        // Generate functionality
-        const generateBtn = document.getElementById('generate-btn');
-        generateBtn.addEventListener('click', async () => {
-            // Validation
-            const productName = document.getElementById('product-name').value;
-            const brand = document.getElementById('brand').value;
-            const category = document.getElementById('category').value;
-            const price = document.getElementById('price').value;
-            const sku = document.getElementById('sku').value;
-
-            if (!productName || !brand || !category || !price || !sku) {
-                showToast('⚠️ Veuillez remplir tous les champs obligatoires');
-                return;
-            }
-
-            // Disable button
-            generateBtn.disabled = true;
-            generateBtn.innerHTML = '<span class="loading"></span> Génération en cours...';
-
-            // Simulate generation
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Generate content
-            generateContent();
-
-            // Enable button
-            generateBtn.disabled = false;
-            generateBtn.innerHTML = '⚡ GÉNÉRER LA FICHE PRODUIT';
-
-            // Show results
-            document.getElementById('results').classList.add('show');
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-
-            showToast('✅ Fiche produit générée avec succès !');
-        });
-
-        function generateContent() {
-            const productName = document.getElementById('product-name').value;
-            const brand = document.getElementById('brand').value;
-            const brandText = document.getElementById('brand').options[document.getElementById('brand').selectedIndex].text;
-            const price = document.getElementById('price').value;
-            const oldPrice = document.getElementById('old-price').value;
-            const selectedTone = document.querySelector('.tone-option.selected').dataset.tone;
-
-            // Update preview
-            document.getElementById('result-title').textContent = productName;
-            document.getElementById('result-brand').textContent = `Marque: ${brandText}`;
+    generateMainDescription(data, descriptors) {
+        const templates = [
+            `Cette ${data.category} ${data.brand} incarne le parfait équilibre entre ${descriptors[0]} et ${descriptors[1]}. 
+             Conçue pour ${data.gender === 'homme' ? 'l\'homme' : data.gender === 'femme' ? 'la femme' : 'tous'} 
+             ${descriptors[2]}, elle offre un confort optimal au quotidien.`,
             
-            let priceHTML = `Prix: ${price}€`;
-            if (oldPrice) {
-                const discount = Math.round((1 - price/oldPrice) * 100);
-                priceHTML = `<span style="text-decoration: line-through; color: #999;">${oldPrice}€</span> ${price}€ <span style="color: red;">(-${discount}%)</span>`;
-            }
-            document.getElementById('result-price').innerHTML = priceHTML;
-
-            // Generate description based on tone
-            const descriptions = {
-                sportif: `Découvrez ${productName} de ${brandText}, conçu pour les athlètes exigeants. Performance et innovation au service de vos exploits sportifs.`,
-                streetwear: `${productName} by ${brandText} - L'essence du street style. Une pièce iconique pour affirmer votre style urbain.`,
-                premium: `${productName}, création exclusive ${brandText}. L'excellence et le raffinement pour les connaisseurs.`,
-                technique: `${productName} intègre les dernières technologies ${brandText}. Conception avancée pour des performances optimales.`,
-                jeune: `${productName} de ${brandText} est juste INCROYABLE! Le must-have qui va faire buzzer ton style! 🔥`,
-                classique: `${productName} perpétue l'héritage ${brandText} avec élégance et authenticité.`
-            };
-
-            document.getElementById('result-description').innerHTML = `<p>${descriptions[selectedTone]}</p>`;
-
-            // Features
-            const features = document.getElementById('features').value;
-            if (features) {
-                const featuresList = features.split('\n').map(f => `<li>${f.trim()}</li>`).join('');
-                document.getElementById('result-features').innerHTML = `<h4>Caractéristiques:</h4><ul>${featuresList}</ul>`;
-            }
-
-            // Generate other tabs content
-            generateWebContent(productName, brandText, price);
-            generateMarketplaceContent(productName, brandText, price);
-            generateSocialContent(productName, brandText);
-            generateSEOContent(productName, brandText);
-        }
-
-        function generateWebContent(productName, brand, price) {
-            document.getElementById('web-content').innerHTML = `
-                <h3>Description Site Web</h3>
-                <h4>${productName} - ${brand}</h4>
-                <p>Prix: ${price}€</p>
-                <p>Description optimisée pour votre site e-commerce...</p>
-            `;
-        }
-
-        function generateMarketplaceContent(productName, brand, price) {
-            document.getElementById('marketplace-content').innerHTML = `
-                <h3>Format Marketplace</h3>
-                <p><strong>Titre:</strong> ${brand} ${productName} - Neuf - Authentique - Livraison 24h</p>
-                <h4>Bullet Points:</h4>
-                <ul>
-                    <li>✅ Produit 100% authentique ${brand}</li>
-                    <li>⚡ Livraison express 24h</li>
-                    <li>🔄 Retours gratuits 30 jours</li>
-                    <li>💯 Garantie satisfaction</li>
-                    <li>📦 Emballage soigné</li>
-                </ul>
-            `;
-        }
-
-        function generateSocialContent(productName, brand) {
-            document.getElementById('social-content').innerHTML = `
-                <h3>Posts Réseaux Sociaux</h3>
-                <div style="margin-bottom: 20px;">
-                    <h4>Instagram</h4>
-                    <p>🔥 NEW DROP! ${productName} by ${brand} vient d'arriver! 💯<br>
-                    #${brand} #NewArrivals #Sportswear #DMSportsLyon</p>
-                </div>
-                <div>
-                    <h4>Facebook</h4>
-                    <p>Découvrez ${productName}, la dernière innovation ${brand} maintenant disponible chez DM Sports!<br>
-                    👉 Livraison gratuite dès 90€<br>
-                    📍 Disponible en boutique et sur notre site</p>
-                </div>
-            `;
-        }
-
-        function generateSEOContent(productName, brand) {
-            document.getElementById('seo-content').innerHTML = `
-                <h3>Optimisation SEO</h3>
-                <p><strong>Meta Title:</strong> ${productName} ${brand} | Achat en ligne | DM Sports Lyon</p>
-                <p><strong>Meta Description:</strong> Achetez ${productName} de ${brand}. ✓ Livraison 24h ✓ Retours gratuits ✓ Prix garantis. Commandez maintenant!</p>
-                <h4>Mots-clés suggérés:</h4>
-                <ul>
-                    <li>${productName}</li>
-                    <li>${brand} ${productName}</li>
-                    <li>Acheter ${productName}</li>
-                    <li>${productName} pas cher</li>
-                    <li>${productName} Lyon</li>
-                </ul>
-            `;
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = message;
-            toast.classList.add('show');
+            `${data.brand} présente ${data.name}, une ${data.category} ${descriptors[0]} qui redéfinit les standards. 
+             Avec sa conception ${descriptors[1]} et ses finitions ${descriptors[2]}, ce modèle s'impose comme un incontournable.`,
             
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+            `Découvrez l'excellence avec cette ${data.category} ${data.brand}. 
+             Son design ${descriptors[0]} et sa construction ${descriptors[1]} en font le choix idéal pour un style ${descriptors[2]}.`
+        ];
+        
+        return this.getRandomElement(templates);
+    }
 
-        function exportData(format) {
-            const data = {
-                productName: document.getElementById('product-name').value,
-                brand: document.getElementById('brand').value,
+    generateFeatures(features) {
+        if (!features) return '';
+        
+        const featuresList = features.split('\n').filter(f => f.trim());
+        if (featuresList.length === 0) return '';
+        
+        let html = '<div class="features-section">';
+        html += '<h4>Points forts du produit :</h4>';
+        html += '<ul>';
+        featuresList.forEach(feature => {
+            html += `<li>✓ ${feature.trim()}</li>`;
+        });
+        html += '</ul>';
+        html += '</div>';
+        
+        return html;
+    }
+
+    generateProductInfo(data) {
+        let html = '<div class="product-info">';
+        html += '<h4>Informations produit :</h4>';
+        html += '<table>';
+        
+        if (data.brand) html += `<tr><td><strong>Marque :</strong></td><td>${this.getBrandName(data.brand)}</td></tr>`;
+        if (data.sku) html += `<tr><td><strong>Référence :</strong></td><td>${data.sku}</td></tr>`;
+        if (data.ean) html += `<tr><td><strong>Code EAN :</strong></td><td>${data.ean}</td></tr>`;
+        if (data.material) html += `<tr><td><strong>Composition :</strong></td><td>${this.getMaterialName(data.material)}</td></tr>`;
+        if (data.season) html += `<tr><td><strong>Saison :</strong></td><td>${this.getSeasonName(data.season)}</td></tr>`;
+        if (data.gender) html += `<tr><td><strong>Genre :</strong></td><td>${this.getGenderName(data.gender)}</td></tr>`;
+        
+        const selectedColors = Array.from(document.querySelectorAll('.color-box.selected')).map(c => c.dataset.color);
+        if (selectedColors.length > 0) {
+            html += `<tr><td><strong>Coloris disponibles :</strong></td><td>${selectedColors.join(', ')}</td></tr>`;
+        }
+        
+        const selectedSizes = Array.from(document.querySelectorAll('.size-box.selected')).map(s => s.dataset.size);
+        if (selectedSizes.length > 0) {
+            html += `<tr><td><strong>Tailles disponibles :</strong></td><td>${selectedSizes.join(', ')}</td></tr>`;
+        }
+        
+        html += '</table>';
+        html += '</div>';
+        
+        return html;
+    }
+
+    generateCareGuide(data) {
+        let html = '<div class="care-guide">';
+        html += '<h4>Conseils d\'entretien :</h4>';
+        
+        const material = data.material || '';
+        if (material.includes('coton') || material.includes('polyester')) {
+            html += '<ul>';
+            html += '<li>🌡️ Lavage en machine à 30°C</li>';
+            html += '<li>🚫 Ne pas utiliser de javel</li>';
+            html += '<li>♨️ Repassage à température moyenne</li>';
+            html += '<li>🌀 Séchage en tambour autorisé à basse température</li>';
+            html += '</ul>';
+        } else if (material.includes('cuir')) {
+            html += '<ul>';
+            html += '<li>🧽 Nettoyer avec un chiffon humide</li>';
+            html += '<li>💧 Imperméabiliser régulièrement</li>';
+            html += '<li>☀️ Éviter l\'exposition prolongée au soleil</li>';
+            html += '<li>👟 Utiliser des embauchoirs pour maintenir la forme</li>';
+            html += '</ul>';
+        } else {
+            html += '<p>Suivre les instructions d\'entretien sur l\'étiquette du produit.</p>';
+        }
+        
+        html += '</div>';
+        
+        // Ajout de la garantie et livraison
+        html += '<div class="delivery-info">';
+        html += '<h4>Livraison & Garantie :</h4>';
+        html += '<ul>';
+        html += '<li>📦 Livraison gratuite dès 90€ d\'achat</li>';
+        html += '<li>🚚 Expédition sous 24h (jours ouvrés)</li>';
+        html += '<li>🔄 Retours gratuits sous 30 jours</li>';
+        html += '<li>✅ Garantie authenticité 100%</li>';
+        html += '<li>💳 Paiement sécurisé CB, PayPal, Apple Pay</li>';
+        html += '</ul>';
+        html += '</div>';
+        
+        return html;
+    }
+
+    detectTone(data) {
+        const category = data.category.toLowerCase();
+        const brand = data.brand.toLowerCase();
+        
+        if (brand.includes('boss') || brand.includes('armani') || brand.includes('lacoste')) {
+            return 'premium';
+        } else if (category.includes('running') || category.includes('training') || category.includes('football')) {
+            return 'sport';
+        }
+        return 'lifestyle';
+    }
+
+    getBrandName(brand) {
+        const brandNames = {
+            'nike': 'Nike',
+            'adidas': 'Adidas',
+            'puma': 'Puma',
+            'lacoste': 'Lacoste',
+            'boss': 'Hugo Boss',
+            'calvin-klein': 'Calvin Klein',
+            'armani': 'Emporio Armani EA7',
+            'the-north-face': 'The North Face',
+            'new-balance': 'New Balance',
+            'under-armour': 'Under Armour',
+            'champion': 'Champion',
+            'fila': 'Fila',
+            'vans': 'Vans',
+            'converse': 'Converse'
+        };
+        return brandNames[brand] || brand;
+    }
+
+    getMaterialName(material) {
+        const materials = {
+            'coton': '100% Coton',
+            'polyester': '100% Polyester',
+            'coton-polyester': '80% Coton, 20% Polyester',
+            'mesh': 'Mesh respirant haute performance',
+            'cuir': 'Cuir véritable',
+            'synthetique': 'Matière synthétique',
+            'nylon': '100% Nylon',
+            'laine': 'Laine mérinos',
+            'elasthanne': '95% Coton, 5% Élasthanne'
+        };
+        return materials[material] || material;
+    }
+
+    getSeasonName(season) {
+        const seasons = {
+            'printemps-ete': 'Printemps/Été',
+            'automne-hiver': 'Automne/Hiver',
+            'toutes-saisons': 'Toutes saisons'
+        };
+        return seasons[season] || season;
+    }
+
+    getGenderName(gender) {
+        const genders = {
+            'homme': 'Homme',
+            'femme': 'Femme',
+            'mixte': 'Mixte/Unisexe',
+            'enfant': 'Enfant',
+            'bebe': 'Bébé'
+        };
+        return genders[gender] || gender;
+    }
+
+    getRandomElement(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+}
+
+// Génération de la fiche produit
+async function generateProductSheet() {
+    const generator = new ProductContentGenerator();
+    
+    // Récupération des données
+    const productData = {
+        name: document.getElementById('product-name').value,
+        brand: document.getElementById('brand').value,
+        category: document.getElementById('category').value,
+        gender: document.getElementById('gender').value,
+        price: document.getElementById('price').value,
+        oldPrice: document.getElementById('old-price').value,
+        sku: document.getElementById('sku').value,
+        ean: document.getElementById('ean').value,
+        material: document.getElementById('material').value,
+        season: document.getElementById('season').value,
+        features: document.getElementById('features').value,
+        shortDesc: document.getElementById('short-desc').value
+    };
+    
+    // Validation
+    if (!productData.name || !productData.brand || !productData.category || !productData.price || !productData.sku) {
+        showToast('⚠️ Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    const btn = document.getElementById('generate-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading"></span> Génération en cours...';
+    
+    // Simulation du temps de génération
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Génération du contenu
+    const content = generator.generateDescription(productData);
+    
+    // Affichage du preview
+    document.getElementById('preview-empty').style.display = 'none';
+    document.getElementById('preview-content').style.display = 'block';
+    
+    // Mise à jour du titre
+    document.getElementById('preview-title').innerHTML = `${productData.name} - ${generator.getBrandName(productData.brand)}`;
+    
+    // Prix
+    let priceHTML = `<div class="price-section">`;
+    if (productData.oldPrice && parseFloat(productData.oldPrice) > parseFloat(productData.price)) {
+        const discount = Math.round((1 - productData.price / productData.oldPrice) * 100);
+        priceHTML += `<span class="old-price" style="text-decoration: line-through; color: #999;">${productData.oldPrice}€</span> `;
+        priceHTML += `<span class="current-price" style="font-size: 24px; font-weight: bold; color: var(--dms-red);">${productData.price}€</span> `;
+        priceHTML += `<span class="discount" style="background: var(--dms-red); color: white; padding: 2px 8px; border-radius: 4px; font-size: 14px;">-${discount}%</span>`;
+    } else {
+        priceHTML += `<span class="current-price" style="font-size: 24px; font-weight: bold;">${productData.price}€</span>`;
+    }
+    priceHTML += `</div>`;
+    
+    document.getElementById('preview-details').innerHTML = priceHTML;
+    document.getElementById('preview-description').innerHTML = content;
+    
+    // Réinitialiser le bouton
+    btn.disabled = false;
+    btn.innerHTML = '<span>⚡</span> GÉNÉRER LA FICHE PRODUIT';
+    
+    showToast('✅ Fiche produit générée avec succès !');
+    
+    // Scroll vers le preview
+    document.querySelector('.preview-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Export des données
+function exportData(format) {
+    const title = document.getElementById('preview-title').textContent;
+    const content = document.getElementById('preview-description').innerHTML;
+    
+    switch(format) {
+        case 'copy':
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            navigator.clipboard.writeText(`${title}\n\n${textContent}`);
+            showToast('📋 Contenu copié dans le presse-papier');
+            break;
+            
+        case 'html':
+            const htmlContent = `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>${title}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h3 { color: #333; }
+        h4 { color: #666; margin-top: 20px; }
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding: 5px 0; }
+        table { width: 100%; margin: 15px 0; }
+        table td { padding: 8px; border-bottom: 1px solid #eee; }
+        .price-section { margin: 20px 0; }
+        .features-section, .product-info, .care-guide, .delivery-info { 
+            margin: 20px 0; 
+            padding: 15px; 
+            background: #f9f9f9; 
+            border-radius: 8px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>${title}</h1>
+    ${document.getElementById('preview-details').innerHTML}
+    ${content}
+</body>
+</html>`;
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `fiche-produit-${Date.now()}.html`;
+            a.click();
+            showToast('📄 Fichier HTML téléchargé');
+            break;
+            
+        case 'json':
+            const jsonData = {
+                title: title,
                 price: document.getElementById('price').value,
+                oldPrice: document.getElementById('old-price').value,
                 sku: document.getElementById('sku').value,
-                description: document.getElementById('result-description').textContent
+                ean: document.getElementById('ean').value,
+                brand: document.getElementById('brand').value,
+                category: document.getElementById('category').value,
+                description: content,
+                generatedAt: new Date().toISOString()
             };
+            
+            navigator.clipboard.writeText(JSON.stringify(jsonData, null, 2));
+            showToast('📋 JSON copié dans le presse-papier');
+            break;
+            
+        case 'print':
+            window.print();
+            break;
+    }
+}
 
-            switch(format) {
-                case 'json':
-                    const json = JSON.stringify(data, null, 2);
-                    navigator.clipboard.writeText(json);
-                    showToast('📋 JSON copié dans le presse-papier');
-                    break;
-                case 'csv':
-                    const csv = Object.keys(data).join(',') + '\n' + Object.values(data).join(',');
-                    navigator.clipboard.writeText(csv);
-                    showToast('📋 CSV copié dans le presse-papier');
-                    break;
-                case 'copy':
-                    const text = `${data.productName}\n${data.brand}\n${data.price}€\n${data.description}`;
-                    navigator.clipboard.writeText(text);
-                    showToast('📋 Contenu copié dans le presse-papier');
-                    break;
-                case 'print':
-                    window.print();
-                    break;
-            }
-        }
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup upload
+    setupImageUpload();
+    
+    // Mise à jour des tailles quand on change de catégorie ou genre
+    document.getElementById('category').addEventListener('change', updateSizes);
+    document.getElementById('gender').addEventListener('change', updateSizes);
+    
+    // Bouton de génération
+    document.getElementById('generate-btn').addEventListener('click', generateProductSheet);
+    
+    // Initialiser les tailles
+    updateSizes();
+});
 
-        // Initialize
-        updateSizes();
-    </script>
+// Styles pour l'impression
+const printStyles = `
+@media print {
+    .header, .form-panel, .export-options, .toast { display: none !important; }
+    .main-content { display: block !important; }
+    .preview-panel { 
+        position: static !important; 
+        box-shadow: none !important;
+        max-height: none !important;
+    }
+    body { background: white !important; }
+}`;
+
+const styleSheet = document.createElement('style');
+styleSheet.textContent = printStyles;
+document.head.appendChild(styleSheet);
 </body>
 </html>
