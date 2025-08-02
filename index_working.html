@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM Sports AI - Générateur de Fiche Produit Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        :root {
+            --dm-red: #e60012;
+            --dm-red-hover: #cc0010;
+            --dm-red-light: rgba(230, 0, 18, 0.1);
+            --dm-gray: #f5f5f5;
+            --dm-dark: #333;
+            --dm-border: #e0e0e0;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #333;
+        }
+
+        .logo-badge {
+            background: #e60012;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .nav-tab.active {
+            background: #e60012;
+            color: white;
+        }
+
+        .nav-tab:not(.active):hover {
+            background: #f0f0f0;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-panel, .preview-panel {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            background: #e60012;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .required {
+            color: #e60012;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e60012;
+            box-shadow: 0 0 0 3px rgba(230, 0, 18, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: #e60012;
+            background: #fff5f5;
+        }
+
+        .upload-area.has-image {
+            border-color: #4CAF50;
+            background: #f1f8f4;
+            padding: 20px;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .upload-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .sizes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .size-item {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .size-item:hover {
+            border-color: #e60012;
+            transform: translateY(-2px);
+        }
+
+        .size-item.selected {
+            background: #e60012;
+            color: white;
+            border-color: #e60012;
+        }
+
+        .colors-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .color-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #e0e0e0;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .color-item.selected {
+            border-color: #e60012;
+            border-width: 4px;
+        }
+
+        .color-item.selected::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            text-shadow: 0 0 4px rgba(0,0,0,0.8);
+        }
+
+        .generate-btn {
+            background: #000;
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 50px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+
+        .generate-btn:hover:not(:disabled) {
+            background: #e60012;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(230, 0, 18, 0.3);
+        }
+
+        .generate-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .preview-header {
+            background: #000;
+            color: white;
+            padding: 20px;
+            margin: -30px -30px 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+
+        .preview-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .preview-empty {
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+
+        .preview-empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .preview-content {
+            display: none;
+        }
+
+        .preview-content.show {
+            display: block;
+        }
+
+        .product-preview {
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .current-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e60012;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 10px;
+        }
+
+        .discount-badge {
+            background: #e60012;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .export-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .export-btn {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .export-btn:hover {
+            border-color: #e60012;
+            background: #fff5f5;
+            transform: translateY(-2px);
+        }
+
+        /* Bibliothèque */
+        .products-library {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .library-header {
+            background: #e60012;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .library-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+
+        .library-empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .product-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .product-card:hover {
+            border-color: #e60012;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(230, 0, 18, 0.1);
+        }
+
+        .product-card-header {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-card-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product-card-brand {
+            color: #e60012;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .product-card-body {
+            padding: 15px;
+        }
+
+        .product-card-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e60012;
+            margin-bottom: 10px;
+        }
+
+        .product-card-meta {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .product-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .card-btn.primary {
+            background: #e60012;
+            color: white;
+            border-color: #e60012;
+        }
+
+        .card-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .card-btn.primary:hover {
+            background: #cc0010;
+        }
+
+        .card-btn.danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .card-btn.danger:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #333;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            font-weight: 600;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background: #4CAF50;
+        }
+
+        .toast.error {
+            background: #f44336;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                DM'S SPORTS
+                <span class="logo-badge">AI PRO</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="nav-tab active" id="generator-tab">
+                ⚡ Générateur
+            </button>
+            <button class="nav-tab" id="library-tab">
+                📚 Bibliothèque (<span id="library-count">0</span>)
+            </button>
+        </div>
+
+        <!-- Vue Générateur -->
+        <div id="generator-view" class="main-grid">
+            <div class="form-panel">
+                <!-- Section 1: Image -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">1</span>
+                        Image du produit
+                    </h3>
+                    
+                    <div class="upload-area" id="upload-area">
+                        <input type="file" accept="image/*" id="file-input" style="display: none;">
+                        <div class="upload-placeholder">
+                            <div class="upload-icon">📸</div>
+                            <div class="upload-text">
+                                <strong>Cliquez ou glissez une image</strong><br>
+                                <span>JPG, PNG, WebP - Max 5MB</span>
+                            </div>
+                        </div>
+                        <img id="upload-preview" class="upload-preview" />
+                    </div>
+                </div>
+
+                <!-- Section 2: Informations produit -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">2</span>
+                        Informations produit
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label>Nom du produit <span class="required">*</span></label>
+                        <input type="text" id="product-name" placeholder="Ex: Survêtement nid d'abeilles">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Marque <span class="required">*</span></label>
+                            <select id="brand">
+                                <option value="">Sélectionner</option>
+                                <option value="Nike">Nike</option>
+                                <option value="Adidas">Adidas</option>
+                                <option value="Puma">Puma</option>
+                                <option value="Lacoste">Lacoste</option>
+                                <option value="Hugo Boss">Hugo Boss</option>
+                                <option value="Calvin Klein">Calvin Klein</option>
+                                <option value="Emporio Armani EA7">Emporio Armani EA7</option>
+                                <option value="Ralph Lauren">Ralph Lauren</option>
+                                <option value="Tommy Hilfiger">Tommy Hilfiger</option>
+                                <option value="The North Face">The North Face</option>
+                                <option value="Champion">Champion</option>
+                                <option value="Fila">Fila</option>
+                                <option value="New Balance">New Balance</option>
+                                <option value="Under Armour">Under Armour</option>
+                                <option value="Asics">Asics</option>
+                                <option value="Reebok">Reebok</option>
+                                <option value="Vans">Vans</option>
+                                <option value="Converse">Converse</option>
+                                <option value="Timberland">Timberland</option>
+                                <option value="Columbia">Columbia</option>
+                                <option value="Ellesse">Ellesse</option>
+                                <option value="Kappa">Kappa</option>
+                                <option value="Sergio Tacchini">Sergio Tacchini</option>
+                                <option value="Fred Perry">Fred Perry</option>
+                                <option value="Gant">Gant</option>
+                                <option value="Mizuno">Mizuno</option>
+                                <option value="Saucony">Saucony</option>
+                                <option value="Le Coq Sportif">Le Coq Sportif</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Catégorie <span class="required">*</span></label>
+                            <select id="category">
+                                <option value="">Sélectionner</option>
+                                <optgroup label="Chaussures">
+                                    <option value="chaussures-running">Running</option>
+                                    <option value="chaussures-lifestyle">Lifestyle</option>
+                                    <option value="chaussures-basketball">Basketball</option>
+                                    <option value="chaussures-football">Football</option>
+                                    <option value="chaussures-tennis">Tennis</option>
+                                    <option value="chaussures-training">Training</option>
+                                </optgroup>
+                                <optgroup label="Vêtements">
+                                    <option value="survetements">Survêtements</option>
+                                    <option value="sweats">Sweats</option>
+                                    <option value="tshirts">T-shirts</option>
+                                    <option value="polos">Polos</option>
+                                    <option value="pantalons">Pantalons</option>
+                                    <option value="shorts">Shorts</option>
+                                    <option value="vestes">Vestes</option>
+                                    <option value="doudounes">Doudounes</option>
+                                </optgroup>
+                                <optgroup label="Accessoires">
+                                    <option value="sacs">Sacs</option>
+                                    <option value="casquettes">Casquettes</option>
+                                    <option value="chaussettes">Chaussettes</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Genre <span class="required">*</span></label>
+                            <select id="gender">
+                                <option value="">Sélectionner</option>
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
+                                <option value="enfant">Enfant</option>
+                                <option value="bebe">Bébé</option>
+                                <option value="unisexe">Unisexe</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Référence <span class="required">*</span></label>
+                            <input type="text" id="sku" placeholder="REF-001">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prix (€) <span class="required">*</span></label>
+                            <input type="number" id="price" placeholder="89.99" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Prix barré (€)</label>
+                            <input type="number" id="old-price" placeholder="119.99" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description courte</label>
+                        <textarea id="short-desc" placeholder="Description courte du produit..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 3: Tailles et couleurs -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">3</span>
+                        Tailles et couleurs
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label>Tailles disponibles</label>
+                        <div class="sizes-container" id="sizes-container">
+                            <!-- Tailles générées dynamiquement -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Couleurs disponibles</label>
+                        <div class="colors-container">
+                            <div class="color-item" data-color="Noir" style="background: #000000" title="Noir"></div>
+                            <div class="color-item" data-color="Blanc" style="background: #FFFFFF; border-color: #ccc;" title="Blanc"></div>
+                            <div class="color-item" data-color="Gris" style="background: #808080" title="Gris"></div>
+                            <div class="color-item" data-color="Rouge" style="background: #FF0000" title="Rouge"></div>
+                            <div class="color-item" data-color="Bleu" style="background: #0000FF" title="Bleu"></div>
+                            <div class="color-item" data-color="Vert" style="background: #008000" title="Vert"></div>
+                            <div class="color-item" data-color="Jaune" style="background: #FFFF00" title="Jaune"></div>
+                            <div class="color-item" data-color="Orange" style="background: #FFA500" title="Orange"></div>
+                            <div class="color-item" data-color="Violet" style="background: #800080" title="Violet"></div>
+                            <div class="color-item" data-color="Rose" style="background: #FFC0CB" title="Rose"></div>
+                            <div class="color-item" data-color="Marron" style="background: #8B4513" title="Marron"></div>
+                            <div class="color-item" data-color="Beige" style="background: #F5DEB3" title="Beige"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Détails -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">4</span>
+                        Détails et caractéristiques
+                    </h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Matière principale</label>
+                            <select id="material">
+                                <option value="">Sélectionner</option>
+                                <option value="100% Coton">100% Coton</option>
+                                <option value="Polyester">Polyester</option>
+                                <option value="Coton/Polyester">Coton/Polyester</option>
+                                <option value="Mesh respirant">Mesh respirant</option>
+                                <option value="Cuir">Cuir</option>
+                                <option value="Synthétique">Synthétique</option>
+                                <option value="Nylon">Nylon</option>
+                                <option value="Laine">Laine</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Saison</label>
+                            <select id="season">
+                                <option value="">Sélectionner</option>
+                                <option value="Printemps/Été">Printemps/Été</option>
+                                <option value="Automne/Hiver">Automne/Hiver</option>
+                                <option value="Toutes saisons">Toutes saisons</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Points forts (un par ligne)</label>
+                        <textarea id="features" placeholder="Logo brodé&#10;Poches zippées&#10;Coupe ajustée&#10;Technologie Dri-FIT"></textarea>
+                    </div>
+                </div>
+
+                <button class="generate-btn" id="generate-btn">
+                    <span>⚡</span> GÉNÉRER LA FICHE PRODUIT
+                </button>
+            </div>
+
+            <!-- Panel de prévisualisation -->
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <h3 class="preview-title">📄 Aperçu de la fiche produit</h3>
+                </div>
+                
+                <div id="preview-empty" class="preview-empty">
+                    <div class="preview-empty-icon">📝</div>
+                    <p>Remplissez le formulaire et cliquez sur<br />"Générer" pour voir l'aperçu</p>
+                </div>
+                
+                <div id="preview-content" class="preview-content">
+                    <div class="product-preview">
+                        <h2 class="product-title" id="preview-title"></h2>
+                        <div class="product-price" id="preview-price"></div>
+                        <div id="preview-description"></div>
+                    </div>
+                    
+                    <div class="export-options">
+                        <button class="export-btn" id="copy-btn">
+                            <span>📋</span> Copier
+                        </button>
+                        <button class="export-btn" id="html-btn">
+                            <span>🌐</span> HTML
+                        </button>
+                        <button class="export-btn" id="json-btn">
+                            <span>📄</span> JSON
+                        </button>
+                        <button class="export-btn" id="print-btn">
+                            <span>🖨️</span> Imprimer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vue Bibliothèque -->
+        <div id="library-view" class="hidden">
+            <div class="products-library">
+                <div class="library-header">
+                    <h2>📚 Bibliothèque des produits</h2>
+                    <input type="text" class="search-bar" id="search-bar" placeholder="🔍 Rechercher un produit...">
+                </div>
+                <div id="products-grid" class="products-grid">
+                    <div class="library-empty">
+                        <div class="library-empty-icon">📦</div>
+                        <p>Aucun produit créé.<br>Générez votre première fiche pour commencer !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div class="toast" id="toast">
+        <span id="toast-message"></span>
+    </div>
+
+    <script>
+        // Variables globales
+        let uploadedImage = null;
+        let generatedContent = {};
+        let savedProducts = JSON.parse(localStorage.getItem('dmSportsProducts')) || [];
+        let currentView = 'generator';
+
+        // Fonctions utilitaires
+        function showToast(message, type = 'success', duration = 4000) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toast.className = `toast ${type} show`;
+            toastMessage.innerHTML = message;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        function updateLibraryCount() {
+            document.getElementById('library-count').textContent = savedProducts.length;
+        }
+
+        // Navigation entre onglets
+        function switchTab(tab) {
+            const generatorView = document.getElementById('generator-view');
+            const libraryView = document.getElementById('library-view');
+            const generatorTab = document.getElementById('generator-tab');
+            const libraryTab = document.getElementById('library-tab');
+            
+            if (tab === 'generator') {
+                generatorView.classList.remove('hidden');
+                libraryView.classList.add('hidden');
+                generatorTab.classList.add('active');
+                libraryTab.classList.remove('active');
+                currentView = 'generator';
+            } else {
+                generatorView.classList.add('hidden');
+                libraryView.classList.remove('hidden');
+                generatorTab.classList.remove('active');
+                libraryTab.classList.add('active');
+                currentView = 'library';
+                displayProducts();
+            }
+        }
+
+        // Gestion de l'upload d'image
+        function setupImageUpload() {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('file-input');
+            const preview = document.getElementById('upload-preview');
+            const placeholder = document.querySelector('.upload-placeholder');
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#e60012';
+                uploadArea.style.background = '#fff5f5';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#e0e0e0';
+                uploadArea.style.background = '#fafafa';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#e0e0e0';
+                uploadArea.style.background = '#fafafa';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0 && files[0].type.startsWith('image/')) {
+                    handleImageFile(files[0]);
+                } else {
+                    showToast('❌ Veuillez sélectionner une image valide', 'error');
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleImageFile(e.target.files[0]);
+                }
+            });
+        }
+
+        function handleImageFile(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('❌ L\'image ne doit pas dépasser 5MB', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImage = e.target.result;
+                const preview = document.getElementById('upload-preview');
+                const placeholder = document.querySelector('.upload-placeholder');
+                const uploadArea = document.getElementById('upload-area');
+                
+                preview.src = uploadedImage;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+                uploadArea.classList.add('has-image');
+                
+                showToast('✅ Image ajoutée avec succès');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Gestion des tailles
+        function updateSizes() {
+            const category = document.getElementById('category').value;
+            const gender = document.getElementById('gender').value;
+            const container = document.getElementById('sizes-container');
+            
+            if (!category || !gender) {
+                container.innerHTML = '<p style="color: #999;">Sélectionnez d\'abord la catégorie et le genre</p>';
+                return;
+            }
+            
+            let sizes = [];
+            
+            if (category.includes('chaussures')) {
+                if (gender === 'homme') {
+                    sizes = ['39', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44', '44.5', '45', '45.5', '46'];
+                } else if (gender === 'femme') {
+                    sizes = ['35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42'];
+                } else if (gender === 'enfant') {
+                    sizes = ['28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38'];
+                } else if (gender === 'bebe') {
+                    sizes = ['16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27'];
+                } else {
+                    sizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'];
+                }
+            } else {
+                if (gender === 'enfant') {
+                    sizes = ['4A', '6A', '8A', '10A', '12A', '14A', '16A', '18A'];
+                } else if (gender === 'bebe') {
+                    sizes = ['3M', '6M', '9M', '12M', '18M', '24M', '36M'];
+                } else {
+                    sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
+                }
+            }
+            
+            container.innerHTML = sizes.map(size => 
+                `<div class="size-item" data-size="${size}">${size}</div>`
+            ).join('');
+            
+            // Ajouter les événements de clic
+            container.querySelectorAll('.size-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+        }
+
+        // Gestion des couleurs
+        function setupColors() {
+            document.querySelectorAll('.color-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+        }
+
+        // Génération de contenu
+        function generateProductContent() {
+            const productName = document.getElementById('product-name').value.trim();
+            const brand = document.getElementById('brand').value;
+            const category = document.getElementById('category').value;
+            const gender = document.getElementById('gender').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const oldPrice = parseFloat(document.getElementById('old-price').value) || null;
+            const sku = document.getElementById('sku').value.trim();
+            const shortDesc = document.getElementById('short-desc').value.trim();
+            const material = document.getElementById('material').value;
+            const season = document.getElementById('season').value;
+            const features = document.getElementById('features').value.trim();
+
+            if (!productName || !brand || !category || !gender || !price || !sku) {
+                showToast('⚠️ Veuillez remplir tous les champs obligatoires', 'error');
+                return false;
+            }
+
+            if (price <= 0) {
+                showToast('⚠️ Le prix doit être supérieur à 0', 'error');
+                return false;
+            }
+
+            if (oldPrice && oldPrice <= price) {
+                showToast('⚠️ Le prix barré doit être supérieur au prix de vente', 'error');
+                return false;
+            }
+
+            // Génération du contenu
+            const title = `${productName} - ${brand}`;
+            
+            // Introduction par marque
+            const brandIntros = {
+                'Nike': '🏃‍♂️ Performance et innovation au service du sport - Just Do It !',
+                'Adidas': '⚡ L\'excellence sportive depuis 1949 - Impossible Is Nothing',
+                'Lacoste': '🐊 L\'élégance sportive à la française depuis 1933',
+                'Hugo Boss': '👔 Le luxe et la sophistication allemande',
+                'Puma': '🐆 Forever Faster - La vitesse au service du style',
+                'The North Face': '🏔️ L\'aventure sans limites depuis 1966'
+            };
+            
+            const intro = brandIntros[brand] || '🏆 Qualité et style garantis par DM Sports Lyon';
+            
+            let description = `<p><strong>${intro}</strong></p>`;
+            
+            // Description principale
+            if (shortDesc) {
+                description += `<p>${shortDesc}</p>`;
+            } else {
+                description += `<p>Découvrez ${productName} de ${brand}, un ${category.replace('-', ' ')} d'exception qui allie style et performance. Conçu pour ${gender === 'homme' ? 'l\'homme moderne' : gender === 'femme' ? 'la femme active' : 'tous'}, il offre un confort optimal pour toutes vos activités.</p>`;
+            }
+
+            // Points forts
+            if (features) {
+                description += '<h4>✨ Points forts du produit</h4><ul>';
+                features.split('\n').forEach(feature => {
+                    if (feature.trim()) {
+                        description += `<li>• ${feature.trim()}</li>`;
+                    }
+                });
+                description += '</ul>';
+            }
+
+            // Informations techniques
+            description += '<h4>📋 Informations techniques</h4>';
+            description += '<table style="width: 100%; margin: 15px 0; border-collapse: collapse;">';
+            description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Marque :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${brand}</td></tr>`;
+            description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Référence :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${sku}</td></tr>`;
+            description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Genre :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${gender.charAt(0).toUpperCase() + gender.slice(1)}</td></tr>`;
+            
+            if (material) {
+                description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Composition :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${material}</td></tr>`;
+            }
+            
+            if (season) {
+                description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Saison :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${season}</td></tr>`;
+            }
+
+            // Tailles sélectionnées
+            const selectedSizes = Array.from(document.querySelectorAll('.size-item.selected')).map(s => s.dataset.size);
+            if (selectedSizes.length > 0) {
+                description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Tailles disponibles :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${selectedSizes.join(', ')}</td></tr>`;
+            }
+
+            // Couleurs sélectionnées
+            const selectedColors = Array.from(document.querySelectorAll('.color-item.selected')).map(c => c.dataset.color);
+            if (selectedColors.length > 0) {
+                description += `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Coloris disponibles :</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${selectedColors.join(', ')}</td></tr>`;
+            }
+
+            description += '</table>';
+
+            // Guide d'entretien
+            description += '<h4>🧺 Guide d\'entretien</h4><ul>';
+            if (category.includes('chaussures')) {
+                description += '<li>🧽 Nettoyer avec un chiffon humide</li>';
+                description += '<li>💧 Imperméabiliser régulièrement</li>';
+                description += '<li>☀️ Éviter l\'exposition prolongée au soleil</li>';
+                description += '<li>👟 Utiliser des embauchoirs pour maintenir la forme</li>';
+            } else {
+                description += '<li>🌡️ Lavage en machine à 30°C</li>';
+                description += '<li>🚫 Ne pas utiliser de javel</li>';
+                description += '<li>♨️ Repassage à température moyenne</li>';
+                description += '<li>🌀 Séchage en tambour autorisé à basse température</li>';
+            }
+            description += '</ul>';
+
+            // Services DM Sports
+            description += '<h4>🚚 Livraison & Services DM Sports</h4><ul>';
+            description += '<li>✅ <strong>Livraison gratuite</strong> dès 80€ d\'achat</li>';
+            description += '<li>📦 <strong>Expédition sous 24h</strong> (jours ouvrés)</li>';
+            description += '<li>🔄 <strong>Retours gratuits</strong> sous 30 jours</li>';
+            description += '<li>💯 <strong>Garantie authenticité</strong> 100%</li>';
+            description += '<li>💳 <strong>Paiement sécurisé</strong> (CB, PayPal, Apple Pay)</li>';
+            description += '<li>🏪 <strong>Retrait gratuit</strong> en boutique Lyon - 11 rue de la République</li>';
+            description += '</ul>';
+
+            generatedContent = { title, price, oldPrice, description };
+            return true;
+        }
+
+        // Affichage du contenu généré
+        function displayGeneratedContent() {
+            const previewEmpty = document.getElementById('preview-empty');
+            const previewContent = document.getElementById('preview-content');
+            const previewTitle = document.getElementById('preview-title');
+            const previewPrice = document.getElementById('preview-price');
+            const previewDescription = document.getElementById('preview-description');
+
+            previewEmpty.style.display = 'none';
+            previewContent.classList.add('show');
+
+            previewTitle.textContent = generatedContent.title;
+
+            // Prix avec réduction
+            let priceHTML = '';
+            if (generatedContent.oldPrice && parseFloat(generatedContent.oldPrice) > parseFloat(generatedContent.price)) {
+                const discount = Math.round((1 - generatedContent.price / generatedContent.oldPrice) * 100);
+                priceHTML = `
+                    <span class="old-price">${generatedContent.oldPrice}€</span>
+                    <span class="current-price">${generatedContent.price}€</span>
+                    <span class="discount-badge">-${discount}%</span>
+                `;
+            } else {
+                priceHTML = `<span class="current-price">${generatedContent.price}€</span>`;
+            }
+            previewPrice.innerHTML = priceHTML;
+
+            previewDescription.innerHTML = generatedContent.description;
+        }
+
+        // Sauvegarde des produits
+        function saveProduct(productData) {
+            const product = {
+                id: Date.now().toString(),
+                ...productData,
+                createdAt: new Date().toISOString(),
+                generatedContent: generatedContent
+            };
+
+            savedProducts.unshift(product);
+            localStorage.setItem('dmSportsProducts', JSON.stringify(savedProducts));
+            updateLibraryCount();
+
+            return product;
+        }
+
+        // Génération principale
+        async function handleGenerate() {
+            const btn = document.getElementById('generate-btn');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> GÉNÉRATION EN COURS...';
+
+            if (generateProductContent()) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                displayGeneratedContent();
+
+                // Sauvegarde automatique
+                const productData = {
+                    name: document.getElementById('product-name').value.trim(),
+                    brand: document.getElementById('brand').value,
+                    category: document.getElementById('category').value,
+                    gender: document.getElementById('gender').value,
+                    price: parseFloat(document.getElementById('price').value),
+                    oldPrice: parseFloat(document.getElementById('old-price').value) || null,
+                    sku: document.getElementById('sku').value.trim(),
+                    shortDesc: document.getElementById('short-desc').value.trim(),
+                    material: document.getElementById('material').value,
+                    season: document.getElementById('season').value,
+                    features: document.getElementById('features').value.trim().split('\n').filter(f => f.trim()),
+                    sizes: Array.from(document.querySelectorAll('.size-item.selected')).map(s => s.dataset.size),
+                    colors: Array.from(document.querySelectorAll('.color-item.selected')).map(c => c.dataset.color),
+                    image: uploadedImage
+                };
+
+                saveProduct(productData);
+                showToast('✅ Fiche produit générée et sauvegardée avec succès !');
+                
+                document.querySelector('.preview-panel').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<span>⚡</span> GÉNÉRER LA FICHE PRODUIT';
+        }
+
+        // Affichage des produits dans la bibliothèque
+        function displayProducts() {
+            const productsGrid = document.getElementById('products-grid');
+            const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+            
+            const filteredProducts = savedProducts.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.brand.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm)
+            );
+
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="library-empty">
+                        <div class="library-empty-icon">📦</div>
+                        <p>${searchTerm ? 'Aucun produit trouvé.' : 'Aucun produit créé.<br>Générez votre première fiche pour commencer !'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-card-header">
+                        <div class="product-card-title">${product.name}</div>
+                        <div class="product-card-brand">${product.brand}</div>
+                    </div>
+                    <div class="product-card-body">
+                        <div class="product-card-price">${product.price}€${product.oldPrice && product.oldPrice > product.price ? ` <span style="text-decoration: line-through; color: #999; font-size: 16px;">${product.oldPrice}€</span>` : ''}</div>
+                        <div class="product-card-meta">
+                            ${product.category.replace('-', ' ')} • ${product.gender} • ${new Date(product.createdAt).toLocaleDateString('fr-FR')}
+                        </div>
+                        <div class="product-card-actions">
+                            <button class="card-btn primary" onclick="copyProductContent('${product.id}')">
+                                📋 Copier
+                            </button>
+                            <button class="card-btn danger" onclick="deleteProduct('${product.id}')">
+                                🗑️ Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function copyProductContent(productId) {
+            const product = savedProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const content = product.generatedContent.description.replace(/<[^>]*>/g, '');
+            const title = product.generatedContent.title;
+            const price = `${product.price}€${product.oldPrice && product.oldPrice > product.price ? ` (était ${product.oldPrice}€)` : ''}`;
+            
+            const fullContent = `${title}\n${price}\n\n${content}`;
+            
+            navigator.clipboard.writeText(fullContent).then(() => {
+                showToast('📋 Contenu copié dans le presse-papier');
+            });
+        }
+
+        function deleteProduct(productId) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) return;
+            
+            savedProducts = savedProducts.filter(p => p.id !== productId);
+            localStorage.setItem('dmSportsProducts', JSON.stringify(savedProducts));
+            updateLibraryCount();
+            displayProducts();
+            showToast('🗑️ Produit supprimé avec succès');
+        }
+
+        // Export functions
+        function copyContent() {
+            const content = document.getElementById('preview-description').innerText;
+            const title = document.getElementById('preview-title').textContent;
+            const price = document.getElementById('preview-price').textContent;
+            
+            const fullContent = `🏷️ ${title}\n💰 ${price}\n\n${content}`;
+            
+            navigator.clipboard.writeText(fullContent).then(() => {
+                showToast('📋 Contenu copié dans le presse-papier');
+            });
+        }
+
+        function downloadHTML() {
+            const title = generatedContent.title;
+            const content = generatedContent.description;
+            const price = document.getElementById('preview-price').innerHTML;
+            
+            const html = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>${title} - DM Sports</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .price { font-size: 24px; margin: 20px 0; }
+        .current-price { font-weight: bold; color: #e60012; }
+        .old-price { text-decoration: line-through; color: #999; }
+        h4 { color: #666; margin-top: 25px; }
+        table { width: 100%; border-collapse: collapse; }
+        table td { padding: 8px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <h1>${title}</h1>
+    <div class="price">${price}</div>
+    ${content}
+    <hr style="margin-top: 40px;">
+    <p style="text-align: center; color: #666;">
+        Généré par DM Sports AI Pro - ${new Date().toLocaleDateString('fr-FR')}
+    </p>
+</body>
+</html>`;
+            
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${generatedContent.title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('📄 Fichier HTML téléchargé');
+        }
+
+        function downloadJSON() {
+            const data = {
+                title: generatedContent.title,
+                price: generatedContent.price,
+                oldPrice: generatedContent.oldPrice,
+                description: generatedContent.description,
+                generatedAt: new Date().toISOString()
+            };
+            
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${generatedContent.title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('📄 Fichier JSON téléchargé');
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup des fonctionnalités
+            setupImageUpload();
+            setupColors();
+            
+            // Événements
+            document.getElementById('category').addEventListener('change', updateSizes);
+            document.getElementById('gender').addEventListener('change', updateSizes);
+            document.getElementById('generate-btn').addEventListener('click', handleGenerate);
+            
+            // Navigation
+            document.getElementById('generator-tab').addEventListener('click', () => switchTab('generator'));
+            document.getElementById('library-tab').addEventListener('click', () => switchTab('library'));
+            
+            // Recherche
+            document.getElementById('search-bar').addEventListener('keyup', displayProducts);
+            
+            // Export
+            document.getElementById('copy-btn').addEventListener('click', copyContent);
+            document.getElementById('html-btn').addEventListener('click', downloadHTML);
+            document.getElementById('json-btn').addEventListener('click', downloadJSON);
+            document.getElementById('print-btn').addEventListener('click', () => window.print());
+            
+            // Initialiser
+            updateSizes();
+            updateLibraryCount();
+            
+            // Message de bienvenue
+            setTimeout(() => {
+                showToast('🎉 Bienvenue dans le générateur DM Sports AI Pro !');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
