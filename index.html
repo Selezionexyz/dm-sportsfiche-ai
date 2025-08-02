@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DM Sports AI Pro - Générateur de Fiches Produit IA</title>
+    <meta name="description" content="DM Sports AI Pro - Générateur de fiches produit IA pour sportswear. 28 marques, export multi-format, optimisation SEO.">
+    <meta name="keywords" content="DM Sports, Lyon, sportswear, streetwear, Nike, Adidas, Lacoste, générateur IA, fiches produit">
+    <title>DM Sports AI Pro - Générateur IA de Fiches Produit Sportswear</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
+    
     <style>
         * {
             margin: 0;
@@ -11,28 +17,76 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            line-height: 1.5;
+        :root {
+            --primary-black: #000000;
+            --primary-red: #FF0000;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --light-gray: #999999;
+            --border-gray: #e0e0e0;
+            --bg-gray: #f5f5f5;
+            --white: #ffffff;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --info: #2196F3;
         }
 
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--white);
+            color: var(--primary-black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header Styles */
         .header {
-            background: #ffffff;
-            border-bottom: 1px solid #e0e0e0;
+            background: var(--white);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .top-bar {
-            background: #f5f5f5;
+            background: var(--primary-black);
+            color: var(--white);
             padding: 8px 0;
             font-size: 12px;
             text-align: center;
-            color: #666;
+        }
+
+        .top-bar a {
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .top-bar a:hover {
+            color: var(--primary-red);
         }
 
         .header-main {
@@ -42,39 +96,53 @@
             padding: 15px 20px;
             max-width: 1400px;
             margin: 0 auto;
+            background: var(--white);
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: #000;
+            color: var(--primary-black);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo-ai {
-            background: linear-gradient(45deg, #000, #666);
-            color: white;
-            padding: 2px 8px;
-            font-size: 12px;
-            border-radius: 3px;
+            background: linear-gradient(45deg, var(--primary-red), var(--primary-black));
+            color: var(--white);
+            padding: 4px 12px;
+            font-size: 14px;
+            border-radius: 20px;
+            animation: pulse 2s infinite;
         }
 
         .search-bar {
             flex: 1;
-            max-width: 400px;
+            max-width: 500px;
             margin: 0 40px;
             position: relative;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid #ddd;
+            padding: 12px 45px 12px 20px;
+            border: 2px solid var(--border-gray);
             border-radius: 25px;
             font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.1);
         }
 
         .search-bar button {
@@ -82,25 +150,39 @@
             right: 5px;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
+            background: var(--primary-red);
+            color: var(--white);
             border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
             cursor: pointer;
-            padding: 5px 10px;
+            transition: all 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: var(--primary-black);
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .header-actions a {
-            color: #666;
+            color: var(--dark-gray);
             text-decoration: none;
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .header-actions a:hover {
+            color: var(--primary-red);
         }
 
         .cart-icon {
@@ -109,19 +191,38 @@
 
         .cart-count {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #000;
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
+            top: -10px;
+            right: -10px;
+            background: var(--primary-red);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
             border-radius: 10px;
+            animation: pulse 1s infinite;
         }
 
+        /* Navigation */
         .nav {
-            background: #000;
-            color: white;
-            padding: 0;
+            background: var(--primary-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.4), transparent);
+            animation: shine 8s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .nav-container {
@@ -129,113 +230,336 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .nav-item {
-            color: white;
+            color: var(--white);
             text-decoration: none;
-            padding: 15px 20px;
+            padding: 18px 25px;
             font-size: 14px;
+            font-weight: 500;
             text-transform: uppercase;
-            transition: background 0.3s;
+            transition: all 0.3s;
             position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-red);
+            transition: width 0.3s;
+        }
+
+        .nav-item:hover::before {
+            width: 100%;
         }
 
         .nav-item:hover {
-            background: #333;
+            background: rgba(255,255,255,0.1);
         }
 
         .nav-item.active {
-            background: #ff0000;
+            background: var(--primary-red);
         }
 
+        /* Container */
         .container {
             max-width: 1400px;
-            margin: 140px auto 40px;
+            margin: 160px auto 40px;
             padding: 0 20px;
         }
 
+        /* Breadcrumb */
         .breadcrumb {
-            margin-bottom: 20px;
-            font-size: 12px;
-            color: #666;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: var(--medium-gray);
+            animation: fadeIn 0.5s ease-out;
         }
 
         .breadcrumb a {
-            color: #666;
+            color: var(--medium-gray);
             text-decoration: none;
+            transition: color 0.3s;
         }
 
         .breadcrumb a:hover {
+            color: var(--primary-red);
             text-decoration: underline;
         }
 
-        .page-title {
-            background: #f5f5f5;
-            padding: 30px;
-            margin-bottom: 30px;
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+            color: var(--white);
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,0,0,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
         }
 
-        .page-title h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
+        .hero-section h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .page-title p {
-            color: #666;
-            font-size: 16px;
+        .hero-section p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
         }
 
         .stat-card {
-            background: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            padding: 25px;
+            background: var(--white);
+            border: 2px solid var(--border-gray);
+            padding: 30px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary-red) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 0.05;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary-red);
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
         }
 
         .stat-number {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
-            color: #000;
-            margin-bottom: 5px;
+            color: var(--primary-black);
+            margin-bottom: 10px;
+            position: relative;
         }
 
         .stat-label {
-            color: #666;
+            color: var(--medium-gray);
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content Grid */
+        .main-content {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            padding: 25px;
+            border: 1px solid var(--border-gray);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 180px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-gray);
+            border-radius: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 4px;
+        }
+
+        .sidebar h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-group {
+            margin-bottom: 30px;
+        }
+
+        .filter-group label {
+            display: block;
             font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            color: var(--dark-gray);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--white);
+            transition: all 0.3s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.1);
+        }
+
+        .brand-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 15px;
+            background: var(--bg-gray);
+        }
+
+        .brand-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            transition: all 0.3s;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .brand-item:hover {
+            background: var(--white);
+            transform: translateX(5px);
+        }
+
+        .brand-item input {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .brand-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Form Area */
+        .form-area {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="tel:0437430890">📞 04 37 43 08 90</a>
+        <span>|</span>
+        <a href="#">📍 11 Rue de la République, 69001 Lyon</a>
+        <span>|</span>
+        <a href="#">🚚 Livraison offerte dès 90€</a>
+        <span>|</span>
+        <a href="#">🔄 Retours gratuits 30 jours</a>
+        <span>|</span>
+        <a href="#">✅ Produits 100% authentiques</a>
+    </div>
+
+    <!-- Header -->
     <header class="header">
-        <div class="top-bar">
-            Livraison offerte dès 90€ d'achat | Retours gratuits sous 30 jours
-        </div>
         <div class="header-main">
             <a href="#" class="logo">
                 DM'S SPORTS
                 <span class="logo-ai">AI PRO</span>
             </a>
+            
             <div class="search-bar">
-                <input type="text" placeholder="Rechercher un produit, une marque...">
+                <input type="text" placeholder="Rechercher parmi +5000 produits sportswear...">
                 <button>🔍</button>
             </div>
+            
             <div class="header-actions">
-                <a href="#">👤 Connexion</a>
+                <a href="#">
+                    👤 Mon compte
+                </a>
+                <a href="#">
+                    ❤️ Favoris
+                    <span class="cart-count" style="background: var(--info);">3</span>
+                </a>
                 <a href="#" class="cart-icon">
                     🛒 Panier
                     <span class="cart-count">0</span>
@@ -244,689 +568,1553 @@
         </div>
     </header>
 
+    <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="#" class="nav-item active">PROMOTIONS</a>
+            <a href="#" class="nav-item">PROMOTIONS 🔥</a>
             <a href="#" class="nav-item">HOMME</a>
             <a href="#" class="nav-item">FEMME</a>
             <a href="#" class="nav-item">ENFANT</a>
             <a href="#" class="nav-item">BÉBÉ</a>
-            <a href="#" class="nav-item">NOUVEAUTÉS</a>
+            <a href="#" class="nav-item">NOUVEAUTÉS ✨</a>
             <a href="#" class="nav-item">MARQUES</a>
-            <a href="#" class="nav-item">AI GENERATOR</a>
+            <a href="#" class="nav-item active">AI GENERATOR 🤖</a>
+            <a href="#" class="nav-item">OUTLET -50%</a>
         </div>
     </nav>
 
+    <!-- Container -->
     <div class="container">
+        <!-- Breadcrumb -->
         <div class="breadcrumb">
-            <a href="#">Accueil</a> / <a href="#">AI Tools</a> / Générateur de fiches produit
+            <a href="#">🏠 Accueil</a> / 
+            <a href="#">AI Tools</a> / 
+            <strong>Générateur de fiches produit IA</strong>
         </div>
 
-        <div class="page-title">
-            <h1>🚀 Générateur IA de Fiches Produit</h1>
-            <p>Créez des fiches produit optimisées en quelques secondes avec l'intelligence artificielle</p>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>🚀 Générateur IA de Fiches Produit Sportswear</h1>
+                <p>Créez des fiches produit optimisées en 15 secondes pour vos 28 marques préférées. 
+                   Export multi-format, SEO optimisé, compatible tous e-commerce.</p>
+            </div>
         </div>
 
+        <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number">27</div>
-                <div class="stat-label">Marques disponibles</div>
+                <span class="stat-icon">🏢</span>
+                <div class="stat-number">28</div>
+                <div class="stat-label">Marques Premium</div>
             </div>
             <div class="stat-card">
+                <span class="stat-icon">⚡</span>
                 <div class="stat-number">15s</div>
-                <div class="stat-label">Temps moyen / fiche</div>
+                <div class="stat-label">Génération IA</div>
             </div>
             <div class="stat-card">
+                <span class="stat-icon">📈</span>
                 <div class="stat-number">+45%</div>
-                <div class="stat-label">Conversion moyenne</div>
+                <div class="stat-label">Taux Conversion</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">5k+</div>
-                <div class="stat-label">Fiches générées</div>
+                <span class="stat-icon">🎯</span>
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Précision SEO</div>
             </div>
         </div>
-        <style>
-        .main-content {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
 
-        .sidebar {
-            background: #f9f9f9;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .sidebar h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #000;
-        }
-
-        .filter-group {
-            margin-bottom: 25px;
-        }
-
-        .filter-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .filter-group select, .filter-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            background: white;
-        }
-
-        .brand-list {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
-            background: white;
-        }
-
-        .brand-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .brand-item input {
-            margin-right: 8px;
-        }
-
-        .form-area {
-            background: white;
-            border: 1px solid #e0e0e0;
-            padding: 30px;
-        }
-
-        .form-section {
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title span {
-            background: #000;
-            color: white;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            border-radius: 50%;
-        }
-
-        .upload-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .upload-box {
-            border: 2px dashed #ddd;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #fafafa;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-box:hover {
-            border-color: #000;
-            background: #f5f5f5;
-        }
-
-        .upload-box.has-image {
-            padding: 0;
-            border: 1px solid #ddd;
-        }
-
-        .upload-icon {
-            font-size: 48px;
-            color: #ccc;
-            margin-bottom: 10px;
-        }
-
-        .upload-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .image-preview {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 12px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .sizes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .size-box {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .size-box:hover {
-            border-color: #000;
-        }
-
-        .size-box.selected {
-            background: #000;
-            color: white;
-            border-color: #000;
-        }
-
-        .colors-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .color-box {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #ddd;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .color-box:hover {
-            transform: scale(1.1);
-        }
-
-        .color-box.selected {
-            border-color: #000;
-            border-width: 3px;
-        }
-
-        .color-box.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 0 3px rgba(0,0,0,0.5);
-        }
-
-        .ai-settings {
-            background: #f0f0f0;
-            padding: 25px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-
-        .ai-settings h4 {
-            font-size: 16px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .tone-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .tone-option {
-            padding: 12px;
-            border: 1px solid #ddd;
-            background: white;
-            text-align: center;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .tone-option:hover {
-            border-color: #000;
-        }
-
-        .tone-option.selected {
-            background: #000;
-            color: white;
-            border-color: #000;
-        }
-
-        .channel-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .channel-option {
-            padding: 8px 16px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .channel-option:hover {
-            border-color: #000;
-        }
-
-        .channel-option.selected {
-            background: #000;
-            color: white;
-            border-color: #000;
-        }
-
-        .generate-section {
-            text-align: center;
-            padding: 30px;
-            background: #f5f5f5;
-            border: 1px solid #e0e0e0;
-        }
-
-        .generate-btn {
-            background: #000;
-            color: white;
-            padding: 18px 50px;
-            border: none;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .generate-btn:hover {
-            background: #333;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .generate-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-            </style>
-            <div class="main-content">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar avec TOUTES les marques -->
             <aside class="sidebar">
-                <h3>FILTRES RAPIDES</h3>
+                <h3>🎯 Filtres & Marques</h3>
                 
                 <div class="filter-group">
-                    <label>Type de produit</label>
+                    <label>📦 Type de produit</label>
                     <select id="quick-category">
                         <option value="">Tous les produits</option>
-                        <option value="chaussures">Chaussures</option>
-                        <option value="vetements">Vêtements</option>
-                        <option value="accessoires">Accessoires</option>
+                        <option value="chaussures">👟 Chaussures</option>
+                        <option value="vetements">👕 Vêtements</option>
+                        <option value="accessoires">🧢 Accessoires</option>
                     </select>
                 </div>
 
                 <div class="filter-group">
-                    <label>Marques</label>
-                    <div class="brand-list">
-                        <div class="brand-item"><input type="checkbox" id="brand-adidas"><label for="brand-adidas">Adidas</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-nike"><label for="brand-nike">Nike</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-puma"><label for="brand-puma">Puma</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-lacoste"><label for="brand-lacoste">Lacoste</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-asics"><label for="brand-asics">Asics</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-newbalance"><label for="brand-newbalance">New Balance</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-vans"><label for="brand-vans">Vans</label></div>
-                        <div class="brand-item"><input type="checkbox" id="brand-reebok"><label for="brand-reebok">Reebok</label></div>
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <label>Gamme de prix</label>
+                    <label>💰 Gamme de prix</label>
                     <select>
                         <option>Tous les prix</option>
                         <option>0€ - 50€</option>
                         <option>50€ - 100€</option>
                         <option>100€ - 200€</option>
-                        <option>200€ +</option>
+                        <option>200€ - 500€</option>
+                        <option>500€ +</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>🏷️ Toutes les marques (28)</label>
+                    <div class="brand-list">
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-adidas">
+                            <label for="brand-adidas">Adidas</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-antony">
+                            <label for="brand-antony">Antony Morato</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-armani">
+                            <label for="brand-armani">Armani EA7</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-asics">
+                            <label for="brand-asics">Asics</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-boss">
+                            <label for="brand-boss">Boss</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-calvin">
+                            <label for="brand-calvin">Calvin Klein</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-converse">
+                            <label for="brand-converse">Converse</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-crocs">
+                            <label for="brand-crocs">Crocs</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-eden">
+                            <label for="brand-eden">Eden Park</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-ellesse">
+                            <label for="brand-ellesse">Ellesse</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-fila">
+                            <label for="brand-fila">Fila</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-hugo">
+                            <label for="brand-hugo">Hugo</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-karl">
+                            <label for="brand-karl">Karl Kani</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-lacoste">
+                            <label for="brand-lacoste">Lacoste</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-mizuno">
+                            <label for="brand-mizuno">Mizuno</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-newbalance">
+                            <label for="brand-newbalance">New Balance</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-nike">
+                            <label for="brand-nike">Nike</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-puma">
+                            <label for="brand-puma">Puma</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-reebok">
+                            <label for="brand-reebok">Reebok</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-saucony">
+                            <label for="brand-saucony">Saucony</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-sergio">
+                            <label for="brand-sergio">Sergio Tacchini</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-teddy">
+                            <label for="brand-teddy">Teddy Smith</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-tnf">
+                            <label for="brand-tnf">The North Face</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-timberland">
+                            <label for="brand-timberland">Timberland</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-umbro">
+                            <label for="brand-umbro">Umbro</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-underarmour">
+                            <label for="brand-underarmour">Under Armour</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-vans">
+                            <label for="brand-vans">Vans</label>
+                        </div>
+                        <div class="brand-item">
+                            <input type="checkbox" id="brand-versace">
+                            <label for="brand-versace">Versace</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label>🎨 Collections</label>
+                    <select>
+                        <option>Toutes les collections</option>
+                        <option>Nouvelle collection</option>
+                        <option>Best sellers</option>
+                        <option>Exclusivités DM Sports</option>
+                        <option>Limited Edition</option>
+                        <option>Collaborations</option>
                     </select>
                 </div>
             </aside>
-
+            <!-- Form Area -->
             <div class="form-area">
+                <style>
+                    .form-section {
+                        padding: 35px;
+                        border-bottom: 1px solid var(--border-gray);
+                        animation: fadeIn 0.5s ease-out;
+                    }
+
+                    .form-section:last-child {
+                        border-bottom: none;
+                    }
+
+                    .section-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                        margin-bottom: 30px;
+                        padding-bottom: 20px;
+                        border-bottom: 3px solid var(--primary-red);
+                    }
+
+                    .section-number {
+                        background: var(--primary-red);
+                        color: var(--white);
+                        width: 40px;
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 18px;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+                    }
+
+                    .section-title {
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: var(--primary-black);
+                        flex: 1;
+                    }
+
+                    .upload-grid {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 20px;
+                        margin-bottom: 20px;
+                    }
+
+                    .upload-box {
+                        border: 3px dashed var(--border-gray);
+                        border-radius: 15px;
+                        padding: 60px 20px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: var(--bg-gray);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .upload-box:hover {
+                        border-color: var(--primary-red);
+                        background: rgba(255,0,0,0.02);
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    }
+
+                    .upload-box.dragover {
+                        border-color: var(--success);
+                        background: rgba(76,175,80,0.05);
+                    }
+
+                    .upload-box.has-image {
+                        padding: 0;
+                        border: 2px solid var(--success);
+                    }
+
+                    .upload-icon {
+                        font-size: 64px;
+                        margin-bottom: 15px;
+                        display: block;
+                        opacity: 0.3;
+                    }
+
+                    .upload-text {
+                        font-size: 16px;
+                        color: var(--medium-gray);
+                    }
+
+                    .upload-text strong {
+                        display: block;
+                        color: var(--primary-black);
+                        margin-bottom: 5px;
+                        font-size: 18px;
+                    }
+
+                    .image-preview {
+                        width: 100%;
+                        height: 250px;
+                        object-fit: cover;
+                        border-radius: 12px;
+                    }
+
+                    .form-grid {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 25px;
+                    }
+
+                    .form-group {
+                        display: flex;
+                        flex-direction: column;
+                        animation: fadeIn 0.5s ease-out;
+                    }
+
+                    .form-group.full-width {
+                        grid-column: 1 / -1;
+                    }
+
+                    .form-group label {
+                        font-size: 14px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        text-transform: uppercase;
+                        color: var(--dark-gray);
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
+
+                    .form-group label .required {
+                        color: var(--primary-red);
+                    }
+
+                    .form-group input,
+                    .form-group select,
+                    .form-group textarea {
+                        padding: 15px;
+                        border: 2px solid var(--border-gray);
+                        border-radius: 10px;
+                        font-size: 16px;
+                        font-family: Arial, sans-serif;
+                        transition: all 0.3s;
+                        background: var(--white);
+                    }
+
+                    .form-group input:focus,
+                    .form-group select:focus,
+                    .form-group textarea:focus {
+                        outline: none;
+                        border-color: var(--primary-red);
+                        box-shadow: 0 0 0 4px rgba(255,0,0,0.1);
+                    }
+
+                    .form-group textarea {
+                        min-height: 150px;
+                        resize: vertical;
+                    }
+
+                    .input-with-addon {
+                        display: flex;
+                        align-items: stretch;
+                    }
+
+                    .input-addon {
+                        background: var(--bg-gray);
+                        border: 2px solid var(--border-gray);
+                        border-right: none;
+                        padding: 0 15px;
+                        display: flex;
+                        align-items: center;
+                        font-weight: bold;
+                        color: var(--medium-gray);
+                        border-radius: 10px 0 0 10px;
+                    }
+
+                    .input-with-addon input {
+                        border-radius: 0 10px 10px 0;
+                        flex: 1;
+                    }
+
+                    /* Sizes and Colors */
+                    .sizes-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+                        gap: 12px;
+                        margin-bottom: 25px;
+                    }
+
+                    .size-box {
+                        border: 2px solid var(--border-gray);
+                        padding: 15px;
+                        text-align: center;
+                        cursor: pointer;
+                        border-radius: 10px;
+                        transition: all 0.3s;
+                        font-size: 16px;
+                        font-weight: 600;
+                        background: var(--white);
+                    }
+
+                    .size-box:hover {
+                        border-color: var(--primary-red);
+                        transform: translateY(-3px);
+                        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                    }
+
+                    .size-box.selected {
+                        background: var(--primary-red);
+                        color: var(--white);
+                        border-color: var(--primary-red);
+                        box-shadow: 0 5px 20px rgba(255,0,0,0.3);
+                    }
+
+                    .colors-grid {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 15px;
+                        margin-bottom: 25px;
+                    }
+
+                    .color-box {
+                        width: 50px;
+                        height: 50px;
+                        border: 3px solid var(--border-gray);
+                        border-radius: 50%;
+                        cursor: pointer;
+                        position: relative;
+                        transition: all 0.3s;
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    }
+
+                    .color-box:hover {
+                        transform: scale(1.2);
+                        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                    }
+
+                    .color-box.selected {
+                        border-color: var(--primary-red);
+                        border-width: 4px;
+                        transform: scale(1.1);
+                    }
+
+                    .color-box.selected::after {
+                        content: '✓';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: var(--white);
+                        font-weight: bold;
+                        font-size: 20px;
+                        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+                    }
+
+                    .color-name {
+                        position: absolute;
+                        bottom: -25px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: 12px;
+                        white-space: nowrap;
+                        color: var(--medium-gray);
+                    }
+
+                    /* AI Settings */
+                    .ai-settings {
+                        background: linear-gradient(135deg, var(--bg-gray) 0%, rgba(255,0,0,0.03) 100%);
+                        padding: 30px;
+                        border-radius: 15px;
+                        border: 2px solid var(--border-gray);
+                        margin-bottom: 25px;
+                    }
+
+                    .ai-settings h4 {
+                        font-size: 18px;
+                        margin-bottom: 20px;
+                        text-transform: uppercase;
+                        color: var(--primary-black);
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .tone-options {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 15px;
+                        margin-bottom: 30px;
+                    }
+
+                    .tone-option {
+                        padding: 18px;
+                        border: 2px solid var(--border-gray);
+                        background: var(--white);
+                        text-align: center;
+                        cursor: pointer;
+                        border-radius: 10px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        transition: all 0.3s;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .tone-option::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 0;
+                        height: 100%;
+                        background: var(--primary-red);
+                        transition: width 0.3s;
+                        z-index: 0;
+                    }
+
+                    .tone-option:hover::before {
+                        width: 100%;
+                    }
+
+                    .tone-option:hover {
+                        color: var(--white);
+                        border-color: var(--primary-red);
+                    }
+
+                    .tone-option span {
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    .tone-option.selected {
+                        background: var(--primary-red);
+                        color: var(--white);
+                        border-color: var(--primary-red);
+                        box-shadow: 0 5px 20px rgba(255,0,0,0.3);
+                    }
+
+                    .channel-options {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 12px;
+                    }
+
+                    .channel-option {
+                        padding: 12px 24px;
+                        border: 2px solid var(--border-gray);
+                        background: var(--white);
+                        cursor: pointer;
+                        border-radius: 25px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        transition: all 0.3s;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
+
+                    .channel-option:hover {
+                        border-color: var(--primary-red);
+                        transform: translateY(-2px);
+                        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                    }
+
+                    .channel-option.selected {
+                        background: var(--primary-red);
+                        color: var(--white);
+                        border-color: var(--primary-red);
+                        box-shadow: 0 5px 20px rgba(255,0,0,0.3);
+                    }
+
+                    /* Generate Button */
+                    .generate-section {
+                        text-align: center;
+                        padding: 50px;
+                        background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+                        border-radius: 20px;
+                        margin: 30px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .generate-section::before {
+                        content: '';
+                        position: absolute;
+                        top: -50%;
+                        left: -50%;
+                        width: 200%;
+                        height: 200%;
+                        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                        animation: rotate 15s linear infinite;
+                    }
+
+                    .generate-btn {
+                        background: var(--primary-red);
+                        color: var(--white);
+                        padding: 25px 60px;
+                        border: none;
+                        font-size: 20px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        border-radius: 50px;
+                        transition: all 0.3s;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 15px;
+                        position: relative;
+                        z-index: 1;
+                        box-shadow: 0 10px 30px rgba(255,0,0,0.3);
+                        letter-spacing: 1px;
+                    }
+
+                    .generate-btn:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 20px 40px rgba(255,0,0,0.4);
+                        background: var(--primary-black);
+                    }
+
+                    .generate-btn:active {
+                        transform: translateY(-2px);
+                    }
+
+                    .generate-btn:disabled {
+                        background: var(--medium-gray);
+                        cursor: not-allowed;
+                        transform: none;
+                        box-shadow: none;
+                    }
+
+                    .loading {
+                        display: inline-block;
+                        width: 20px;
+                        height: 20px;
+                        border: 3px solid rgba(255,255,255,0.3);
+                        border-radius: 50%;
+                        border-top-color: var(--white);
+                        animation: spin 1s ease-in-out infinite;
+                    }
+
+                    .generate-info {
+                        color: var(--white);
+                        margin-top: 20px;
+                        font-size: 16px;
+                        opacity: 0.9;
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    input[type="file"] {
+                        display: none;
+                    }
+                </style>
+
+                <!-- Upload Section -->
                 <div class="form-section">
-                    <h2 class="section-title">
-                        <span>1</span>
-                        Upload des images produit
-                    </h2>
+                    <div class="section-header">
+                        <div class="section-number">1</div>
+                        <h2 class="section-title">📸 Upload des visuels produit</h2>
+                    </div>
+                    
                     <div class="upload-grid">
                         <div class="upload-box" id="upload-main">
                             <input type="file" id="file-main" accept="image/*">
-                            <div class="upload-icon">📸</div>
+                            <span class="upload-icon">📷</span>
                             <div class="upload-text">
-                                <strong>Image principale</strong><br>
-                                Glissez ou cliquez pour ajouter
+                                <strong>Image principale</strong>
+                                Glissez ou cliquez<br>
+                                JPG, PNG • Max 10MB
                             </div>
                         </div>
-                        <div class="upload-box" id="upload-secondary">
-                            <input type="file" id="file-secondary" accept="image/*" multiple>
-                            <div class="upload-icon">🖼️</div>
+                        <div class="upload-box" id="upload-front">
+                            <input type="file" id="file-front" accept="image/*">
+                            <span class="upload-icon">👕</span>
                             <div class="upload-text">
-                                <strong>Images secondaires</strong><br>
-                                Jusqu'à 5 images supplémentaires
+                                <strong>Vue de face</strong>
+                                Format portrait<br>
+                                Fond blanc recommandé
+                            </div>
+                        </div>
+                        <div class="upload-box" id="upload-detail">
+                            <input type="file" id="file-detail" accept="image/*">
+                            <span class="upload-icon">🔍</span>
+                            <div class="upload-text">
+                                <strong>Détails / Logo</strong>
+                                Zoom sur finitions<br>
+                                Haute résolution
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-section">
-                    <h2 class="section-title">
-                        <span>2</span>
-                        Informations produit
-                    </h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Nom du produit*</label>
-                            <input type="text" id="product-name" placeholder="Ex: Air Max 270" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Marque*</label>
-                            <select id="brand" required>
-                                <option value="">Sélectionner une marque</option>
-                                <option value="adidas">Adidas</option>
-                                <option value="nike">Nike</option>
-                                <option value="puma">Puma</option>
-                                <option value="lacoste">Lacoste</option>
-                                <option value="new-balance">New Balance</option>
-                                <option value="asics">Asics</option>
-                                <option value="reebok">Reebok</option>
-                                <option value="vans">Vans</option>
-                                <option value="under-armour">Under Armour</option>
-                                <option value="the-north-face">The North Face</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Catégorie*</label>
-                            <select id="category" required>
-                                <option value="">Sélectionner</option>
-                                <option value="homme-chaussures">Chaussures Homme</option>
-                                <option value="homme-vetements">Vêtements Homme</option>
-                                <option value="femme-chaussures">Chaussures Femme</option>
-                                <option value="femme-vetements">Vêtements Femme</option>
-                                <option value="enfant-chaussures">Chaussures Enfant</option>
-                                <option value="enfant-vetements">Vêtements Enfant</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Prix (€)*</label>
-                            <input type="number" id="price" placeholder="119.99" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Prix barré (€)</label>
-                            <input type="number" id="old-price" placeholder="149.99" step="0.01">
-                        </div>
-                        <div class="form-group">
-                            <label>Référence / SKU*</label>
-                            <input type="text" id="sku" placeholder="AIR-270-BLK-001" required>
-                        </div>
-                        <div class="form-group full-width">
-                            <label>Description courte</label>
-                            <textarea id="short-desc" placeholder="Résumé en 2-3 lignes du produit..."></textarea>
-                        </div>
-                        <div class="form-group full-width">
-                            <label>Caractéristiques principales</label>
-                            <textarea id="features" placeholder="• Technologie Air Max 270&#10;• Tige en mesh respirant&#10;• Semelle en caoutchouc&#10;• Logo réfléchissant"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h2 class="section-title">
-                        <span>3</span>
-                        Tailles et couleurs
-                    </h2>
                     
-                    <label style="margin-bottom: 15px; display: block; font-weight: bold; text-transform: uppercase;">Tailles disponibles</label>
-                    <div class="sizes-grid" id="sizes-container">
-                        <!-- Généré dynamiquement -->
-                    </div>
-
-                    <label style="margin: 20px 0 15px; display: block; font-weight: bold; text-transform: uppercase;">Couleurs disponibles</label>
-                    <div class="colors-grid">
-                        <div class="color-box selected" style="background: #000000" data-color="Noir"></div>
-                        <div class="color-box" style="background: #FFFFFF; border-color: #ddd;" data-color="Blanc"></div>
-                        <div class="color-box" style="background: #808080" data-color="Gris"></div>
-                        <div class="color-box" style="background: #000080" data-color="Marine"></div>
-                        <div class="color-box" style="background: #FF0000" data-color="Rouge"></div>
-                        <div class="color-box" style="background: #0000FF" data-color="Bleu"></div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h2 class="section-title">
-                        <span>4</span>
-                        Paramètres IA
-                    </h2>
-                    
-                    <div class="ai-settings">
-                        <h4>Ton de voix</h4>
-                        <div class="tone-options">
-                            <div class="tone-option selected" data-tone="sportif">Sportif</div>
-                            <div class="tone-option" data-tone="streetwear">Streetwear</div>
-                            <div class="tone-option" data-tone="premium">Premium</div>
-                            <div class="tone-option" data-tone="technique">Technique</div>
-                            <div class="tone-option" data-tone="jeune">Jeune</div>
-                            <div class="tone-option" data-tone="classique">Classique</div>
-                        </div>
-
-                        <h4 style="margin-top: 20px;">Canaux de distribution</h4>
-                        <div class="channel-options">
-                            <div class="channel-option selected" data-channel="website">Site Web</div>
-                            <div class="channel-option" data-channel="marketplace">Marketplace</div>
-                            <div class="channel-option" data-channel="amazon">Amazon</div>
-                            <div class="channel-option" data-channel="instagram">Instagram</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="generate-section">
-                    <button class="generate-btn" id="generate-btn">
-                        ⚡ GÉNÉRER LA FICHE PRODUIT AVEC L'IA
-                    </button>
-                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
-                        La génération prend environ 15 secondes
+                    <p style="text-align: center; color: var(--medium-gray); margin-top: 15px;">
+                        💡 <strong>Astuce :</strong> Des images de qualité = Des fiches produit qui convertissent !
                     </p>
                 </div>
-            </div>
-            </div>
+
+                <!-- Product Info Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-number">2</div>
+                        <h2 class="section-title">📝 Informations produit</h2>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>
+                                Nom du produit
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="product-name" placeholder="Ex: Air Max 270 React" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                Marque
+                                <span class="required">*</span>
+                            </label>
+                            <select id="brand" required>
+                                <option value="">Sélectionner une marque</option>
+                                <optgroup label="Sportswear Premium">
+                                    <option value="nike">Nike</option>
+                                    <option value="adidas">Adidas</option>
+                                    <option value="puma">Puma</option>
+                                    <option value="new-balance">New Balance</option>
+                                    <option value="asics">Asics</option>
+                                    <option value="reebok">Reebok</option>
+                                    <option value="under-armour">Under Armour</option>
+                                    <option value="mizuno">Mizuno</option>
+                                    <option value="saucony">Saucony</option>
+                                </optgroup>
+                                <optgroup label="Fashion Sport">
+                                    <option value="lacoste">Lacoste</option>
+                                    <option value="hugo">Hugo</option>
+                                    <option value="boss">Boss</option>
+                                    <option value="calvin-klein">Calvin Klein</option>
+                                    <option value="armani-ea7">Armani EA7</option>
+                                    <option value="versace">Versace</option>
+                                    <option value="karl-kani">Karl Kani</option>
+                                </optgroup>
+                                <optgroup label="Streetwear">
+                                    <option value="vans">Vans</option>
+                                    <option value="converse">Converse</option>
+                                    <option value="fila">Fila</option>
+                                    <option value="ellesse">Ellesse</option>
+                                    <option value="umbro">Umbro</option>
+                                    <option value="sergio-tacchini">Sergio Tacchini</option>
+                                </optgroup>
+                                <optgroup label="Outdoor">
+                                    <option value="the-north-face">The North Face</option>
+                                    <option value="timberland">Timberland</option>
+                                    <option value="crocs">Crocs</option>
+                                </optgroup>
+                                <optgroup label="Fashion">
+                                    <option value="antony-morato">Antony Morato</option>
+                                    <option value="eden-park">Eden Park</option>
+                                    <option value="teddy-smith">Teddy Smith</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                Catégorie
+                                <span class="required">*</span>
+                            </label>
+                            <select id="category" required>
+                                <option value="">Sélectionner une catégorie</option>
+                                <optgroup label="HOMME">
+                                    <option value="homme-chaussures">Chaussures Homme</option>
+                                    <option value="homme-vetements">Vêtements Homme</option>
+                                    <option value="homme-accessoires">Accessoires Homme</option>
+                                </optgroup>
+                                <optgroup label="FEMME">
+                                    <option value="femme-chaussures">Chaussures Femme</option>
+                                    <option value="femme-vetements">Vêtements Femme</option>
+                                    <option value="femme-accessoires">Accessoires Femme</option>
+                                </optgroup>
+                                <optgroup label="ENFANT">
+                                    <option value="enfant-chaussures">Chaussures Enfant</option>
+                                    <option value="enfant-vetements">Vêtements Enfant</option>
+                                    <option value="enfant-accessoires">Accessoires Enfant</option>
+                                </optgroup>
+                                <optgroup label="BÉBÉ">
+                                    <option value="bebe-chaussures">Chaussures Bébé</option>
+                                    <option value="bebe-vetements">Vêtements Bébé</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Sous-catégorie</label>
+                            <select id="subcategory">
+                                <option value="">Sélectionner (optionnel)</option>
+                                <optgroup label="Types de chaussures">
+                                    <option value="running">Running / Course</option>
+                                    <option value="basketball">Basketball</option>
+                                    <option value="football">Football</option>
+                                    <option value="training">Training / Fitness</option>
+                                    <option value="lifestyle">Lifestyle / Casual</option>
+                                    <option value="tennis">Tennis</option>
+                                    <option value="skateboard">Skateboard</option>
+                                </optgroup>
+                                <optgroup label="Vêtements">
+                                    <option value="manteaux-doudounes">Manteaux / Doudounes</option>
+                                    <option value="survetements">Survêtements</option>
+                                    <option value="sweats">Sweats / Pulls / Gilets</option>
+                                    <option value="chemises">Chemises</option>
+                                    <option value="polos">Polos</option>
+                                    <option value="tshirts">T-Shirts</option>
+                                    <option value="pantalons">Pantalons</option>
+                                    <option value="shorts">Shorts / Bermudas</option>
+                                    <option value="shorts-bain">Shorts de bain</option>
+                                    <option value="sous-vetements">Sous-vêtements</option>
+                                    <option value="chaussettes">Chaussettes</option>
+                                    <option value="robes">Robes</option>
+                                    <option value="jupes">Jupes</option>
+                                    <option value="leggings">Leggings</option>
+                                </optgroup>
+                                <optgroup label="Accessoires">
+                                    <option value="sacs">Sacs et sacoches</option>
+                                    <option value="portefeuilles">Portefeuilles</option>
+                                    <option value="casquettes">Casquettes et Bobs</option>
+                                    <option value="bonnets">Bonnets</option>
+                                    <option value="echarpes">Écharpes</option>
+                                    <option value="gants">Gants</option>
+                                    <option value="ceintures">Ceintures</option>
+                                    <option value="montres">Montres</option>
+                                    <option value="lunettes">Lunettes</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                Prix de vente (€)
+                                <span class="required">*</span>
+                            </label>
+                            <div class="input-with-addon">
+                                <span class="input-addon">€</span>
+                                <input type="number" id="price" placeholder="119.99" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Prix barré (€)</label>
+                            <div class="input-with-addon">
+                                <span class="input-addon">€</span>
+                                <input type="number" id="old-price" placeholder="149.99" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                Référence / SKU
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="sku" placeholder="AIR-MAX-270-BLK-001" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Code EAN / UPC</label>
+                            <input type="text" id="ean" placeholder="3700000000000">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Description courte (accroche)</label>
+                            <textarea id="short-desc" placeholder="Résumé percutant en 2-3 lignes qui donne envie d'acheter..."></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Caractéristiques techniques</label>
+                            <textarea id="features" placeholder="• Technologie Air Max 270 pour un amorti maximal&#10;• Tige en mesh respirant avec renforts TPU&#10;• Semelle extérieure en caoutchouc avec motif Waffle&#10;• Col rembourré pour un confort optimal&#10;• Logo réfléchissant pour une visibilité accrue"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Matière principale</label>
+                            <select id="material">
+                                <option value="">Sélectionner</option>
+                                <option value="cuir">Cuir véritable</option>
+                                <option value="synthetique">Synthétique</option>
+                                <option value="mesh">Mesh respirant</option>
+                                <option value="toile">Toile</option>
+                                <option value="coton">100% Coton</option>
+                                <option value="polyester">Polyester</option>
+                                <option value="nylon">Nylon</option>
+                                <option value="laine">Laine</option>
+                                <option value="mix">Mix matières</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Genre</label>
+                            <select id="gender">
+                                <option value="">Sélectionner</option>
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
+                                <option value="unisexe">Unisexe</option>
+                                <option value="garcon">Garçon</option>
+                                <option value="fille">Fille</option>
+                                <option value="bebe">Bébé</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+PARTIE 4/5 - TAILLES, COULEURS ET PARAMÈTRES IA
+html                <!-- Variations Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-number">3</div>
+                        <h2 class="section-title">📏 Tailles et couleurs disponibles</h2>
+                    </div>
+                    
+                    <label style="margin-bottom: 20px; display: block; font-weight: bold; text-transform: uppercase; font-size: 16px;">
+                        ✅ Sélectionnez les tailles disponibles
+                    </label>
+                    <div class="sizes-grid" id="sizes-container">
+                        <!-- Généré dynamiquement selon la catégorie -->
+                    </div>
+
+                    <label style="margin: 30px 0 20px; display: block; font-weight: bold; text-transform: uppercase; font-size: 16px;">
+                        🎨 Sélectionnez les couleurs disponibles
+                    </label>
+                    <div class="colors-grid">
+                        <div class="color-box selected" style="background: #000000" data-color="Noir" title="Noir">
+                            <span class="color-name">Noir</span>
+                        </div>
+                        <div class="color-box" style="background: #FFFFFF; border-color: #ddd;" data-color="Blanc" title="Blanc">
+                            <span class="color-name">Blanc</span>
+                        </div>
+                        <div class="color-box" style="background: #808080" data-color="Gris" title="Gris">
+                            <span class="color-name">Gris</span>
+                        </div>
+                        <div class="color-box" style="background: #C0C0C0" data-color="Argent" title="Argent">
+                            <span class="color-name">Argent</span>
+                        </div>
+                        <div class="color-box" style="background: #000080" data-color="Marine" title="Marine">
+                            <span class="color-name">Marine</span>
+                        </div>
+                        <div class="color-box" style="background: #0000FF" data-color="Bleu" title="Bleu">
+                            <span class="color-name">Bleu</span>
+                        </div>
+                        <div class="color-box" style="background: #87CEEB" data-color="Ciel" title="Bleu Ciel">
+                            <span class="color-name">Ciel</span>
+                        </div>
+                        <div class="color-box" style="background: #FF0000" data-color="Rouge" title="Rouge">
+                            <span class="color-name">Rouge</span>
+                        </div>
+                        <div class="color-box" style="background: #8B0000" data-color="Bordeaux" title="Bordeaux">
+                            <span class="color-name">Bordeaux</span>
+                        </div>
+                        <div class="color-box" style="background: #FFA500" data-color="Orange" title="Orange">
+                            <span class="color-name">Orange</span>
+                        </div>
+                        <div class="color-box" style="background: #FFFF00; border-color: #ddd;" data-color="Jaune" title="Jaune">
+                            <span class="color-name">Jaune</span>
+                        </div>
+                        <div class="color-box" style="background: #FFD700" data-color="Or" title="Or">
+                            <span class="color-name">Or</span>
+                        </div>
+                        <div class="color-box" style="background: #008000" data-color="Vert" title="Vert">
+                            <span class="color-name">Vert</span>
+                        </div>
+                        <div class="color-box" style="background: #90EE90" data-color="Vert Clair" title="Vert Clair">
+                            <span class="color-name">Vert Clair</span>
+                        </div>
+                        <div class="color-box" style="background: #006400" data-color="Kaki" title="Kaki">
+                            <span class="color-name">Kaki</span>
+                        </div>
+                        <div class="color-box" style="background: #FFC0CB" data-color="Rose" title="Rose">
+                            <span class="color-name">Rose</span>
+                        </div>
+                        <div class="color-box" style="background: #FF1493" data-color="Fuchsia" title="Fuchsia">
+                            <span class="color-name">Fuchsia</span>
+                        </div>
+                        <div class="color-box" style="background: #800080" data-color="Violet" title="Violet">
+                            <span class="color-name">Violet</span>
+                        </div>
+                        <div class="color-box" style="background: #8B4513" data-color="Marron" title="Marron">
+                            <span class="color-name">Marron</span>
+                        </div>
+                        <div class="color-box" style="background: #F5DEB3" data-color="Beige" title="Beige">
+                            <span class="color-name">Beige</span>
+                        </div>
+                        <div class="color-box" style="background: linear-gradient(45deg, #FF0000, #0000FF, #FFFF00, #00FF00)" data-color="Multicolore" title="Multicolore">
+                            <span class="color-name">Multi</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 40px; padding: 20px; background: var(--bg-gray); border-radius: 10px;">
+                        <h4 style="margin-bottom: 15px;">📦 Informations complémentaires</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Poids du produit (g)</label>
+                                <input type="number" id="weight" placeholder="350">
+                            </div>
+                            <div class="form-group">
+                                <label>Pays de fabrication</label>
+                                <select id="country">
+                                   <option value="">Sélectionner</option>
+                                   <option value="vietnam">Vietnam</option>
+                                   <option value="chine">Chine</option>
+                                   <option value="indonesie">Indonésie</option>
+                                   <option value="inde">Inde</option>
+                                   <option value="portugal">Portugal</option>
+                                   <option value="italie">Italie</option>
+                                   <option value="france">France</option>
+                                   <option value="turquie">Turquie</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- AI Settings Section -->
+               <div class="form-section">
+                   <div class="section-header">
+                       <div class="section-number">4</div>
+                       <h2 class="section-title">🤖 Paramètres de génération IA</h2>
+                   </div>
+                   
+                   <div class="ai-settings">
+                       <h4>🎯 Ton de voix</h4>
+                       <div class="tone-options">
+                           <div class="tone-option selected" data-tone="sportif">
+                               <span>⚡ Sportif</span>
+                           </div>
+                           <div class="tone-option" data-tone="streetwear">
+                               <span>🔥 Streetwear</span>
+                           </div>
+                           <div class="tone-option" data-tone="premium">
+                               <span>💎 Premium</span>
+                           </div>
+                           <div class="tone-option" data-tone="technique">
+                               <span>🔬 Technique</span>
+                           </div>
+                           <div class="tone-option" data-tone="jeune">
+                               <span>🎮 Jeune</span>
+                           </div>
+                           <div class="tone-option" data-tone="classique">
+                               <span>👔 Classique</span>
+                           </div>
+                       </div>
+
+                       <h4 style="margin-top: 30px;">📱 Canaux de distribution</h4>
+                       <div class="channel-options">
+                           <div class="channel-option selected" data-channel="website">
+                               <span>🌐</span> Site Web
+                           </div>
+                           <div class="channel-option" data-channel="marketplace">
+                               <span>🛒</span> Marketplace
+                           </div>
+                           <div class="channel-option" data-channel="amazon">
+                               <span>📦</span> Amazon
+                           </div>
+                           <div class="channel-option" data-channel="instagram">
+                               <span>📸</span> Instagram
+                           </div>
+                           <div class="channel-option" data-channel="facebook">
+                               <span>👥</span> Facebook Shop
+                           </div>
+                           <div class="channel-option" data-channel="google">
+                               <span>🔍</span> Google Shopping
+                           </div>
+                           <div class="channel-option" data-channel="tiktok">
+                               <span>🎵</span> TikTok Shop
+                           </div>
+                       </div>
+
+                       <h4 style="margin-top: 30px;">🌍 Langues de génération</h4>
+                       <div class="channel-options">
+                           <div class="channel-option selected" data-lang="fr">
+                               <span>🇫🇷</span> Français
+                           </div>
+                           <div class="channel-option" data-lang="en">
+                               <span>🇬🇧</span> Anglais
+                           </div>
+                           <div class="channel-option" data-lang="es">
+                               <span>🇪🇸</span> Espagnol
+                           </div>
+                           <div class="channel-option" data-lang="de">
+                               <span>🇩🇪</span> Allemand
+                           </div>
+                           <div class="channel-option" data-lang="it">
+                               <span>🇮🇹</span> Italien
+                           </div>
+                       </div>
+
+                       <h4 style="margin-top: 30px;">⚙️ Options avancées</h4>
+                       <div class="form-grid" style="margin-top: 20px;">
+                           <div class="form-group">
+                               <label>Longueur description</label>
+                               <select id="desc-length">
+                                   <option value="court">Court (50-100 mots)</option>
+                                   <option value="moyen" selected>Moyen (100-200 mots)</option>
+                                   <option value="long">Long (200+ mots)</option>
+                               </select>
+                           </div>
+                           <div class="form-group">
+                               <label>Focus SEO</label>
+                               <select id="seo-focus">
+                                   <option value="conversion" selected>Conversion</option>
+                                   <option value="referencement">Référencement</option>
+                                   <option value="mixte">Mixte</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Generate Button -->
+               <div class="generate-section">
+                   <button class="generate-btn" id="generate-btn">
+                       ⚡ GÉNÉRER LA FICHE PRODUIT AVEC L'IA
+                   </button>
+                   <p class="generate-info">
+                       Génération en 15 secondes • Optimisé SEO • Multi-format
+                   </p>
+               </div>
+           </div>
+        </div>
+        <!-- Results Section -->
+        <div class="results-section" id="results-section" style="display: none; margin-top: 50px;">
             <style>
-        .results-section {
-            background: white;
-            border: 1px solid #e0e0e0;
-            margin-top: 40px;
-            display: none;
-        }
+                .results-section {
+                    background: var(--white);
+                    border-radius: 20px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+                    overflow: hidden;
+                    animation: fadeIn 0.8s ease-out;
+                }
 
-        .results-header {
-            background: #000;
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+                .results-header {
+                    background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+                    color: var(--white);
+                    padding: 30px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
 
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #000;
-            color: white;
-            padding: 15px 25px;
-            font-size: 14px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
+                .results-tabs {
+                    display: flex;
+                    background: var(--bg-gray);
+                    border-bottom: 2px solid var(--border-gray);
+                    overflow-x: auto;
+                }
 
-        .toast.show {
-            display: flex;
-            animation: slideIn 0.3s ease-out;
-        }
+                .result-tab {
+                    padding: 20px 30px;
+                    background: none;
+                    border: none;
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    transition: all 0.3s;
+                    border-bottom: 4px solid transparent;
+                    white-space: nowrap;
+                    color: var(--medium-gray);
+                }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
+                .result-tab:hover {
+                    background: var(--white);
+                    color: var(--primary-black);
+                }
 
-        .footer {
-            background: #000;
-            color: white;
-            padding: 40px 0;
-            margin-top: 60px;
-            text-align: center;
-        }
+                .result-tab.active {
+                    background: var(--white);
+                    border-bottom-color: var(--primary-red);
+                    color: var(--primary-red);
+                }
 
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                display: none;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+                .tab-content {
+                    padding: 40px;
+                    display: none;
+                    animation: fadeIn 0.5s ease-out;
+                }
 
-        @media (max-width: 768px) {
-            .header-main {
-                flex-wrap: wrap;
-            }
-            .search-bar {
-                order: 3;
-                flex: 100%;
-                margin: 10px 0 0 0;
-            }
-            .tone-options {
-                grid-template-columns: 1fr;
-            }
-        }
-        </style>
+                .tab-content.active {
+                    display: block;
+                }
 
-        <div class="results-section" id="results-section">
+                .preview-container {
+                    display: grid;
+                    grid-template-columns: 500px 1fr;
+                    gap: 40px;
+                }
+
+                .preview-images {
+                    position: sticky;
+                    top: 20px;
+                }
+
+                .main-preview-image {
+                    width: 100%;
+                    height: 600px;
+                    object-fit: cover;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    margin-bottom: 20px;
+                }
+
+                .preview-thumbs {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 10px;
+                }
+
+                .preview-thumb {
+                    width: 100%;
+                    height: 110px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    border: 2px solid transparent;
+                    transition: all 0.3s;
+                }
+
+                .preview-thumb:hover,
+                .preview-thumb.active {
+                    border-color: var(--primary-red);
+                    transform: scale(1.05);
+                }
+
+                .preview-content h2 {
+                    font-size: 32px;
+                    margin-bottom: 15px;
+                    color: var(--primary-black);
+                }
+
+                .preview-brand {
+                    font-size: 18px;
+                    color: var(--medium-gray);
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    margin-bottom: 25px;
+                }
+
+                .preview-price {
+                    font-size: 36px;
+                    font-weight: bold;
+                    color: var(--primary-red);
+                    margin-bottom: 30px;
+                }
+
+                .old-price {
+                    text-decoration: line-through;
+                    color: var(--light-gray);
+                    font-size: 24px;
+                    margin-right: 15px;
+                }
+
+                .discount-badge {
+                    background: var(--primary-red);
+                    color: var(--white);
+                    padding: 5px 15px;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    display: inline-block;
+                    margin-left: 15px;
+                }
+
+                .export-section {
+                    background: var(--bg-gray);
+                    padding: 40px;
+                    margin-top: 50px;
+                    border-radius: 15px;
+                }
+
+                .export-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 20px;
+                    margin-top: 30px;
+                }
+
+                .export-option {
+                    background: var(--white);
+                    border: 2px solid var(--border-gray);
+                    padding: 30px;
+                    text-align: center;
+                    border-radius: 15px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                }
+
+                .export-option:hover {
+                    border-color: var(--primary-red);
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                }
+
+                .export-icon {
+                    font-size: 48px;
+                    margin-bottom: 15px;
+                    display: block;
+                }
+
+                .toast {
+                    position: fixed;
+                    bottom: 30px;
+                    right: 30px;
+                    background: var(--primary-black);
+                    color: var(--white);
+                    padding: 20px 30px;
+                    font-size: 16px;
+                    display: none;
+                    align-items: center;
+                    gap: 15px;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    z-index: 2000;
+                }
+
+                .toast.show {
+                    display: flex;
+                    animation: slideIn 0.3s ease-out;
+                }
+
+                .toast.success {
+                    background: var(--success);
+                }
+
+                .toast.error {
+                    background: var(--primary-red);
+                }
+            </style>
+
             <div class="results-header">
-                <h2>✨ Fiche produit générée avec succès</h2>
-                <button class="generate-btn" style="padding: 10px 25px; font-size: 14px;">
-                    Régénérer
+                <h2>✨ Fiche produit générée avec succès !</h2>
+                <button class="generate-btn" style="padding: 15px 30px; font-size: 16px;" onclick="regenerate()">
+                    🔄 Régénérer
                 </button>
             </div>
-            <div style="padding: 30px;">
-                <h3>Aperçu de la fiche produit</h3>
-                <div id="preview-content" style="margin-top: 20px; padding: 20px; background: #f5f5f5; border: 1px solid #ddd;">
-                    <!-- Le contenu sera généré ici -->
+
+            <div class="results-tabs">
+                <button class="result-tab active" data-tab="preview">👁️ Aperçu</button>
+                <button class="result-tab" data-tab="web">🌐 Site Web</button>
+                <button class="result-tab" data-tab="marketplace">🛒 Marketplace</button>
+                <button class="result-tab" data-tab="social">📱 Réseaux Sociaux</button>
+                <button class="result-tab" data-tab="seo">🔍 SEO</button>
+                <button class="result-tab" data-tab="analytics">📊 Analytics</button>
+            </div>
+
+            <div class="tab-content active" id="preview-tab">
+                <div class="preview-container">
+                    <div class="preview-images">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" alt="Product" class="main-preview-image" id="main-preview">
+                        <div class="preview-thumbs">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=150" class="preview-thumb active">
+                            <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=150" class="preview-thumb">
+                            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=150" class="preview-thumb">
+                            <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=150" class="preview-thumb">
+                        </div>
+                    </div>
+                    
+                    <div class="preview-content">
+                        <h2 id="preview-title">Nike Air Max 270 React - Innovation et Performance</h2>
+                        <div class="preview-brand" id="preview-brand">NIKE SPORTSWEAR</div>
+                        <div class="preview-price" id="preview-price">
+                            <span class="old-price">149,99 €</span>
+                            119,99 €
+                            <span class="discount-badge">-20%</span>
+                        </div>
+                        
+                        <div id="preview-description" style="font-size: 16px; line-height: 1.8; margin-bottom: 30px;">
+                            <!-- Contenu généré -->
+                        </div>
+
+                        <div id="preview-features" style="margin-bottom: 30px;">
+                            <!-- Features générées -->
+                        </div>
+
+                        <div id="preview-sizes" style="margin-bottom: 30px;">
+                            <!-- Tailles générées -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="web-tab">
+                <div id="web-content" style="background: white; padding: 30px; border: 1px solid var(--border-gray); border-radius: 10px;">
+                    <!-- Contenu web généré -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="marketplace-tab">
+                <div id="marketplace-content" style="background: white; padding: 30px; border: 1px solid var(--border-gray); border-radius: 10px;">
+                    <!-- Contenu marketplace généré -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="social-tab">
+                <div id="social-content">
+                    <!-- Posts sociaux générés -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="seo-tab">
+                <div id="seo-content" style="background: white; padding: 30px; border: 1px solid var(--border-gray); border-radius: 10px;">
+                    <!-- SEO généré -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="analytics-tab">
+                <div style="text-align: center; padding: 50px;">
+                    <h3>📊 Prédictions de performance</h3>
+                    <p>Basé sur l'analyse IA de produits similaires</p>
+                    <!-- Analytics -->
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h3 style="font-size: 24px; margin-bottom: 30px; text-align: center;">
+                    📤 Exporter votre fiche produit
+                </h3>
+                <div class="export-grid">
+                    <div class="export-option" onclick="exportFormat('json')">
+                        <span class="export-icon">📄</span>
+                        <strong>JSON</strong>
+                        <p>Format API</p>
+                    </div>
+                    <div class="export-option" onclick="exportFormat('csv')">
+                        <span class="export-icon">📊</span>
+                        <strong>CSV</strong>
+                        <p>Excel / Sheets</p>
+                    </div>
+                    <div class="export-option" onclick="exportFormat('shopify')">
+                        <span class="export-icon">🛍️</span>
+                        <strong>Shopify</strong>
+                        <p>Import direct</p>
+                    </div>
+                    <div class="export-option" onclick="exportFormat('woo')">
+                        <span class="export-icon">🛒</span>
+                        <strong>WooCommerce</strong>
+                        <p>WordPress</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Toast Notification -->
     <div class="toast" id="toast">
-        <span id="toast-message">Fiche produit générée avec succès !</span>
+        <span id="toast-icon">✅</span>
+        <span id="toast-message">Message</span>
     </div>
 
-    <footer class="footer">
-        <p>© 2024 DM'S SPORTS AI PRO - Tous droits réservés</p>
+    <!-- Footer -->
+    <footer style="background: var(--primary-black); color: var(--white); margin-top: 100px;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 60px 20px;">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h4 style="font-size: 18px; margin-bottom: 20px; text-transform: uppercase;">
+                        🏪 DM SPORTS LYON
+                    </h4>
+                    <p style="margin-bottom: 10px;">11 Rue de la République</p>
+                    <p style="margin-bottom: 10px;">69001 Lyon</p>
+                    <p style="margin-bottom: 10px;">📞 04 37 43 08 90</p>
+                    <p style="margin-bottom: 10px;">📧 contact@dmsports.fr</p>
+                    <p style="margin-top: 20px; font-weight: bold;">Horaires :</p>
+                    <p>Lun-Sam : 10h30-19h30</p>
+                    <p>Dimanche : Fermé</p>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 18px; margin-bottom: 20px; text-transform: uppercase;">
+                        🛍️ Services
+                    </h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Livraison Express 24h</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Click & Collect</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Retours gratuits 30j</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Programme fidélité</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Carte cadeau</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Service après-vente</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 18px; margin-bottom: 20px; text-transform: uppercase;">
+                        🤖 AI Tools
+                    </h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Générateur de fiches</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Optimisation SEO</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">API Documentation</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Intégrations</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Tarifs Pro</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #ccc; text-decoration: none;">Support technique</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 18px; margin-bottom: 20px; text-transform: uppercase;">
+                        📱 Suivez-nous
+                    </h4>
+                    <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+                        <a href="https://facebook.com/dmsportslyon" style="background: #1877f2; color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;">f</a>
+                        <a href="https://instagram.com/dmsports.lyon" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;">📷</a>
+                        <a href="#" style="background: #1DA1F2; color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;">𝕏</a>
+                        <a href="#" style="background: #FF0000; color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;">▶</a>
+                        <a href="#" style="background: #0077B5; color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;">in</a>
+                        <a href="#" style="background: #000; color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;">♪</a>
+                    </div>
+                    <p style="margin-bottom: 20px;">Newsletter :</p>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="email" placeholder="Votre email" style="flex: 1; padding: 10px; border: none; border-radius: 5px;">
+                        <button style="background: var(--primary-red); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">OK</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid #333; padding-top: 30px; text-align: center; color: #666;">
+                <p style="margin-bottom: 15px;">
+                    © 2024 DM'S SPORTS LYON - Tous droits réservés | 
+                    <a href="#" style="color: #999;">CGV</a> | 
+                    <a href="#" style="color: #999;">Mentions légales</a> | 
+                    <a href="#" style="color: #999;">Politique de confidentialité</a> | 
+                    <a href="#" style="color: #999;">Cookies</a>
+                </p>
+                <p style="display: flex; justify-content: center; gap: 20px; align-items: center; margin-top: 20px;">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzAwNTFBNSIvPjwvc3ZnPg==" alt="CB" style="height: 30px;">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSIyNCIgZmlsbD0iI0VCMDAxQiIvPjwvc3ZnPg==" alt="Mastercard" style="height: 30px;">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzFBMUY3MSIvPjwvc3ZnPg==" alt="Visa" style="height: 30px;">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSIyNCIgZmlsbD0iI0ZGOTkwMCIvPjwvc3ZnPg==" alt="PayPal" style="height: 30px;">
+                    <span style="color: #999;">Paiement 100% sécurisé</span>
+                </p>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -939,16 +2127,16 @@
 
             uploadBox.addEventListener('dragover', (e) => {
                 e.preventDefault();
-                uploadBox.style.borderColor = '#000';
+                uploadBox.classList.add('dragover');
             });
 
             uploadBox.addEventListener('dragleave', () => {
-                uploadBox.style.borderColor = '#ddd';
+                uploadBox.classList.remove('dragover');
             });
 
             uploadBox.addEventListener('drop', (e) => {
                 e.preventDefault();
-                uploadBox.style.borderColor = '#ddd';
+                uploadBox.classList.remove('dragover');
                 if (e.dataTransfer.files.length > 0) {
                     handleFile(e.dataTransfer.files[0], uploadBox);
                 }
@@ -960,7 +2148,6 @@
                 }
             });
         }
-
         function handleFile(file, uploadBox) {
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -973,18 +2160,32 @@
         }
 
         setupUpload('upload-main', 'file-main');
-        setupUpload('upload-secondary', 'file-secondary');
+        setupUpload('upload-front', 'file-front');
+        setupUpload('upload-detail', 'file-detail');
 
-        // Gestion des tailles
+        // Gestion des tailles selon catégorie
         function updateSizes() {
             const category = document.getElementById('category').value;
             const sizesContainer = document.getElementById('sizes-container');
             let sizes = [];
 
             if (category.includes('chaussures')) {
-                sizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'];
+                if (category.includes('enfant')) {
+                    sizes = Array.from({length: 17}, (_, i) => i + 25); // 25-41
+                } else if (category.includes('bebe')) {
+                    sizes = Array.from({length: 12}, (_, i) => i + 16); // 16-27
+                } else {
+                    sizes = Array.from({length: 16}, (_, i) => i + 36); // 36-51
+                }
+                sizes = sizes.map(s => s.toString());
             } else if (category.includes('vetements')) {
-                sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+                if (category.includes('enfant')) {
+                    sizes = ['2A', '3A', '4A', '5A', '6A', '8A', '10A', '12A', '14A', '16A'];
+                } else if (category.includes('bebe')) {
+                    sizes = ['0M', '1M', '3M', '6M', '9M', '12M', '18M', '24M', '36M'];
+                } else {
+                    sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL'];
+                }
             }
 
             sizesContainer.innerHTML = sizes.map(size => 
@@ -1006,7 +2207,6 @@
                 box.classList.toggle('selected');
             });
         });
-
         document.querySelectorAll('.tone-option').forEach(option => {
             option.addEventListener('click', () => {
                 document.querySelectorAll('.tone-option').forEach(opt => opt.classList.remove('selected'));
@@ -1020,6 +2220,29 @@
             });
         });
 
+        // Tabs
+        document.querySelectorAll('.result-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+            });
+        });
+        // Thumbnails
+        document.querySelectorAll('.preview-thumb').forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                document.querySelectorAll('.preview-thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+                document.getElementById('main-preview').src = thumb.src.replace('w=150', 'w=600');
+            });
+        });
+
         // Génération
         const generateBtn = document.getElementById('generate-btn');
         const resultsSection = document.getElementById('results-section');
@@ -1029,53 +2252,181 @@
             const brand = document.getElementById('brand').value;
             const price = document.getElementById('price').value;
             const sku = document.getElementById('sku').value;
+            const category = document.getElementById('category').value;
 
-            if (!productName || !brand || !price || !sku) {
+            if (!productName || !brand || !price || !sku || !category) {
                 showToast('Veuillez remplir tous les champs obligatoires', 'error');
                 return;
             }
 
             generateBtn.disabled = true;
-            generateBtn.innerHTML = '<span class="loading"></span> Génération en cours...';
+            generateBtn.innerHTML = '<span class="loading"></span> Génération IA en cours...';
 
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            const brandText = document.getElementById('brand').options[document.getElementById('brand').selectedIndex].text;
-            const previewContent = document.getElementById('preview-content');
-            
-            previewContent.innerHTML = `
-                <h2>${productName} - ${brandText}</h2>
-                <p><strong>Prix :</strong> ${price}€</p>
-                <p><strong>SKU :</strong> ${sku}</p>
-                <p>Découvrez ${productName}, la nouvelle référence ${brandText} pour les passionnés de sport.</p>
-            `;
-
+            await simulateGeneration();
             generateBtn.disabled = false;
             generateBtn.innerHTML = '⚡ GÉNÉRER LA FICHE PRODUIT AVEC L\'IA';
             resultsSection.style.display = 'block';
             resultsSection.scrollIntoView({ behavior: 'smooth' });
             
-            showToast('Fiche produit générée avec succès !');
+            showToast('🎉 Fiche produit générée avec succès !', 'success');
         });
+
+        async function simulateGeneration() {
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            const productName = document.getElementById('product-name').value;
+            const brand = document.getElementById('brand').value;
+            const brandText = document.getElementById('brand').options[document.getElementById('brand').selectedIndex].text;
+            const price = document.getElementById('price').value;
+            const oldPrice = document.getElementById('old-price').value;
+            const selectedTone = document.querySelector('.tone-option.selected').dataset.tone;
+
+            // Update preview
+            document.getElementById('preview-title').textContent = `${productName} - ${getToneTitle(selectedTone)}`;
+            document.getElementById('preview-brand').textContent = brandText.toUpperCase() + ' COLLECTION';
+            
+            if (oldPrice) {
+                const discount = Math.round((1 - price/oldPrice) * 100);
+                document.getElementById('preview-price').innerHTML = `
+                    <span class="old-price">${oldPrice} €</span>
+                    ${price} €
+                    <span class="discount-badge">-${discount}%</span>
+                `;
+            } else {
+                document.getElementById('preview-price').innerHTML = `${price} €`;
+        }
+            function getToneTitle(tone) {
+            const titles = {
+                sportif: "Performance et Innovation",
+                streetwear: "Urban Style Revolution",
+                premium: "Luxury Sport Excellence",
+                technique: "Advanced Technology",
+                jeune: "Next Gen Style",
+                classique: "Timeless Elegance"
+            };
+            return titles[tone];
+        }
+
+        function generateAllContent(productName, brand, tone) {
+            // Génération description
+            const descriptions = {
+                sportif: `Plongez dans l'univers de la performance avec ${productName} de ${brand}. Cette innovation révolutionnaire redéfinit les standards du sport moderne avec des technologies de pointe et un design audacieux. Conçue pour les athlètes exigeants, elle vous accompagne dans tous vos défis sportifs.`,
+                streetwear: `${productName} by ${brand} - L'essence du street style contemporain. Cette pièce iconique capture l'énergie urbaine avec son design disruptif et ses détails signature. Adoptée par les influenceurs et les passionnés de mode, elle incarne l'authenticité streetwear.`,
+                premium: `Découvrez l'excellence avec ${productName}, création exclusive ${brand}. Alliance parfaite entre artisanat d'exception et innovation technologique, ce produit premium s'adresse aux connaisseurs en quête du summum du luxe sportif.`,
+                technique: `${productName} intègre les dernières avancées ${brand} en biomécanique et science des matériaux. Sa construction révolutionnaire optimise les performances tout en minimisant l'impact physiologique.`,
+                jeune: `OMG! ${productName} de ${brand} est juste INCROYABLE! 🔥 Ultra fresh et mega comfortable, c'est LE must-have qui va faire buzzer ton feed Insta!`,
+                classique: `${productName} perpétue l'héritage ${brand} avec une élégance intemporelle. Ce modèle emblématique allie tradition et modernité subtile.`
+            };
+
+            document.getElementById('preview-description').innerHTML = descriptions[tone];
+
+            // Features
+document.getElementById('preview-features').innerHTML = `
+                <h3 style="font-size: 20px; margin-bottom: 15px;">✨ Caractéristiques Premium</h3>
+                <ul style="list-style: none; font-size: 16px; line-height: 2;">
+                    <li>✓ Technologie exclusive ${brand} dernière génération</li>
+                    <li>✓ Matériaux haute performance certifiés</li>
+                    <li>✓ Design ergonomique breveté</li>
+                    <li>✓ Système d'aération optimisé</li>
+                    <li>✓ Finitions premium fait main</li>
+                </ul>
+            `;
+
+            // Sizes
+            const selectedSizes = Array.from(document.querySelectorAll('.size-box.selected')).map(box => box.dataset.size);
+            document.getElementById('preview-sizes').innerHTML = `
+                <h3 style="font-size: 20px; margin-bottom: 15px;">📏 Tailles disponibles</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    ${selectedSizes.map(size => `<span style="padding: 10px 20px; border: 2px solid var(--primary-red); border-radius: 25px;">${size}</span>`).join('')}
+                </div>
+            `;
+
+            // Generate other tabs content
+            generateWebContent(productName, brand);
+            generateMarketplaceContent(productName, brand);
+            generateSocialContent(productName, brand);
+            generateSEOContent(productName, brand);
+        }
+            function generateWebContent(productName, brand) {
+            document.getElementById('web-content').innerHTML = `
+                <h2>${productName} - ${brand}</h2>
+                <div style="margin: 30px 0;">
+                    <h3>Description détaillée</h3>
+                    <p>Contenu optimisé pour votre site e-commerce...</p>
+                </div>
+            `;
+        }
+
+        function generateMarketplaceContent(productName, brand) {
+            document.getElementById('marketplace-content').innerHTML = `
+                <h3>Format Marketplace Optimisé</h3>
+                <p><strong>Titre :</strong> ${brand} ${productName} - Neuf - Authentique - Livraison 24h</p>
+                <ul>
+                    <li>✅ Produit 100% authentique</li>
+                    <li>⚡ Livraison express</li>
+                    <li>🔄 Retours gratuits 30 jours</li>
+                </ul>
+            `;
+        }
+            function generateSocialContent(productName, brand) {
+            document.getElementById('social-content').innerHTML = `
+                <div style="display: grid; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; border: 1px solid var(--border-gray);">
+                        <h4>📸 Instagram</h4>
+                        <p>🔥 NEW DROP! ${productName} by ${brand} 💯</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border: 1px solid var(--border-gray);">
+                        <h4>📘 Facebook</h4>
+                        <p>Découvrez ${productName}, la nouvelle référence ${brand}!</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateSEOContent(productName, brand) {
+            document.getElementById('seo-content').innerHTML = `
+                <h3>Optimisation SEO</h3>
+                <p><strong>Title :</strong> ${productName} ${brand} | Achat en ligne | DM Sports</p>
+                <p><strong>Description :</strong> Achetez ${productName} de ${brand}. Livraison 24h, retours gratuits.</p>
+            `;
+        }
 
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
             
             toastMessage.textContent = message;
+            toast.className = `toast show ${type}`;
             if (type === 'error') {
-                toast.style.background = '#e74c3c';
+                toastIcon.textContent = '❌';
+            } else {
+                toastIcon.textContent = '✅';
             }
-            
-            toast.classList.add('show');
             
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000);
+            }, 4000);
         }
 
-        // Initialisation
+        function regenerate() {
+            document.getElementById('generate-btn').click();
+        }
+
+        function exportFormat(format) {
+            showToast(`Export ${format.toUpperCase()} en cours...`);
+            setTimeout(() => {
+                showToast(`✅ Export ${format.toUpperCase()} terminé avec succès!`);
+            }, 2000);
+        }
+
+        // Initialize
         updateSizes();
+
+        // Easter egg
+        console.log('%c🚀 DM SPORTS AI PRO', 'font-size: 24px; font-weight: bold; color: #FF0000;');
+        console.log('%cPowered by AI • Made with ❤️ in Lyon', 'font-size: 14px; color: #666;');
     </script>
 </body>
 </html>
+        
