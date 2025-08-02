@@ -1142,7 +1142,7 @@ function loadProduct(productId) {
     showToast('📝 Produit chargé pour modification');
 }
 
-// Gestion de l'upload d'image
+// Gestion de l'upload d'image améliorée
 function setupImageUpload() {
     const uploadArea = document.getElementById('upload-area');
     const fileInput = document.getElementById('file-input');
@@ -1152,23 +1152,28 @@ function setupImageUpload() {
     // Clic sur la zone
     uploadArea.addEventListener('click', () => fileInput.click());
 
-    // Drag & Drop
+    // Drag & Drop amélioré
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#e60012';
+        uploadArea.style.background = '#fff5f5';
     });
 
     uploadArea.addEventListener('dragleave', () => {
         uploadArea.style.borderColor = '#e0e0e0';
+        uploadArea.style.background = '#fafafa';
     });
 
     uploadArea.addEventListener('drop', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#e0e0e0';
+        uploadArea.style.background = '#fafafa';
         
         const files = e.dataTransfer.files;
         if (files.length > 0 && files[0].type.startsWith('image/')) {
             handleImageFile(files[0]);
+        } else {
+            showToast('❌ Veuillez sélectionner une image valide');
         }
     });
 
@@ -1181,6 +1186,12 @@ function setupImageUpload() {
 }
 
 function handleImageFile(file) {
+    // Vérifier la taille (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('❌ L\'image ne doit pas dépasser 5MB');
+        return;
+    }
+    
     const reader = new FileReader();
     reader.onload = (e) => {
         uploadedImage = e.target.result;
@@ -1192,6 +1203,8 @@ function handleImageFile(file) {
         preview.style.display = 'block';
         placeholder.style.display = 'none';
         uploadArea.classList.add('has-image');
+        
+        showToast('✅ Image ajoutée avec succès');
     };
     reader.readAsDataURL(file);
 }
