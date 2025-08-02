@@ -462,6 +462,190 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .nav-tab.active {
+            background: #e60012;
+            color: white;
+        }
+
+        .nav-tab:not(.active):hover {
+            background: #f0f0f0;
+        }
+
+        /* Products Library */
+        .products-library {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .library-header {
+            background: #e60012;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #search-bar {
+            padding: 10px 15px;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            width: 300px;
+            font-size: 14px;
+            background: white;
+            color: #333;
+        }
+
+        #search-bar:focus {
+            outline: none;
+            border-color: #fff;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .library-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+
+        .library-empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .product-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .product-card:hover {
+            border-color: #e60012;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(230, 0, 18, 0.1);
+        }
+
+        .product-card-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-card-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .product-card-brand {
+            color: #e60012;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .product-card-body {
+            padding: 20px;
+        }
+
+        .product-card-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e60012;
+            margin-bottom: 10px;
+        }
+
+        .product-card-meta {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .product-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .card-btn.primary {
+            background: #e60012;
+            color: white;
+            border-color: #e60012;
+        }
+
+        .card-btn:hover {
+            background: #f0f0f0;
+            border-color: #e60012;
+        }
+
+        .card-btn.primary:hover {
+            background: #cc0010;
+            border-color: #cc0010;
+        }
+
+        .card-btn.danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .card-btn.danger:hover {
+            background: #dc3545;
+            color: white;
+        }
     </style>
 </head>
 <body>
