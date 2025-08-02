@@ -189,8 +189,10 @@ def generate_product_content(product_data: dict) -> dict:
     if short_desc:
         description_parts.append(f"<p>{short_desc}</p>")
     else:
+        # Handle apostrophe in f-string properly
+        gender_text = "l'homme moderne" if gender == 'homme' else 'la femme active' if gender == 'femme' else 'tous'
         templates = [
-            f"Ce {category} {brand} incarne le parfait équilibre entre style et performance. Conçu pour {('l\\'homme moderne' if gender == 'homme' else 'la femme active' if gender == 'femme' else 'tous')}, il offre un confort optimal au quotidien.",
+            f"Ce {category} {brand} incarne le parfait équilibre entre style et performance. Conçu pour {gender_text}, il offre un confort optimal au quotidien.",
             f"Découvrez l'excellence avec ce {category} {brand}. Sa conception soignée et ses finitions de qualité en font un choix idéal pour toutes vos activités.",
             f"{brand} présente {name}, un {category} qui allie technicité et esthétisme. Un must-have pour votre garde-robe."
         ]
