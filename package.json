@@ -1,0 +1,14 @@
+{
+  "name": "dm-sports-ai-generator",
+  "version": "1.0.0",
+  "description": "Générateur IA de fiches produit sportswear",
+  "scripts": {
+    "start": "npx serve -s . -l 3000"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
