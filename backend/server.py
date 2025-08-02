@@ -394,7 +394,9 @@ async def update_product(
     
     # Get updated product
     updated_product = products_collection.find_one({"_id": product_id})
-    return Product(id=product_id, **{k: v for k, v in updated_product.items() if k != "_id"})
+    product_data = {k: v for k, v in updated_product.items() if k != "_id"}
+    product_data["id"] = product_id
+    return Product(**product_data)
 
 @app.delete("/api/products/{product_id}")
 async def delete_product(product_id: str, current_user: User = Depends(get_current_user)):
