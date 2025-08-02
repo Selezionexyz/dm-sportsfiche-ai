@@ -1484,25 +1484,46 @@ function displayGeneratedContent() {
     previewDescription.innerHTML = generatedContent.description;
 }
 
-// Bouton de génération
+// Bouton de génération avec sauvegarde automatique
 async function handleGenerate() {
     const btn = document.getElementById('generate-btn');
     
-    // Désactiver le bouton
+    // Animation du bouton
     btn.disabled = true;
-    btn.innerHTML = '<span class="loading"></span> Génération en cours...';
+    btn.innerHTML = '<span class="loading"></span> GÉNÉRATION EN COURS...';
+    btn.style.background = '#999';
     
     // Générer le contenu
     if (generateProductContent()) {
-        // Simuler un délai
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Simuler un délai pour l'expérience utilisateur
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
         // Afficher le résultat
         displayGeneratedContent();
         
-        showToast('✅ Fiche produit générée avec succès !');
+        // Sauvegarder automatiquement le produit
+        const productData = {
+            name: document.getElementById('product-name').value.trim(),
+            brand: document.getElementById('brand').value,
+            category: document.getElementById('category').value,
+            gender: document.getElementById('gender').value,
+            price: parseFloat(document.getElementById('price').value),
+            oldPrice: parseFloat(document.getElementById('old-price').value) || null,
+            sku: document.getElementById('sku').value.trim(),
+            shortDesc: document.getElementById('short-desc').value.trim(),
+            material: document.getElementById('material').value,
+            season: document.getElementById('season').value,
+            features: document.getElementById('features').value.trim().split('\n').filter(f => f.trim()),
+            sizes: Array.from(document.querySelectorAll('.size-item.selected')).map(s => s.dataset.size),
+            colors: Array.from(document.querySelectorAll('.color-item.selected')).map(c => c.dataset.color),
+            image: uploadedImage
+        };
         
-        // Scroll vers le preview
+        const savedProduct = saveProduct(productData);
+        
+        showToast('✅ Fiche produit générée et sauvegardée avec succès !', 5000);
+        
+        // Scroll vers le preview avec animation fluide
         document.querySelector('.preview-panel').scrollIntoView({ 
             behavior: 'smooth', 
             block: 'start' 
@@ -1512,6 +1533,7 @@ async function handleGenerate() {
     // Réactiver le bouton
     btn.disabled = false;
     btn.innerHTML = '<span>⚡</span> GÉNÉRER LA FICHE PRODUIT';
+    btn.style.background = '#000';
 }
 
 // Fonctions d'export
