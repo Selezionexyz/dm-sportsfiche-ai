@@ -1638,9 +1638,9 @@ function downloadJSON() {
     showToast('📋 Fichier JSON téléchargé');
 }
 
-// Initialisation
+// Initialisation améliorée
 document.addEventListener('DOMContentLoaded', function() {
-    // Setup des fonctionnalités
+    // Setup des fonctionnalités existantes
     setupImageUpload();
     setupColorSelection();
     
@@ -1651,6 +1651,65 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialiser les tailles
     updateSizes();
+    
+    // Initialiser le compteur de la bibliothèque
+    updateLibraryCount();
+    
+    // Message de bienvenue amélioré
+    setTimeout(() => {
+        showToast('🎉 Bienvenue dans le générateur DM Sports AI Pro !', 4000);
+    }, 1000);
+    
+    // Auto-save du formulaire en cours (brouillon)
+    const formElements = ['product-name', 'brand', 'category', 'gender', 'price', 'old-price', 'sku', 'short-desc', 'material', 'season', 'features'];
+    formElements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.addEventListener('input', () => {
+                // Sauvegarder le brouillon
+                const draft = {};
+                formElements.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) draft[fieldId] = field.value;
+                });
+                localStorage.setItem('dmSportsDraft', JSON.stringify(draft));
+            });
+        }
+    });
+    
+    // Récupérer le brouillon au chargement
+    const draft = JSON.parse(localStorage.getItem('dmSportsDraft') || '{}');
+    Object.entries(draft).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element && value) {
+            element.value = value;
+        }
+    });
+    
+    // Ajouter les animations CSS
+    const animationStyles = document.createElement('style');
+    animationStyles.textContent = `
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .generate-btn:hover {
+            animation: pulse 2s infinite;
+        }
+    `;
+    document.head.appendChild(animationStyles);
 });
 
 // Styles d'impression
