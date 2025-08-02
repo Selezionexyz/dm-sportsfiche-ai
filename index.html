@@ -966,11 +966,181 @@
         <span id="toast-message"></span>
     </div>
 <script>
-    // Ajoutez ce code dans une balise <script> avant la fermeture de </body>
-
-// Variables globales
+// Variables globales améliorées
 let uploadedImage = null;
 let generatedContent = {};
+let savedProducts = JSON.parse(localStorage.getItem('dmSportsProducts')) || [];
+
+// LocalStorage pour sauvegarder les produits
+function saveProduct(productData) {
+    const product = {
+        id: Date.now().toString(),
+        ...productData,
+        createdAt: new Date().toISOString(),
+        generatedContent: generatedContent
+    };
+    
+    savedProducts.unshift(product); // Ajouter au début
+    localStorage.setItem('dmSportsProducts', JSON.stringify(savedProducts));
+    updateLibraryCount();
+    
+    return product;
+}
+
+function deleteProduct(productId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) return;
+    
+    savedProducts = savedProducts.filter(p => p.id !== productId);
+    localStorage.setItem('dmSportsProducts', JSON.stringify(savedProducts));
+    updateLibraryCount();
+    displayProducts();
+    showToast('🗑️ Produit supprimé avec succès');
+}
+
+function updateLibraryCount() {
+    document.getElementById('library-count').textContent = savedProducts.length;
+}
+
+// Navigation entre onglets
+function switchTab(tab) {
+    const generatorView = document.getElementById('generator-view');
+    const libraryView = document.getElementById('library-view');
+    const generatorTab = document.getElementById('generator-tab');
+    const libraryTab = document.getElementById('library-tab');
+    
+    if (tab === 'generator') {
+        generatorView.style.display = 'grid';
+        libraryView.style.display = 'none';
+        generatorTab.classList.add('active');
+        libraryTab.classList.remove('active');
+    } else {
+        generatorView.style.display = 'none';
+        libraryView.style.display = 'block';
+        generatorTab.classList.remove('active');
+        libraryTab.classList.add('active');
+        displayProducts();
+    }
+}
+
+// Affichage des produits dans la bibliothèque
+function displayProducts() {
+    const productsGrid = document.getElementById('products-grid');
+    
+    if (savedProducts.length === 0) {
+        productsGrid.innerHTML = `
+            <div class="library-empty">
+                <div class="library-empty-icon">📦</div>
+                <p>Aucun produit créé.<br>Générez votre première fiche pour commencer !</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+    const filteredProducts = savedProducts.filter(product => 
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.brand.toLowerCase().includes(searchTerm) ||
+        product.category.toLowerCase().includes(searchTerm)
+    );
+    
+    if (filteredProducts.length === 0) {
+        productsGrid.innerHTML = `
+            <div class="library-empty">
+                <div class="library-empty-icon">🔍</div>
+                <p>Aucun produit trouvé.<br>Essayez un autre terme de recherche.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    productsGrid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card">
+            <div class="product-card-header">
+                <div class="product-card-title">${product.name}</div>
+                <div class="product-card-brand">${product.brand}</div>
+            </div>
+            <div class="product-card-body">
+                <div class="product-card-price">${product.price}€${product.oldPrice && product.oldPrice > product.price ? ` <span style="text-decoration: line-through; color: #999; font-size: 16px;">${product.oldPrice}€</span>` : ''}</div>
+                <div class="product-card-meta">
+                    ${product.category.replace('-', ' ')} • ${product.gender} • ${new Date(product.createdAt).toLocaleDateString('fr-FR')}
+                </div>
+                <div class="product-card-actions">
+                    <button class="card-btn primary" onclick="copyProductContent('${product.id}')">
+                        📋 Copier
+                    </button>
+                    <button class="card-btn" onclick="loadProduct('${product.id}')">
+                        ✏️ Modifier
+                    </button>
+                    <button class="card-btn danger" onclick="deleteProduct('${product.id}')">
+                        🗑️ Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterProducts() {
+    displayProducts();
+}
+
+function copyProductContent(productId) {
+    const product = savedProducts.find(p => p.id === productId);
+    if (!product) return;
+    
+    const content = product.generatedContent.description.replace(/<[^>]*>/g, '');
+    const title = product.generatedContent.title;
+    const price = `${product.price}€${product.oldPrice && product.oldPrice > product.price ? ` (était ${product.oldPrice}€)` : ''}`;
+    
+    const fullContent = `${title}\n${price}\n\n${content}`;
+    
+    navigator.clipboard.writeText(fullContent).then(() => {
+        showToast('📋 Contenu copié dans le presse-papier');
+    });
+}
+
+function loadProduct(productId) {
+    const product = savedProducts.find(p => p.id === productId);
+    if (!product) return;
+    
+    // Remplir le formulaire avec les données du produit
+    document.getElementById('product-name').value = product.name;
+    document.getElementById('brand').value = product.brand;
+    document.getElementById('category').value = product.category;
+    document.getElementById('gender').value = product.gender;
+    document.getElementById('price').value = product.price;
+    document.getElementById('old-price').value = product.oldPrice || '';
+    document.getElementById('sku').value = product.sku;
+    document.getElementById('short-desc').value = product.shortDesc || '';
+    document.getElementById('material').value = product.material || '';
+    document.getElementById('season').value = product.season || '';
+    document.getElementById('features').value = product.features ? product.features.join('\n') : '';
+    
+    // Mettre à jour les tailles et couleurs
+    updateSizes();
+    
+    setTimeout(() => {
+        // Sélectionner les tailles sauvegardées
+        if (product.sizes) {
+            product.sizes.forEach(size => {
+                const sizeElement = document.querySelector(`.size-item[data-size="${size}"]`);
+                if (sizeElement) sizeElement.classList.add('selected');
+            });
+        }
+        
+        // Sélectionner les couleurs sauvegardées
+        if (product.colors) {
+            product.colors.forEach(color => {
+                const colorElement = document.querySelector(`.color-item[data-color="${color}"]`);
+                if (colorElement) colorElement.classList.add('selected');
+            });
+        }
+    }, 100);
+    
+    // Revenir au générateur
+    switchTab('generator');
+    showToast('📝 Produit chargé pour modification');
+}
 
 // Gestion de l'upload d'image
 function setupImageUpload() {
