@@ -363,7 +363,9 @@ async def get_product(product_id: str, current_user: User = Depends(get_current_
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     
-    return Product(id=product_id, **{k: v for k, v in product.items() if k != "_id"})
+    product_data = {k: v for k, v in product.items() if k != "_id"}
+    product_data["id"] = product_id
+    return Product(**product_data)
 
 @app.put("/api/products/{product_id}", response_model=Product)
 async def update_product(
