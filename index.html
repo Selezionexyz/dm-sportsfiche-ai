@@ -476,7 +476,18 @@
     </header>
 
     <div class="container">
-        <div class="main-grid">
+        <!-- Navigation améliorée -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" id="generator-tab" onclick="switchTab('generator')">
+                ⚡ Générateur
+            </button>
+            <button class="nav-tab" id="library-tab" onclick="switchTab('library')">
+                📚 Bibliothèque (<span id="library-count">0</span>)
+            </button>
+        </div>
+
+        <!-- Vue Générateur -->
+        <div id="generator-view" class="main-grid">
             <!-- Panneau de formulaire -->
             <div class="form-panel">
                 <!-- Section 1: Upload d'image -->
