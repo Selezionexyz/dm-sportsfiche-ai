@@ -329,7 +329,12 @@ async def login(user: UserLogin):
 @app.get("/api/products", response_model=List[Product])
 async def get_products(current_user: User = Depends(get_current_user)):
     products = list(products_collection.find({"user_id": current_user.username}))
-    return [Product(id=str(p["_id"]), **{k: v for k, v in p.items() if k != "_id"}) for p in products]
+    result = []
+    for p in products:
+        product_data = {k: v for k, v in p.items() if k != "_id"}
+        product_data["id"] = str(p["_id"])
+        result.append(Product(**product_data))
+    return result
 
 @app.post("/api/products", response_model=Product)
 async def create_product(product: ProductCreate, current_user: User = Depends(get_current_user)):
