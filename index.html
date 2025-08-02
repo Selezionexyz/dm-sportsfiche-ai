@@ -757,6 +757,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- Vue Bibliothèque -->
+        <div id="library-view" style="display: none;">
+            <div class="products-library">
+                <div class="library-header">
+                    <h2>📚 Bibliothèque des produits</h2>
+                    <div class="search-container">
+                        <input type="text" id="search-bar" placeholder="🔍 Rechercher un produit..." onkeyup="filterProducts()">
+                    </div>
+                </div>
+                <div id="products-grid" class="products-grid">
+                    <div class="library-empty">
+                        <div class="library-empty-icon">📦</div>
+                        <p>Aucun produit créé.<br>Générez votre première fiche pour commencer !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Toast Notification -->
