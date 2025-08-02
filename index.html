@@ -1209,7 +1209,7 @@ function handleImageFile(file) {
     reader.readAsDataURL(file);
 }
 
-// Gestion des tailles
+// Gestion des tailles améliorée
 function updateSizes() {
     const category = document.getElementById('category').value;
     const gender = document.getElementById('gender').value;
@@ -1217,23 +1217,23 @@ function updateSizes() {
     
     let sizes = [];
     
-    // Déterminer les tailles selon la catégorie et le genre
+    // Déterminer les tailles selon la catégorie et le genre avec plus de précision
     if (category.includes('chaussures')) {
         if (gender === 'homme') {
-            sizes = ['39', '40', '41', '42', '43', '44', '45', '46', '47', '48'];
+            sizes = ['39', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44', '44.5', '45', '45.5', '46', '47', '48'];
         } else if (gender === 'femme') {
-            sizes = ['35', '36', '37', '38', '39', '40', '41', '42'];
+            sizes = ['35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42'];
         } else if (gender === 'enfant') {
-            sizes = ['28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38'];
+            sizes = ['28', '28.5', '29', '29.5', '30', '30.5', '31', '31.5', '32', '32.5', '33', '33.5', '34', '34.5', '35', '35.5', '36', '36.5', '37', '37.5', '38'];
         } else if (gender === 'bebe') {
-            sizes = ['16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27'];
+            sizes = ['16', '17', '17.5', '18', '18.5', '19', '19.5', '20', '20.5', '21', '21.5', '22', '22.5', '23', '23.5', '24', '24.5', '25', '25.5', '26', '26.5', '27'];
         } else {
             sizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'];
         }
     } else {
-        // Vêtements
+        // Vêtements avec tailles spécifiques
         if (gender === 'enfant') {
-            sizes = ['4A', '6A', '8A', '10A', '12A', '14A', '16A'];
+            sizes = ['4A', '6A', '8A', '10A', '12A', '14A', '16A', '18A'];
         } else if (gender === 'bebe') {
             sizes = ['3M', '6M', '9M', '12M', '18M', '24M', '36M'];
         } else {
@@ -1241,9 +1241,9 @@ function updateSizes() {
         }
     }
     
-    // Générer les boutons de taille
+    // Générer les boutons de taille avec animation
     container.innerHTML = sizes.map(size => 
-        `<div class="size-item" data-size="${size}">${size}</div>`
+        `<div class="size-item" data-size="${size}" style="animation: fadeInUp 0.3s ease-out">${size}</div>`
     ).join('');
     
     // Ajouter les événements de clic
@@ -1254,6 +1254,12 @@ function setupSizeSelection() {
     document.querySelectorAll('.size-item').forEach(item => {
         item.addEventListener('click', function() {
             this.classList.toggle('selected');
+            
+            // Animation légère
+            this.style.transform = this.classList.contains('selected') ? 'scale(0.95)' : 'scale(1)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
         });
     });
 }
