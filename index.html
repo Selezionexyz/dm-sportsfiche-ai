@@ -1264,21 +1264,27 @@ function setupSizeSelection() {
     });
 }
 
-// Gestion des couleurs
+// Gestion des couleurs améliorée
 function setupColorSelection() {
     document.querySelectorAll('.color-item').forEach(item => {
         item.addEventListener('click', function() {
             this.classList.toggle('selected');
+            
+            // Animation légère
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
         });
     });
 }
 
-// Toast notifications
-function showToast(message, duration = 3000) {
+// Toast notifications améliorées
+function showToast(message, duration = 4000) {
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toast-message');
     
-    toastMessage.textContent = message;
+    toastMessage.innerHTML = message;
     toast.classList.add('show');
     
     setTimeout(() => {
