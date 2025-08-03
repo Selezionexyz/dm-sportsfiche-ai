@@ -2384,7 +2384,52 @@ ${product.features?.length ? 'Points forts:\n• ' + product.features.join('\n�
             // Initialiser l'affichage
             updateLibraryCount();
             updateSizes();
+            
+            // Ajouter une image de démonstration pour tester l'éditeur
+            addDemoImage();
         });
+
+        // Fonction pour ajouter une image de démonstration
+        function addDemoImage() {
+            // Créer une image de test avec canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+            
+            // Créer un gradient de fond
+            const gradient = ctx.createLinearGradient(0, 0, 400, 400);
+            gradient.addColorStop(0, '#FF6B6B');
+            gradient.addColorStop(1, '#4ECDC4');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 400);
+            
+            // Ajouter du texte
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('IMAGE DEMO', 200, 180);
+            ctx.fillText('Cliquez 🎨 pour', 200, 220);
+            ctx.fillText('l\'éditeur Ultimate', 200, 250);
+            
+            // Convertir en data URL
+            const dataURL = canvas.toDataURL('image/png');
+            
+            // Ajouter à la liste des images
+            const demoImage = {
+                id: 'demo-' + Date.now(),
+                name: 'demo-ultimate.png',
+                size: 25000, // ~25KB
+                type: 'image/png',
+                data: dataURL
+            };
+            
+            uploadedImages.push(demoImage);
+            updateImageGallery();
+            updateUploadStats();
+            
+            showToast('📸 Image de démonstration ajoutée ! Cliquez sur 🎨 pour tester l\'éditeur Ultimate', 'success', 6000);
+        }
     </script>
 </body>
 </html>
