@@ -3517,8 +3517,10 @@
                     <div class="product-basic-info">
                         <p><strong>🏷️ Marque:</strong> ${data.brand}</p>
                         <p><strong>📦 Référence:</strong> ${data.sku}</p>
+                        <p><strong>🔢 Code EAN:</strong> ${data.ean}</p>
                         <p><strong>🏆 Catégorie:</strong> ${data.category.replace('-', ' ').toUpperCase()}</p>
                         <p><strong>👥 Genre:</strong> ${data.gender.charAt(0).toUpperCase() + data.gender.slice(1)}</p>
+                        ${data.stock ? `<p><strong>📊 Stock:</strong> ${data.stock} unités disponibles</p>` : ''}
                     </div>
 
                     <div class="product-description-enhanced">
