@@ -1604,130 +1604,72 @@
                     </div>
                 </div>
 
-                <!-- Section 1.5: Éditeur de Fond Intégré -->
+                <!-- Section 1.5: Éditeur de Fond Simplifié -->
                 <div class="section" id="background-editor-section" style="display: none;">
                     <h3 class="section-title">
                         <span class="section-number">1.5</span>
-                        🎨 Éditeur de Fond Ultimate
+                        🎨 Changer le fond de vos photos
                     </h3>
                     
-                    <!-- Version Mobile Simplifiée -->
-                    <div class="editor-mobile-simple" id="editor-mobile">
-                        <div class="mobile-editor-header">
-                            <span id="mobile-editing-name">Sélectionnez une image</span>
-                            <button id="close-mobile-editor" class="close-mobile">✕</button>
-                        </div>
-                        
-                        <div class="mobile-images-grid">
-                            <div class="mobile-section-title">📷 Vos images :</div>
-                            <div class="mobile-images-selector" id="mobile-images-selector">
-                                <!-- Images générées par JS -->
-                            </div>
-                        </div>
-                        
-                        <div class="mobile-canvas-container">
-                            <canvas id="mobile-canvas" class="mobile-canvas"></canvas>
-                            <div class="mobile-placeholder" id="mobile-placeholder">
-                                <div class="mobile-placeholder-icon">🖼️</div>
-                                <p>Touchez une image ci-dessus</p>
-                            </div>
-                        </div>
-                        
-                        <div class="mobile-backgrounds">
-                            <div class="mobile-section-title">🎨 Fonds :</div>
-                            <div class="mobile-bg-tabs" id="mobile-bg-tabs">
-                                <button class="mobile-tab active" data-category="wood">🌳</button>
-                                <button class="mobile-tab" data-category="stone">🗿</button>
-                                <button class="mobile-tab" data-category="colors">🎨</button>
-                                <button class="mobile-tab" data-category="metal">🏭</button>
-                                <button class="mobile-tab" data-category="sports">⚽</button>
-                            </div>
-                            <div class="mobile-bg-grid" id="mobile-bg-grid">
-                                <!-- Fonds générés par JS -->
-                            </div>
-                        </div>
-                        
-                        <div class="mobile-actions">
-                            <button class="mobile-btn-apply" id="mobile-apply">✅ Appliquer</button>
-                            <button class="mobile-btn-reset" id="mobile-reset">🔄 Reset</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Version Desktop Complète -->
-                    <div class="editor-integrated desktop-only">
-                        <div class="editor-header-integrated">
-                            <div class="current-image-info">
-                                <span id="editing-image-name">Aucune image sélectionnée</span>
-                                <button id="close-integrated-editor" class="close-btn-small">✕</button>
-                            </div>
-                        </div>
-                        
-                        <div class="editor-layout-integrated">
-                            <!-- Sélecteur d'image -->
-                            <div class="image-selector">
-                                <h4>📷 Sélectionnez une image à éditer :</h4>
-                                <div class="images-selector-grid" id="images-selector-grid">
-                                    <!-- Images pour sélection -->
+                    <div class="simple-editor">
+                        <div class="simple-editor-layout">
+                            <!-- Sélection d'image -->
+                            <div class="image-selection-panel">
+                                <h4>📷 Choisissez votre photo :</h4>
+                                <div class="simple-images-grid" id="simple-images-grid">
+                                    <!-- Images -->
                                 </div>
                             </div>
                             
-                            <!-- Preview zone -->
-                            <div class="editor-preview-zone">
-                                <canvas id="editor-canvas-integrated" class="editor-canvas-integrated"></canvas>
-                                <div class="editor-canvas-placeholder" id="editor-placeholder">
-                                    <div class="placeholder-icon">🖼️</div>
-                                    <p>Sélectionnez une image ci-dessus pour commencer l'édition</p>
+                            <!-- Aperçu en temps réel -->
+                            <div class="live-preview-panel">
+                                <h4>👁️ Aperçu en temps réel :</h4>
+                                <div class="preview-container">
+                                    <canvas id="simple-canvas" class="simple-canvas"></canvas>
+                                    <div class="no-image-selected" id="no-image-selected">
+                                        <div class="select-icon">🖼️</div>
+                                        <p>Sélectionnez une photo ci-dessus</p>
+                                    </div>
+                                </div>
+                                <div class="preview-actions">
+                                    <button id="apply-simple-bg" class="btn-apply-simple">✅ Appliquer ce fond</button>
                                 </div>
                             </div>
                             
-                            <!-- Fonds disponibles -->
-                            <div class="backgrounds-panel">
-                                <h4>🎨 Choisissez un fond :</h4>
-                                
-                                <!-- Onglets des catégories -->
-                                <div class="bg-category-tabs">
-                                    <button class="bg-tab active" data-category="wood">🌳 Bois</button>
-                                    <button class="bg-tab" data-category="stone">🗿 Pierre</button>
-                                    <button class="bg-tab" data-category="colors">🎨 Couleurs</button>
-                                    <button class="bg-tab" data-category="metal">🏭 Métal</button>
-                                    <button class="bg-tab" data-category="sports">⚽ Sports</button>
-                                </div>
-                                
-                                <!-- Grilles de fonds par catégorie -->
-                                <div class="bg-grids-container">
-                                    <div class="bg-grid active" id="wood-bg-grid"></div>
-                                    <div class="bg-grid" id="stone-bg-grid"></div>
-                                    <div class="bg-grid" id="colors-bg-grid"></div>
-                                    <div class="bg-grid" id="metal-bg-grid"></div>
-                                    <div class="bg-grid" id="sports-bg-grid"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Contrôles -->
-                            <div class="controls-panel">
-                                <h4>⚙️ Réglages :</h4>
-                                
-                                <div class="control-item">
-                                    <label>🔆 Luminosité</label>
-                                    <input type="range" id="brightness-integrated" min="50" max="150" value="100" class="control-slider">
-                                    <span class="control-value">100%</span>
-                                </div>
-                                
-                                <div class="control-item">
-                                    <label>📏 Échelle</label>
-                                    <input type="range" id="scale-integrated" min="50" max="200" value="100" class="control-slider">
-                                    <span class="control-value">100%</span>
-                                </div>
-                                
-                                <div class="control-item">
-                                    <label>👻 Opacité fond</label>
-                                    <input type="range" id="opacity-integrated" min="0" max="100" value="80" class="control-slider">
-                                    <span class="control-value">80%</span>
-                                </div>
-                                
-                                <div class="editor-actions-integrated">
-                                    <button class="btn-apply" id="apply-bg-integrated">✅ Appliquer</button>
-                                    <button class="btn-reset" id="reset-bg-integrated">🔄 Reset</button>
+                            <!-- Couleurs simples -->
+                            <div class="colors-panel">
+                                <h4>🎨 Choisissez la couleur de fond :</h4>
+                                <div class="simple-colors-grid">
+                                    <div class="simple-color" style="background: #FFFFFF; border: 2px solid #ccc;" data-color="#FFFFFF" title="Blanc">
+                                        <span class="color-name">Blanc</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #000000;" data-color="#000000" title="Noir">
+                                        <span class="color-name">Noir</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #e60012;" data-color="#e60012" title="Rouge DM">
+                                        <span class="color-name">Rouge DM</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #0066CC;" data-color="#0066CC" title="Bleu Royal">
+                                        <span class="color-name">Bleu</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #228B22;" data-color="#228B22" title="Vert">
+                                        <span class="color-name">Vert</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #FFD700;" data-color="#FFD700" title="Or">
+                                        <span class="color-name">Or</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #FF6B35;" data-color="#FF6B35" title="Orange">
+                                        <span class="color-name">Orange</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #8E44AD;" data-color="#8E44AD" title="Violet">
+                                        <span class="color-name">Violet</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #E91E63;" data-color="#E91E63" title="Rose">
+                                        <span class="color-name">Rose</span>
+                                    </div>
+                                    <div class="simple-color" style="background: #607D8B;" data-color="#607D8B" title="Gris">
+                                        <span class="color-name">Gris</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
