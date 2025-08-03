@@ -2423,7 +2423,6 @@
             
             if (uploadedImages.length === 0) {
                 gallery.style.display = 'none';
-                hideIntegratedEditor();
                 return;
             }
             
@@ -2432,9 +2431,6 @@
                 <div class="image-item" data-image-id="${img.id}">
                     <img src="${img.data}" alt="${img.name}">
                     <div class="image-controls">
-                        <button class="image-btn edit-btn" onclick="openBackgroundEditor('${img.id}')" title="🎨 Éditeur de fond avancé">
-                            🎨
-                        </button>
                         <button class="image-btn delete-btn" onclick="deleteImage('${img.id}')" title="🗑️ Supprimer l'image">
                             🗑️
                         </button>
@@ -2442,16 +2438,9 @@
                     <div class="image-info">
                         ${img.name.length > 15 ? img.name.substring(0, 15) + '...' : img.name}<br>
                         ${formatFileSize(img.size)}
-                        <div style="font-size: 10px; color: #e60012; margin-top: 2px;">
-                            Clic 🎨 = Éditeur Ultimate
-                        </div>
                     </div>
                 </div>
             `).join('');
-            
-            // Afficher la section éditeur intégré
-            showIntegratedEditor();
-            updateImageSelector();
         }
 
         // ÉDITEUR SIMPLE
