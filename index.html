@@ -886,6 +886,108 @@
             display: none !important;
         }
 
+        /* Styles pour l'aperçu enrichi */
+        .product-rich-content {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .product-rich-content h3 {
+            color: #e60012;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 20px 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e60012;
+        }
+
+        .product-basic-info, .product-details, .product-features, .product-seo, .product-images-info, .product-professional {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #e60012;
+        }
+
+        .product-description-enhanced {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #e60012;
+        }
+
+        .features-list {
+            margin: 10px 0;
+            padding-left: 0;
+        }
+
+        .features-list li {
+            list-style: none;
+            padding: 5px 0;
+            color: #333;
+        }
+
+        .hashtags-container {
+            margin-top: 10px;
+        }
+
+        .hashtags {
+            color: #e60012;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .images-preview-grid {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .image-preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .mini-edit-btn {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(230, 0, 18, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mini-edit-btn:hover {
+            background: #e60012;
+            transform: scale(1.1);
+        }
+
+        .more-images {
+            background: #e0e0e0;
+            color: #666;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+        }
+
         @media (max-width: 1200px) {
             .main-grid {
                 grid-template-columns: 1fr;
