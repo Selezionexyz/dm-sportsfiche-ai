@@ -1223,6 +1223,12 @@
             .editor-container {
                 grid-template-columns: 250px 1fr 250px;
             }
+
+            /* FIX pour l'éditeur intégré sur tablettes */
+            .editor-layout-integrated {
+                grid-template-columns: 1fr 250px 1fr 180px;
+                gap: 15px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1233,6 +1239,117 @@
 
             .editor-sidebar {
                 max-height: 200px;
+            }
+
+            /* FIX COMPLET pour l'éditeur intégré sur mobile */
+            .editor-layout-integrated {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 15px;
+            }
+
+            .editor-integrated {
+                margin: 0 -10px;
+            }
+
+            .bg-category-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding-bottom: 5px;
+            }
+
+            .bg-category-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .bg-tab {
+                flex-shrink: 0;
+                padding: 10px 15px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            .bg-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 5px;
+            }
+
+            .images-selector-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .editor-preview-zone {
+                min-height: 200px;
+                order: 1;
+            }
+
+            .image-selector {
+                order: 2;
+            }
+
+            .backgrounds-panel {
+                order: 3;
+            }
+
+            .controls-panel {
+                order: 4;
+            }
+
+            .control-item {
+                margin-bottom: 10px;
+            }
+
+            .control-slider {
+                height: 35px;
+            }
+
+            .editor-actions-integrated {
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .btn-apply, .btn-reset {
+                flex: 1;
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Ultra mobile - phones */
+            .container {
+                padding: 10px;
+            }
+
+            .editor-layout-integrated {
+                padding: 10px;
+                gap: 15px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .section-number {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+            }
+
+            .bg-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .images-selector-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .editor-preview-zone {
+                min-height: 150px;
             }
         }
     </style>
