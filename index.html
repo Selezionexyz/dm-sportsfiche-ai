@@ -1068,6 +1068,93 @@
                     </div>
                 </div>
 
+                <!-- Section 1.5: Éditeur de Fond Intégré -->
+                <div class="section" id="background-editor-section" style="display: none;">
+                    <h3 class="section-title">
+                        <span class="section-number">1.5</span>
+                        🎨 Éditeur de Fond Ultimate
+                    </h3>
+                    
+                    <div class="editor-integrated">
+                        <div class="editor-header-integrated">
+                            <div class="current-image-info">
+                                <span id="editing-image-name">Aucune image sélectionnée</span>
+                                <button id="close-integrated-editor" class="close-btn-small">✕</button>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-layout-integrated">
+                            <!-- Sélecteur d'image -->
+                            <div class="image-selector">
+                                <h4>📷 Sélectionnez une image à éditer :</h4>
+                                <div class="images-selector-grid" id="images-selector-grid">
+                                    <!-- Images pour sélection -->
+                                </div>
+                            </div>
+                            
+                            <!-- Preview zone -->
+                            <div class="editor-preview-zone">
+                                <canvas id="editor-canvas-integrated" class="editor-canvas-integrated"></canvas>
+                                <div class="editor-canvas-placeholder" id="editor-placeholder">
+                                    <div class="placeholder-icon">🖼️</div>
+                                    <p>Sélectionnez une image ci-dessus pour commencer l'édition</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Fonds disponibles -->
+                            <div class="backgrounds-panel">
+                                <h4>🎨 Choisissez un fond :</h4>
+                                
+                                <!-- Onglets des catégories -->
+                                <div class="bg-category-tabs">
+                                    <button class="bg-tab active" data-category="wood">🌳 Bois</button>
+                                    <button class="bg-tab" data-category="stone">🗿 Pierre</button>
+                                    <button class="bg-tab" data-category="colors">🎨 Couleurs</button>
+                                    <button class="bg-tab" data-category="metal">🏭 Métal</button>
+                                    <button class="bg-tab" data-category="sports">⚽ Sports</button>
+                                </div>
+                                
+                                <!-- Grilles de fonds par catégorie -->
+                                <div class="bg-grids-container">
+                                    <div class="bg-grid active" id="wood-bg-grid"></div>
+                                    <div class="bg-grid" id="stone-bg-grid"></div>
+                                    <div class="bg-grid" id="colors-bg-grid"></div>
+                                    <div class="bg-grid" id="metal-bg-grid"></div>
+                                    <div class="bg-grid" id="sports-bg-grid"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Contrôles -->
+                            <div class="controls-panel">
+                                <h4>⚙️ Réglages :</h4>
+                                
+                                <div class="control-item">
+                                    <label>🔆 Luminosité</label>
+                                    <input type="range" id="brightness-integrated" min="50" max="150" value="100" class="control-slider">
+                                    <span class="control-value">100%</span>
+                                </div>
+                                
+                                <div class="control-item">
+                                    <label>📏 Échelle</label>
+                                    <input type="range" id="scale-integrated" min="50" max="200" value="100" class="control-slider">
+                                    <span class="control-value">100%</span>
+                                </div>
+                                
+                                <div class="control-item">
+                                    <label>👻 Opacité fond</label>
+                                    <input type="range" id="opacity-integrated" min="0" max="100" value="80" class="control-slider">
+                                    <span class="control-value">80%</span>
+                                </div>
+                                
+                                <div class="editor-actions-integrated">
+                                    <button class="btn-apply" id="apply-bg-integrated">✅ Appliquer</button>
+                                    <button class="btn-reset" id="reset-bg-integrated">🔄 Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Section 2: Informations produit -->
                 <div class="section">
                     <h3 class="section-title">
