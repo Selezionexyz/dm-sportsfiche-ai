@@ -1415,7 +1415,50 @@
                         🎨 Éditeur de Fond Ultimate
                     </h3>
                     
-                    <div class="editor-integrated">
+                    <!-- Version Mobile Simplifiée -->
+                    <div class="editor-mobile-simple" id="editor-mobile">
+                        <div class="mobile-editor-header">
+                            <span id="mobile-editing-name">Sélectionnez une image</span>
+                            <button id="close-mobile-editor" class="close-mobile">✕</button>
+                        </div>
+                        
+                        <div class="mobile-images-grid">
+                            <div class="mobile-section-title">📷 Vos images :</div>
+                            <div class="mobile-images-selector" id="mobile-images-selector">
+                                <!-- Images générées par JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="mobile-canvas-container">
+                            <canvas id="mobile-canvas" class="mobile-canvas"></canvas>
+                            <div class="mobile-placeholder" id="mobile-placeholder">
+                                <div class="mobile-placeholder-icon">🖼️</div>
+                                <p>Touchez une image ci-dessus</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mobile-backgrounds">
+                            <div class="mobile-section-title">🎨 Fonds :</div>
+                            <div class="mobile-bg-tabs" id="mobile-bg-tabs">
+                                <button class="mobile-tab active" data-category="wood">🌳</button>
+                                <button class="mobile-tab" data-category="stone">🗿</button>
+                                <button class="mobile-tab" data-category="colors">🎨</button>
+                                <button class="mobile-tab" data-category="metal">🏭</button>
+                                <button class="mobile-tab" data-category="sports">⚽</button>
+                            </div>
+                            <div class="mobile-bg-grid" id="mobile-bg-grid">
+                                <!-- Fonds générés par JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="mobile-actions">
+                            <button class="mobile-btn-apply" id="mobile-apply">✅ Appliquer</button>
+                            <button class="mobile-btn-reset" id="mobile-reset">🔄 Reset</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Version Desktop Complète -->
+                    <div class="editor-integrated desktop-only">
                         <div class="editor-header-integrated">
                             <div class="current-image-info">
                                 <span id="editing-image-name">Aucune image sélectionnée</span>
