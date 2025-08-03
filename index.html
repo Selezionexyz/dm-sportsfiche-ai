@@ -2509,7 +2509,126 @@
             updateImageSelector();
         }
 
-        // Fonctions pour l'éditeur intégré
+        // ÉDITEUR SIMPLE
+        let simpleEditor = {
+            currentImageId: null,
+            canvas: null,
+            ctx: null,
+            originalImage: null,
+            selectedColor: null
+        };
+
+        function updateImageSelector() {
+            // Simple editor
+            const simpleGrid = document.getElementById('simple-images-grid');
+            if (simpleGrid) {
+                simpleGrid.innerHTML = uploadedImages.map((img, index) => `
+                    <div class="simple-image-item" data-image-id="${img.id}" onclick="selectSimpleImage('${img.id}')">
+                        <img src="${img.data}" alt="${img.name}">
+                    </div>
+                `).join('');
+            }
+        }
+
+        function setupSimpleEditor() {
+            // Setup couleurs
+            document.querySelectorAll('.simple-color').forEach(color => {
+                color.addEventListener('click', function() {
+                    // Désélectionner toutes les couleurs
+                    document.querySelectorAll('.simple-color').forEach(c => c.classList.remove('selected'));
+                    
+                    // Sélectionner cette couleur
+                    this.classList.add('selected');
+                    simpleEditor.selectedColor = this.dataset.color;
+                    
+                    // Redessiner si une image est sélectionnée
+                    if (simpleEditor.currentImageId) {
+                        drawSimpleImage();
+                    }
+                });
+            });
+
+            // Bouton appliquer
+            document.getElementById('apply-simple-bg').addEventListener('click', applySimpleBg);
+        }
+
+        function selectSimpleImage(imageId) {
+            // Mettre à jour sélection visuelle
+            document.querySelectorAll('.simple-image-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            document.querySelector(`[data-image-id="${imageId}"]`).classList.add('selected');
+
+            // Charger l'image
+            const image = uploadedImages.find(img => img.id === imageId);
+            if (!image) return;
+
+            simpleEditor.currentImageId = imageId;
+
+            // Masquer placeholder, afficher canvas
+            document.getElementById('no-image-selected').style.display = 'none';
+            const canvas = document.getElementById('simple-canvas');
+            canvas.style.display = 'block';
+
+            simpleEditor.canvas = canvas;
+            simpleEditor.ctx = canvas.getContext('2d');
+
+            // Charger et afficher l'image
+            const img = new Image();
+            img.onload = () => {
+                simpleEditor.originalImage = img;
+
+                // Ajuster taille canvas
+                const maxWidth = 350;
+                const maxHeight = 280;
+                const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+
+                canvas.width = img.width * ratio;
+                canvas.height = img.height * ratio;
+
+                drawSimpleImage();
+
+                // Activer bouton
+                document.getElementById('apply-simple-bg').disabled = false;
+            };
+            img.src = image.data;
+        }
+
+        function drawSimpleImage() {
+            const canvas = simpleEditor.canvas;
+            const ctx = simpleEditor.ctx;
+            const img = simpleEditor.originalImage;
+
+            if (!img) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dessiner fond coloré si sélectionné
+            if (simpleEditor.selectedColor) {
+                ctx.fillStyle = simpleEditor.selectedColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            // Dessiner l'image par-dessus
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+
+        function applySimpleBg() {
+            if (!simpleEditor.currentImageId || !simpleEditor.selectedColor) {
+                showToast('❌ Sélectionnez une image et une couleur', 'error');
+                return;
+            }
+
+            // Sauvegarder l'image modifiée
+            const newImageData = simpleEditor.canvas.toDataURL();
+            const imageIndex = uploadedImages.findIndex(img => img.id === simpleEditor.currentImageId);
+
+            if (imageIndex !== -1) {
+                uploadedImages[imageIndex].data = newImageData;
+                updateImageGallery();
+                showToast('✅ Fond appliqué ! Vous pouvez continuer avec les informations produit.', 'success', 4000);
+            }
+        }
         function showIntegratedEditor() {
             const section = document.getElementById('background-editor-section');
             section.style.display = 'block';
