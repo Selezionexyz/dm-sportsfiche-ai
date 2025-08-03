@@ -1403,6 +1403,86 @@
         </div>
     </div>
 
+    <!-- Éditeur de fond Ultimate -->
+    <div class="background-editor" id="background-editor">
+        <div class="editor-container">
+            <div class="editor-header">
+                <div class="editor-title">🎨 Éditeur de Fond Ultimate</div>
+                <button class="close-editor" id="close-editor">&times;</button>
+            </div>
+            
+            <div class="editor-sidebar">
+                <div class="background-category">🌳 BOIS & NATURE</div>
+                <div class="backgrounds-grid" id="wood-backgrounds">
+                    <!-- Fonds bois générés par JS -->
+                </div>
+                
+                <div class="background-category">🗿 PIERRE & MINÉRAUX</div>
+                <div class="backgrounds-grid" id="stone-backgrounds">
+                    <!-- Fonds pierre générés par JS -->
+                </div>
+                
+                <div class="background-category">🎨 COULEURS & DÉGRADÉS</div>
+                <div class="backgrounds-grid" id="color-backgrounds">
+                    <!-- Couleurs générées par JS -->
+                </div>
+                
+                <div class="background-category">🏭 MÉTAL & INDUSTRIEL</div>
+                <div class="backgrounds-grid" id="metal-backgrounds">
+                    <!-- Fonds métal générés par JS -->
+                </div>
+                
+                <div class="background-category">⚽ SPORTS DM</div>
+                <div class="backgrounds-grid" id="sports-backgrounds">
+                    <!-- Fonds sports générés par JS -->
+                </div>
+            </div>
+            
+            <div class="editor-main">
+                <canvas id="editor-canvas" class="editor-canvas"></canvas>
+            </div>
+            
+            <div class="editor-controls">
+                <div class="control-group">
+                    <label class="control-label">🔆 Luminosité</label>
+                    <input type="range" class="slider" id="brightness-slider" min="50" max="150" value="100">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">📏 Échelle</label>
+                    <input type="range" class="slider" id="scale-slider" min="50" max="200" value="100">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">🎭 Opacité fond</label>
+                    <input type="range" class="slider" id="opacity-slider" min="0" max="100" value="80">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">🔄 Position X</label>
+                    <input type="range" class="slider" id="position-x-slider" min="-100" max="100" value="0">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">↕️ Position Y</label>
+                    <input type="range" class="slider" id="position-y-slider" min="-100" max="100" value="0">
+                </div>
+                
+                <div class="editor-actions">
+                    <button class="editor-btn primary" id="apply-background">
+                        ✅ Appliquer le fond
+                    </button>
+                    <button class="editor-btn secondary" id="reset-background">
+                        🔄 Réinitialiser
+                    </button>
+                    <button class="editor-btn secondary" id="download-edited">
+                        💾 Télécharger
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast notifications -->
     <div class="toast" id="toast">
         <span id="toast-message"></span>
