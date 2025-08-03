@@ -2379,6 +2379,11 @@
         function showIntegratedEditor() {
             const section = document.getElementById('background-editor-section');
             section.style.display = 'block';
+            
+            // Déterminer quelle version afficher
+            if (window.innerWidth <= 768) {
+                setupMobileEditor();
+            }
         }
 
         function hideIntegratedEditor() {
@@ -2387,13 +2392,201 @@
         }
 
         function updateImageSelector() {
+            // Desktop
             const grid = document.getElementById('images-selector-grid');
+            if (grid) {
+                grid.innerHTML = uploadedImages.map((img, index) => `
+                    <div class="image-selector-item" data-image-id="${img.id}" onclick="selectImageForEditing('${img.id}')">
+                        <img src="${img.data}" alt="${img.name}">
+                    </div>
+                `).join('');
+            }
+
+            // Mobile
+            const mobileGrid = document.getElementById('mobile-images-selector');
+            if (mobileGrid) {
+                mobileGrid.innerHTML = uploadedImages.map((img, index) => `
+                    <div class="mobile-image-item" data-image-id="${img.id}" onclick="selectMobileImageForEditing('${img.id}')">
+                        <img src="${img.data}" alt="${img.name}">
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Variables pour l'éditeur mobile
+        let mobileEditor = {
+            currentImageId: null,
+            canvas: null,
+            ctx: null,
+            originalImage: null,
+            currentBackground: null,
+            currentCategory: 'wood'
+        };
+
+        function setupMobileEditor() {
+            generateMobileBackgrounds();
             
-            grid.innerHTML = uploadedImages.map((img, index) => `
-                <div class="image-selector-item" data-image-id="${img.id}" onclick="selectImageForEditing('${img.id}')">
-                    <img src="${img.data}" alt="${img.name}">
+            // Setup onglets mobile
+            document.querySelectorAll('.mobile-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    mobileEditor.currentCategory = category;
+                    
+                    // Mettre à jour les onglets
+                    document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    updateMobileBackgroundGrid(category);
+                });
+            });
+            
+            // Setup boutons mobile
+            document.getElementById('mobile-apply').addEventListener('click', applyMobileBackground);
+            document.getElementById('mobile-reset').addEventListener('click', resetMobileEditor);
+            document.getElementById('close-mobile-editor').addEventListener('click', hideIntegratedEditor);
+            
+            // Initialiser avec les fonds bois
+            updateMobileBackgroundGrid('wood');
+        }
+
+        function generateMobileBackgrounds() {
+            // Pas besoin de générer maintenant, on génère à la demande
+        }
+
+        function updateMobileBackgroundGrid(category) {
+            const grid = document.getElementById('mobile-bg-grid');
+            const collection = backgroundCollections[category];
+            
+            grid.innerHTML = collection.map(bg => `
+                <div class="mobile-bg-item" 
+                     data-bg-type="${category}" 
+                     data-bg-name="${bg.name}" 
+                     style="background: ${bg.pattern || bg.gradient || bg.color};" 
+                     onclick="selectMobileBackground('${category}', '${bg.name}')">
                 </div>
             `).join('');
+        }
+
+        function selectMobileImageForEditing(imageId) {
+            // Mettre à jour la sélection visuelle
+            document.querySelectorAll('.mobile-image-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            document.querySelector(`[data-image-id="${imageId}"]`).classList.add('selected');
+            
+            // Charger l'image dans l'éditeur mobile
+            const image = uploadedImages.find(img => img.id === imageId);
+            if (!image) return;
+            
+            mobileEditor.currentImageId = imageId;
+            document.getElementById('mobile-editing-name').textContent = `✏️ ${image.name.length > 20 ? image.name.substring(0, 20) + '...' : image.name}`;
+            
+            // Masquer le placeholder et afficher le canvas
+            document.getElementById('mobile-placeholder').style.display = 'none';
+            const canvas = document.getElementById('mobile-canvas');
+            canvas.style.display = 'block';
+            
+            mobileEditor.canvas = canvas;
+            mobileEditor.ctx = canvas.getContext('2d');
+            
+            // Charger l'image
+            const img = new Image();
+            img.onload = () => {
+                mobileEditor.originalImage = img;
+                
+                // Ajuster la taille du canvas pour mobile
+                const maxWidth = 250;
+                const maxHeight = 180;
+                const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+                
+                canvas.width = img.width * ratio;
+                canvas.height = img.height * ratio;
+                
+                drawMobileImage();
+            };
+            img.src = image.data;
+        }
+
+        function drawMobileImage() {
+            const canvas = mobileEditor.canvas;
+            const ctx = mobileEditor.ctx;
+            const img = mobileEditor.originalImage;
+            
+            if (!img) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Appliquer le fond si sélectionné
+            if (mobileEditor.currentBackground) {
+                const bg = mobileEditor.currentBackground.data;
+                
+                if (bg.color) {
+                    ctx.fillStyle = bg.color;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                } else if (bg.gradient) {
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    if (bg.gradient.includes('FF6B6B')) {
+                        gradient.addColorStop(0, '#FF6B6B');
+                        gradient.addColorStop(1, '#4ECDC4');
+                    } else if (bg.gradient.includes('667eea')) {
+                        gradient.addColorStop(0, '#667eea');
+                        gradient.addColorStop(1, '#764ba2');
+                    } else {
+                        gradient.addColorStop(0, '#e60012');
+                        gradient.addColorStop(1, '#ff4444');
+                    }
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            
+            // Dessiner l'image (version simplifiée pour mobile)
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+
+        function selectMobileBackground(type, name) {
+            // Mettre à jour la sélection visuelle
+            document.querySelectorAll('.mobile-bg-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            document.querySelector(`[data-bg-type="${type}"][data-bg-name="${name}"]`).classList.add('selected');
+            
+            // Sélectionner le fond
+            const collection = backgroundCollections[type];
+            const background = collection.find(bg => bg.name === name);
+            
+            mobileEditor.currentBackground = {
+                type,
+                name,
+                data: background
+            };
+            
+            drawMobileImage();
+        }
+
+        function applyMobileBackground() {
+            if (!mobileEditor.currentImageId || !mobileEditor.canvas) {
+                showToast('❌ Sélectionnez une image et un fond', 'error');
+                return;
+            }
+            
+            // Sauvegarder l'image modifiée
+            const newImageData = mobileEditor.canvas.toDataURL();
+            const imageIndex = uploadedImages.findIndex(img => img.id === mobileEditor.currentImageId);
+            
+            if (imageIndex !== -1) {
+                uploadedImages[imageIndex].data = newImageData;
+                updateImageGallery();
+                showToast('✅ Fond appliqué !');
+            }
+        }
+
+        function resetMobileEditor() {
+            mobileEditor.currentBackground = null;
+            document.querySelectorAll('.mobile-bg-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            drawMobileImage();
         }
 
         let integratedEditor = {
