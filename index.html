@@ -1841,46 +1841,163 @@
             }
             document.getElementById('preview-price').innerHTML = priceHtml;
 
+            // Génération de contenu SEO et hashtags
+            const hashtags = generateHashtags(data);
+            const seoKeywords = generateSEOKeywords(data);
+            const richDescription = generateRichDescription(data);
+
             let description = `
-                <p><strong>Marque:</strong> ${data.brand}</p>
-                <p><strong>Référence:</strong> ${data.sku}</p>
-                <p><strong>Catégorie:</strong> ${data.category}</p>
-                <p><strong>Genre:</strong> ${data.gender}</p>
+                <div class="product-rich-content">
+                    <div class="product-basic-info">
+                        <p><strong>🏷️ Marque:</strong> ${data.brand}</p>
+                        <p><strong>📦 Référence:</strong> ${data.sku}</p>
+                        <p><strong>🏆 Catégorie:</strong> ${data.category.replace('-', ' ').toUpperCase()}</p>
+                        <p><strong>👥 Genre:</strong> ${data.gender.charAt(0).toUpperCase() + data.gender.slice(1)}</p>
+                    </div>
+
+                    <div class="product-description-enhanced">
+                        <h3>📝 Description Ultimate</h3>
+                        <p>${richDescription}</p>
+                    </div>
+
+                    <div class="product-details">
+                        <h3>🎯 Caractéristiques</h3>
+                        ${data.sizes.length ? `<p><strong>📏 Tailles disponibles:</strong> ${data.sizes.join(', ')}</p>` : ''}
+                        ${data.colors.length ? `<p><strong>🎨 Couleurs disponibles:</strong> ${data.colors.join(', ')}</p>` : ''}
+                        ${data.material ? `<p><strong>🧵 Matière:</strong> ${data.material}</p>` : ''}
+                        ${data.season ? `<p><strong>🌟 Saison:</strong> ${data.season}</p>` : ''}
+                    </div>
+
+                    ${data.features.length ? `
+                        <div class="product-features">
+                            <h3>⭐ Points forts Ultimate</h3>
+                            <ul class="features-list">
+                                ${data.features.map(feature => `<li>✅ ${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    <div class="product-seo">
+                        <h3>🔍 SEO & Référencement</h3>
+                        <p><strong>Mots-clés:</strong> ${seoKeywords.join(', ')}</p>
+                        <div class="hashtags-container">
+                            <strong>📱 Hashtags:</strong><br>
+                            <span class="hashtags">${hashtags.join(' ')}</span>
+                        </div>
+                    </div>
+
+                    ${data.images.length ? `
+                        <div class="product-images-info">
+                            <h3>📸 Galerie Images (${data.images.length})</h3>
+                            <div class="images-preview-grid">
+                                ${data.images.slice(0, 4).map((img, index) => `
+                                    <div class="image-preview-item">
+                                        <img src="${img.data}" alt="Image ${index + 1}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                                        <button onclick="editImageFromPreview('${img.id}')" class="mini-edit-btn">🎨</button>
+                                    </div>
+                                `).join('')}
+                                ${data.images.length > 4 ? `<div class="more-images">+${data.images.length - 4} autres</div>` : ''}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <div class="product-professional">
+                        <h3>🏢 Informations Professionnelles</h3>
+                        <p><strong>✨ Qualité:</strong> Produit certifié DM Sports Ultimate</p>
+                        <p><strong>🚚 Livraison:</strong> Disponible sous 24-48h</p>
+                        <p><strong>🔄 Retour:</strong> 30 jours satisfait ou remboursé</p>
+                        <p><strong>🏪 Vendeur:</strong> DM Sports Lyon - Spécialiste Sport</p>
+                    </div>
+                </div>
             `;
 
-            if (data.shortDesc) {
-                description += `<p><strong>Description:</strong> ${data.shortDesc}</p>`;
-            }
-
-            if (data.sizes.length) {
-                description += `<p><strong>Tailles:</strong> ${data.sizes.join(', ')}</p>`;
-            }
-
-            if (data.colors.length) {
-                description += `<p><strong>Couleurs:</strong> ${data.colors.join(', ')}</p>`;
-            }
-
-            if (data.material) {
-                description += `<p><strong>Matière:</strong> ${data.material}</p>`;
-            }
-
-            if (data.season) {
-                description += `<p><strong>Saison:</strong> ${data.season}</p>`;
-            }
-
-            if (data.features.length) {
-                description += `<p><strong>Points forts:</strong></p><ul>`;
-                data.features.forEach(feature => {
-                    description += `<li>${feature}</li>`;
-                });
-                description += `</ul>`;
-            }
-
-            if (data.images.length) {
-                description += `<p><strong>Images:</strong> ${data.images.length} photo(s) disponible(s)</p>`;
-            }
-
             document.getElementById('preview-description').innerHTML = description;
+        }
+
+        // Fonctions SEO et contenu enrichi
+        function generateHashtags(data) {
+            const hashtags = ['#DMSports', '#Ultimate'];
+            
+            // Hashtags basés sur la marque
+            hashtags.push(`#${data.brand.replace(/\s+/g, '')}`);
+            
+            // Hashtags basés sur la catégorie
+            if (data.category.includes('chaussures')) {
+                hashtags.push('#Chaussures', '#Sneakers', '#Baskets');
+                if (data.category.includes('running')) hashtags.push('#Running');
+                if (data.category.includes('basketball')) hashtags.push('#Basketball');
+                if (data.category.includes('football')) hashtags.push('#Football');
+            }
+            if (data.category.includes('survetements')) hashtags.push('#Survetement', '#Tracksuit');
+            if (data.category.includes('sweats')) hashtags.push('#Sweat', '#Hoodie');
+            
+            // Hashtags basés sur le genre
+            if (data.gender === 'homme') hashtags.push('#Homme', '#Men');
+            if (data.gender === 'femme') hashtags.push('#Femme', '#Women');
+            if (data.gender === 'enfant') hashtags.push('#Enfant', '#Kids');
+            
+            // Hashtags génériques sport
+            hashtags.push('#Sport', '#Mode', '#Style', '#Lyon', '#France');
+            
+            // Hashtags couleurs populaires
+            if (data.colors.includes('Noir')) hashtags.push('#Noir', '#Black');
+            if (data.colors.includes('Blanc')) hashtags.push('#Blanc', '#White');
+            if (data.colors.includes('Rouge')) hashtags.push('#Rouge', '#Red');
+            
+            return hashtags.slice(0, 15); // Limiter à 15 hashtags
+        }
+
+        function generateSEOKeywords(data) {
+            const keywords = [];
+            
+            keywords.push(data.brand.toLowerCase());
+            keywords.push(data.name.toLowerCase());
+            keywords.push('dm sports');
+            keywords.push('lyon');
+            
+            if (data.category.includes('chaussures')) {
+                keywords.push('chaussures sport', 'sneakers', 'baskets');
+            }
+            if (data.category.includes('survetements')) {
+                keywords.push('survêtement', 'jogging', 'tracksuit');
+            }
+            
+            keywords.push(data.gender);
+            keywords.push('sport', 'mode', 'qualité premium');
+            
+            return keywords.slice(0, 10);
+        }
+
+        function generateRichDescription(data) {
+            let description = `Découvrez ${data.name} de la marque ${data.brand}, `;
+            
+            if (data.category.includes('chaussures')) {
+                description += "des chaussures d'exception qui allient performance et style. ";
+            } else if (data.category.includes('survetements')) {
+                description += "un survêtement premium qui redéfinit le confort et l'élégance. ";
+            } else {
+                description += "un produit d'exception qui combine qualité et design. ";
+            }
+            
+            description += `Conçu pour ${data.gender === 'homme' ? 'les hommes' : data.gender === 'femme' ? 'les femmes' : 'les enfants'} `;
+            description += "qui exigent le meilleur. ";
+            
+            if (data.material) {
+                description += `Fabriqué en ${data.material.toLowerCase()} pour un confort optimal. `;
+            }
+            
+            if (data.season) {
+                description += `Parfait pour la saison ${data.season.toLowerCase()}. `;
+            }
+            
+            description += `Disponible chez DM Sports Lyon, votre spécialiste sport depuis plus de 20 ans. `;
+            description += `Référence exclusive: ${data.sku}. Qualité garantie Ultimate Pro.`;
+            
+            return description;
+        }
+
+        function editImageFromPreview(imageId) {
+            openBackgroundEditor(imageId);
         }
 
         function saveProduct() {
