@@ -1988,6 +1988,7 @@
             
             if (uploadedImages.length === 0) {
                 gallery.style.display = 'none';
+                hideIntegratedEditor();
                 return;
             }
             
@@ -2012,6 +2013,265 @@
                     </div>
                 </div>
             `).join('');
+            
+            // Afficher la section éditeur intégré
+            showIntegratedEditor();
+            updateImageSelector();
+        }
+
+        // Fonctions pour l'éditeur intégré
+        function showIntegratedEditor() {
+            const section = document.getElementById('background-editor-section');
+            section.style.display = 'block';
+        }
+
+        function hideIntegratedEditor() {
+            const section = document.getElementById('background-editor-section');
+            section.style.display = 'none';
+        }
+
+        function updateImageSelector() {
+            const grid = document.getElementById('images-selector-grid');
+            
+            grid.innerHTML = uploadedImages.map((img, index) => `
+                <div class="image-selector-item" data-image-id="${img.id}" onclick="selectImageForEditing('${img.id}')">
+                    <img src="${img.data}" alt="${img.name}">
+                </div>
+            `).join('');
+        }
+
+        let integratedEditor = {
+            currentImageId: null,
+            canvas: null,
+            ctx: null,
+            originalImage: null,
+            currentBackground: null,
+            settings: {
+                brightness: 100,
+                scale: 100,
+                opacity: 80
+            }
+        };
+
+        function selectImageForEditing(imageId) {
+            // Mettre à jour la sélection visuelle
+            document.querySelectorAll('.image-selector-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            document.querySelector(`[data-image-id="${imageId}"]`).classList.add('selected');
+            
+            // Charger l'image dans l'éditeur
+            const image = uploadedImages.find(img => img.id === imageId);
+            if (!image) return;
+            
+            integratedEditor.currentImageId = imageId;
+            document.getElementById('editing-image-name').textContent = `✏️ ${image.name}`;
+            
+            // Masquer le placeholder et afficher le canvas
+            document.getElementById('editor-placeholder').style.display = 'none';
+            const canvas = document.getElementById('editor-canvas-integrated');
+            canvas.style.display = 'block';
+            
+            integratedEditor.canvas = canvas;
+            integratedEditor.ctx = canvas.getContext('2d');
+            
+            // Charger l'image
+            const img = new Image();
+            img.onload = () => {
+                integratedEditor.originalImage = img;
+                
+                // Ajuster la taille du canvas
+                const maxWidth = 300;
+                const maxHeight = 300;
+                const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+                
+                canvas.width = img.width * ratio;
+                canvas.height = img.height * ratio;
+                
+                drawIntegratedImage();
+            };
+            img.src = image.data;
+        }
+
+        function drawIntegratedImage() {
+            const canvas = integratedEditor.canvas;
+            const ctx = integratedEditor.ctx;
+            const img = integratedEditor.originalImage;
+            
+            if (!img) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Appliquer le fond si sélectionné
+            if (integratedEditor.currentBackground) {
+                const bg = integratedEditor.currentBackground.data;
+                
+                if (bg.color) {
+                    ctx.fillStyle = bg.color;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                } else if (bg.gradient) {
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    if (bg.gradient.includes('FF6B6B')) {
+                        gradient.addColorStop(0, '#FF6B6B');
+                        gradient.addColorStop(1, '#4ECDC4');
+                    } else if (bg.gradient.includes('667eea')) {
+                        gradient.addColorStop(0, '#667eea');
+                        gradient.addColorStop(1, '#764ba2');
+                    } else {
+                        gradient.addColorStop(0, '#e60012');
+                        gradient.addColorStop(1, '#ff4444');
+                    }
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            
+            // Appliquer les réglages et dessiner l'image
+            const settings = integratedEditor.settings;
+            
+            ctx.save();
+            ctx.filter = `brightness(${settings.brightness}%)`;
+            
+            const scale = settings.scale / 100;
+            const scaledWidth = canvas.width * scale;
+            const scaledHeight = canvas.height * scale;
+            const x = (canvas.width - scaledWidth) / 2;
+            const y = (canvas.height - scaledHeight) / 2;
+            
+            ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+            ctx.restore();
+        }
+
+        function setupIntegratedEditor() {
+            // Générer les fonds
+            generateIntegratedBackgrounds();
+            
+            // Setup onglets des catégories
+            document.querySelectorAll('.bg-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    
+                    // Mettre à jour les onglets
+                    document.querySelectorAll('.bg-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mettre à jour les grilles
+                    document.querySelectorAll('.bg-grid').forEach(g => g.classList.remove('active'));
+                    document.getElementById(category + '-bg-grid').classList.add('active');
+                });
+            });
+            
+            // Setup des sliders
+            ['brightness-integrated', 'scale-integrated', 'opacity-integrated'].forEach(sliderId => {
+                const slider = document.getElementById(sliderId);
+                const valueSpan = slider.parentElement.querySelector('.control-value');
+                
+                slider.addEventListener('input', function() {
+                    const setting = sliderId.replace('-integrated', '');
+                    integratedEditor.settings[setting] = parseInt(this.value);
+                    valueSpan.textContent = this.value + '%';
+                    drawIntegratedImage();
+                });
+            });
+            
+            // Setup boutons d'action
+            document.getElementById('apply-bg-integrated').addEventListener('click', applyIntegratedBackground);
+            document.getElementById('reset-bg-integrated').addEventListener('click', resetIntegratedEditor);
+            document.getElementById('close-integrated-editor').addEventListener('click', hideIntegratedEditor);
+        }
+
+        function generateIntegratedBackgrounds() {
+            // Bois
+            const woodGrid = document.getElementById('wood-bg-grid');
+            woodGrid.innerHTML = backgroundCollections.wood.map(bg => `
+                <div class="bg-item-integrated" data-bg-type="wood" data-bg-name="${bg.name}" style="background: ${bg.pattern};" onclick="selectIntegratedBackground('wood', '${bg.name}')"></div>
+            `).join('');
+            
+            // Pierre
+            const stoneGrid = document.getElementById('stone-bg-grid');
+            stoneGrid.innerHTML = backgroundCollections.stone.map(bg => `
+                <div class="bg-item-integrated" data-bg-type="stone" data-bg-name="${bg.name}" style="background: ${bg.pattern};" onclick="selectIntegratedBackground('stone', '${bg.name}')"></div>
+            `).join('');
+            
+            // Couleurs
+            const colorGrid = document.getElementById('colors-bg-grid');
+            colorGrid.innerHTML = backgroundCollections.colors.map(bg => `
+                <div class="bg-item-integrated" data-bg-type="colors" data-bg-name="${bg.name}" style="background: ${bg.gradient || bg.color};" onclick="selectIntegratedBackground('colors', '${bg.name}')"></div>
+            `).join('');
+            
+            // Métal
+            const metalGrid = document.getElementById('metal-bg-grid');
+            metalGrid.innerHTML = backgroundCollections.metal.map(bg => `
+                <div class="bg-item-integrated" data-bg-type="metal" data-bg-name="${bg.name}" style="background: ${bg.pattern};" onclick="selectIntegratedBackground('metal', '${bg.name}')"></div>
+            `).join('');
+            
+            // Sports
+            const sportsGrid = document.getElementById('sports-bg-grid');
+            sportsGrid.innerHTML = backgroundCollections.sports.map(bg => `
+                <div class="bg-item-integrated" data-bg-type="sports" data-bg-name="${bg.name}" style="background: ${bg.pattern};" onclick="selectIntegratedBackground('sports', '${bg.name}')"></div>
+            `).join('');
+        }
+
+        function selectIntegratedBackground(type, name) {
+            // Mettre à jour la sélection visuelle
+            document.querySelectorAll('.bg-item-integrated').forEach(item => {
+                item.classList.remove('selected');
+            });
+            document.querySelector(`[data-bg-type="${type}"][data-bg-name="${name}"]`).classList.add('selected');
+            
+            // Sélectionner le fond
+            const collection = backgroundCollections[type];
+            const background = collection.find(bg => bg.name === name);
+            
+            integratedEditor.currentBackground = {
+                type,
+                name,
+                data: background
+            };
+            
+            drawIntegratedImage();
+        }
+
+        function applyIntegratedBackground() {
+            if (!integratedEditor.currentImageId || !integratedEditor.canvas) {
+                showToast('❌ Aucune image sélectionnée pour l\'édition', 'error');
+                return;
+            }
+            
+            // Sauvegarder l'image modifiée
+            const newImageData = integratedEditor.canvas.toDataURL();
+            const imageIndex = uploadedImages.findIndex(img => img.id === integratedEditor.currentImageId);
+            
+            if (imageIndex !== -1) {
+                uploadedImages[imageIndex].data = newImageData;
+                updateImageGallery();
+                showToast('✅ Fond appliqué avec succès !');
+            }
+        }
+
+        function resetIntegratedEditor() {
+            integratedEditor.settings = {
+                brightness: 100,
+                scale: 100,
+                opacity: 80
+            };
+            
+            // Reset sliders
+            document.getElementById('brightness-integrated').value = 100;
+            document.getElementById('scale-integrated').value = 100;
+            document.getElementById('opacity-integrated').value = 80;
+            
+            // Reset values display
+            document.querySelectorAll('.control-value').forEach((span, index) => {
+                span.textContent = [100, 100, 80][index] + '%';
+            });
+            
+            integratedEditor.currentBackground = null;
+            document.querySelectorAll('.bg-item-integrated').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            drawIntegratedImage();
         }
 
         function updateUploadStats() {
