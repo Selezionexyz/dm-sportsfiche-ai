@@ -3427,12 +3427,29 @@
         // Génération du contenu
         function generateProductContent() {
             // Validation
-            const requiredFields = ['product-name', 'brand', 'category', 'gender', 'sku', 'price'];
+            const requiredFields = ['product-name', 'brand', 'category', 'gender', 'sku', 'price', 'ean'];
             for (const field of requiredFields) {
-                if (!document.getElementById(field).value.trim()) {
-                    showToast(`❌ Le champ "${document.querySelector(`label[for="${field}"], label`).textContent}" est requis`, 'error');
+                const value = document.getElementById(field).value.trim();
+                if (!value) {
+                    const fieldNames = {
+                        'product-name': 'Nom du produit',
+                        'brand': 'Marque',
+                        'category': 'Catégorie', 
+                        'gender': 'Genre',
+                        'sku': 'Référence',
+                        'price': 'Prix',
+                        'ean': 'Code EAN'
+                    };
+                    showToast(`❌ Le champ "${fieldNames[field]}" est requis`, 'error');
                     return;
                 }
+            }
+
+            // Validation spéciale EAN
+            const ean = document.getElementById('ean').value.trim();
+            if (ean.length !== 13 || !/^\d{13}$/.test(ean)) {
+                showToast('❌ Le code EAN doit contenir exactement 13 chiffres', 'error');
+                return;
             }
 
             if (uploadedImages.length === 0) {
@@ -3452,8 +3469,10 @@
                     category: document.getElementById('category').value,
                     gender: document.getElementById('gender').value,
                     sku: document.getElementById('sku').value,
+                    ean: document.getElementById('ean').value,
                     price: parseFloat(document.getElementById('price').value),
                     oldPrice: document.getElementById('old-price').value ? parseFloat(document.getElementById('old-price').value) : null,
+                    stock: document.getElementById('stock').value ? parseInt(document.getElementById('stock').value) : null,
                     shortDesc: document.getElementById('short-desc').value,
                     material: document.getElementById('material').value,
                     season: document.getElementById('season').value,
