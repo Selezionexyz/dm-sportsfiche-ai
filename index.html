@@ -2672,6 +2672,77 @@
                     }
                     ctx.fillStyle = gradient;
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
+                } else if (bg.pattern) {
+                    // CORRECTION: Gérer les patterns en créant des équivalents Canvas
+                    const bgType = integratedEditor.currentBackground.type;
+                    const bgName = integratedEditor.currentBackground.name;
+                    
+                    if (bgType === 'wood') {
+                        // Patterns bois - utiliser des dégradés qui ressemblent au bois
+                        const woodColors = {
+                            'Chêne Clair': ['#D2B48F', '#CD853F'],
+                            'Acajou': ['#8B4513', '#A0522D'],
+                            'Bambou': ['#DEB887', '#F5DEB3'],
+                            'Ébène': ['#2F2F2F', '#1C1C1C'],
+                            'Pin': ['#FFE4B5', '#DEB887'],
+                            'Noyer': ['#8B4513', '#654321']
+                        };
+                        const colors = woodColors[bgName] || ['#DEB887', '#CD853F'];
+                        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                        gradient.addColorStop(0, colors[0]);
+                        gradient.addColorStop(1, colors[1]);
+                        ctx.fillStyle = gradient;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    } else if (bgType === 'stone') {
+                        // Patterns pierre
+                        const stoneColors = {
+                            'Marbre Blanc': ['#FFFFFF', '#F8F8FF'],
+                            'Granit Gris': ['#808080', '#696969'],
+                            'Ardoise': ['#2F4F4F', '#1C1C1C'],
+                            'Travertin': ['#F5DEB3', '#DEB887'],
+                            'Obsidienne': ['#1C1C1C', '#000000'],
+                            'Quartz Rose': ['#FFB6C1', '#FFC0CB']
+                        };
+                        const colors = stoneColors[bgName] || ['#808080', '#696969'];
+                        const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, Math.max(canvas.width, canvas.height)/2);
+                        gradient.addColorStop(0, colors[0]);
+                        gradient.addColorStop(1, colors[1]);
+                        ctx.fillStyle = gradient;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    } else if (bgType === 'metal') {
+                        // Patterns métal
+                        const metalColors = {
+                            'Acier Brossé': '#C0C0C0',
+                            'Cuivre': '#B87333',
+                            'Chrome': '#E5E5E5',
+                            'Laiton': '#B8860B',
+                            'Fer Rouillé': '#CD853F',
+                            'Aluminium': '#F5F5F5'
+                        };
+                        const color = metalColors[bgName] || '#C0C0C0';
+                        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                        gradient.addColorStop(0, color);
+                        gradient.addColorStop(0.5, '#FFFFFF');
+                        gradient.addColorStop(1, color);
+                        ctx.fillStyle = gradient;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    } else if (bgType === 'sports') {
+                        // Patterns sports
+                        const sportsColors = {
+                            'Terrain Foot': ['#228B22', '#32CD32'],
+                            'Parquet Basket': ['#DEB887', '#CD853F'],
+                            'Piste Athlé': ['#DC143C', '#B22222'],
+                            'Court Tennis': ['#4169E1', '#1E90FF'],
+                            'Salle de Sport': ['#2F4F4F', '#556B2F'],
+                            'Ring Boxing': ['#B22222', '#8B0000']
+                        };
+                        const colors = sportsColors[bgName] || ['#228B22', '#32CD32'];
+                        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                        gradient.addColorStop(0, colors[0]);
+                        gradient.addColorStop(1, colors[1]);
+                        ctx.fillStyle = gradient;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
                 }
             }
             
