@@ -3671,29 +3671,72 @@
         }
 
         function generateRichDescription(data) {
-            let description = `Découvrez ${data.name} de la marque ${data.brand}, `;
+            // Templates professionnels par catégorie
+            const templates = {
+                'chaussures-running': {
+                    intro: `Plongez dans l'excellence avec ${data.name}, la chaussure de running ${data.brand} qui redéfinit les standards de performance et de confort.`,
+                    benefits: "Conçue pour les coureurs exigeants qui ne tolèrent aucun compromis, cette chaussure allie technologies de pointe et design avant-gardiste.",
+                    features: "Son système d'amortissement révolutionnaire absorbe parfaitement les chocs tout en restituant l'énergie à chaque foulée.",
+                    conclusion: "Un investissement dans votre passion, une promesse de performances exceptionnelles."
+                },
+                'chaussures-basketball': {
+                    intro: `Dominez le terrain avec ${data.name}, la chaussure ${data.brand} qui équipe les champions et inspire les légendes.`,
+                    benefits: "Fruit de décennies d'innovation et de collaboration avec les plus grands athlètes, elle offre un contrôle total du jeu.",
+                    features: "Sa semelle haute performance garantit une adhérence maximale, tandis que sa tige renforcée assure un maintien parfait lors des mouvements les plus intenses.",
+                    conclusion: "Plus qu'une chaussure, c'est votre arme secrète pour atteindre l'excellence."
+                },
+                'chaussures-lifestyle': {
+                    intro: `Exprimez votre style unique avec ${data.name}, la sneaker ${data.brand} qui transforme chaque pas en déclaration de mode.`,
+                    benefits: "Symbole d'authenticité et d'innovation, elle incarne l'esprit urbain moderne avec une élégance intemporelle.",
+                    features: "Son design iconique s'adapte à toutes les occasions, de la décontraction quotidienne aux sorties les plus stylées.",
+                    conclusion: "L'accessoire indispensable pour ceux qui refusent de passer inaperçus."
+                },
+                'survetements': {
+                    intro: `Adoptez le confort suprême avec ${data.name}, le survêtement ${data.brand} qui marie performance technique et style contemporain.`,
+                    benefits: "Pensé pour accompagner votre mode de vie actif, il offre une liberté de mouvement totale sans compromettre l'élégance.",
+                    features: "Ses matières premium respirantes et thermorégulatrices s'adaptent à toutes les conditions, de l'entraînement intensif aux moments de détente.",
+                    conclusion: "L'alliance parfaite entre fonctionnalité et raffinement."
+                },
+                'sweats': {
+                    intro: `Redécouvrez le confort avec ${data.name}, le sweat ${data.brand} qui révolutionne votre garde-robe casual.`,
+                    benefits: "Créé pour les connaisseurs qui exigent qualité et style, il incarne la sophistication décontractée.",
+                    features: "Sa coupe perfectionnée et ses finitions soignées en font bien plus qu'un simple vêtement : un véritable statement pièce.",
+                    conclusion: "Le compagnon idéal pour vos journées, du lever au coucher."
+                }
+            };
+
+            // Template par défaut professionnel
+            const defaultTemplate = {
+                intro: `Découvrez l'excellence avec ${data.name}, le produit ${data.brand} qui établit de nouveaux standards dans l'univers du sport et du lifestyle.`,
+                benefits: "Résultat d'une recherche approfondie et d'un savoir-faire incomparable, il répond aux attentes les plus élevées.",
+                features: "Chaque détail a été pensé pour offrir une expérience utilisateur exceptionnelle, alliant performance et esthétique.",
+                conclusion: "Un choix d'excellence pour les passionnés qui ne transigent jamais sur la qualité."
+            };
+
+            const template = templates[data.category] || defaultTemplate;
             
-            if (data.category.includes('chaussures')) {
-                description += "des chaussures d'exception qui allient performance et style. ";
-            } else if (data.category.includes('survetements')) {
-                description += "un survêtement premium qui redéfinit le confort et l'élégance. ";
-            } else {
-                description += "un produit d'exception qui combine qualité et design. ";
-            }
-            
-            description += `Conçu pour ${data.gender === 'homme' ? 'les hommes' : data.gender === 'femme' ? 'les femmes' : 'les enfants'} `;
-            description += "qui exigent le meilleur. ";
+            let description = template.intro + " ";
+            description += template.benefits + " ";
             
             if (data.material) {
-                description += `Fabriqué en ${data.material.toLowerCase()} pour un confort optimal. `;
+                description += `Fabriqué avec des matériaux ${data.material.toLowerCase()} de qualité premium, `;
             }
+            
+            description += template.features + " ";
             
             if (data.season) {
-                description += `Parfait pour la saison ${data.season.toLowerCase()}. `;
+                const seasonText = {
+                    'Printemps/Été': "sa polyvalence saisonnière en fait le compagnon idéal des beaux jours",
+                    'Automne/Hiver': "sa robustesse et son confort thermique excellent durant les saisons froides",
+                    'Toutes saisons': "sa polyvalence quatre saisons en fait un investissement durable"
+                };
+                description += (seasonText[data.season] || "adapté à tous les moments de l'année") + ". ";
             }
             
-            description += `Disponible chez DM Sports Lyon, votre spécialiste sport depuis plus de 20 ans. `;
-            description += `Référence exclusive: ${data.sku}. Qualité garantie Ultimate Pro.`;
+            description += template.conclusion;
+            
+            // Ajout signature DM Sports
+            description += ` Disponible exclusivement chez DM Sports Lyon, votre spécialiste sport haut de gamme depuis plus de 20 ans.`;
             
             return description;
         }
