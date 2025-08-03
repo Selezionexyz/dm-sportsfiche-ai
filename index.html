@@ -2458,6 +2458,56 @@ ${product.features?.length ? 'Points forts:\n• ' + product.features.join('\n�
             
             showToast('📸 Image de démonstration ajoutée ! Cliquez sur 🎨 pour tester l\'éditeur Ultimate', 'success', 6000);
         }
+
+        // Fonction de démonstration SEO
+        function generateDemoSEO() {
+            // Pré-remplir le formulaire avec des données riches
+            document.getElementById('product-name').value = 'Survêtement Nike Tech Fleece Ultimate Edition';
+            document.getElementById('brand').value = 'Nike';
+            document.getElementById('category').value = 'survetements';
+            document.getElementById('gender').value = 'homme';
+            document.getElementById('sku').value = 'NIKE-TF-2025-ULTIMATE';
+            document.getElementById('price').value = '239.00';
+            document.getElementById('old-price').value = '299.00';
+            document.getElementById('short-desc').value = 'Survêtement premium Nike Tech Fleece avec technologie révolutionnaire de thermorégulation. Édition Ultimate limitée avec finitions haut de gamme.';
+            document.getElementById('material').value = 'Polyester';
+            document.getElementById('season').value = 'Toutes saisons';
+            document.getElementById('features').value = 'Technologie Tech Fleece révolutionnaire\nThermorégulation intelligente\nCoupe ajustée premium\nFinitions réfléchissantes\nLogo Nike brodé 3D\nÉdition limitée Ultimate\nTissu respirant et déperlant';
+
+            // Sélectionner les tailles automatiquement
+            setTimeout(() => {
+                const sizes = document.querySelectorAll('.size-item');
+                if (sizes.length > 0) {
+                    // Sélectionner M, L, XL
+                    sizes.forEach((size, index) => {
+                        if (index >= 2 && index <= 4 && sizes[index]) {
+                            sizes[index].click();
+                        }
+                    });
+                }
+
+                // Sélectionner des couleurs
+                const colors = document.querySelectorAll('.color-item');
+                if (colors.length > 0) {
+                    colors[0].click(); // Noir
+                    colors[3].click(); // Rouge
+                    colors[4].click(); // Bleu
+                }
+
+                // Ajouter une image de démonstration si pas présente
+                if (uploadedImages.length === 0) {
+                    addDemoImage();
+                }
+
+                // Générer automatiquement après 1 seconde
+                setTimeout(() => {
+                    generateProductContent();
+                }, 1000);
+
+            }, 500);
+
+            showToast('✨ Démonstration SEO Ultimate lancée ! Génération automatique en cours...', 'success', 3000);
+        }
     </script>
 </body>
 </html>
