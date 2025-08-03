@@ -2396,6 +2396,22 @@ ${product.features?.length ? 'Points forts:\n• ' + product.features.join('\n�
             addDemoImage();
         });
 
+        // Fonction pour tester l'éditeur directement
+        function testBackgroundEditor() {
+            // S'il n'y a pas d'image de démonstration, en créer une
+            if (uploadedImages.length === 0) {
+                addDemoImage();
+                setTimeout(() => {
+                    if (uploadedImages.length > 0) {
+                        openBackgroundEditor(uploadedImages[0].id);
+                    }
+                }, 500);
+            } else {
+                // Utiliser la première image disponible
+                openBackgroundEditor(uploadedImages[0].id);
+            }
+        }
+
         // Fonction pour ajouter une image de démonstration
         function addDemoImage() {
             // Créer une image de test avec canvas
