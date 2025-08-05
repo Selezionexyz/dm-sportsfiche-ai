@@ -1,0 +1,145 @@
+# Docker Compose - Générateur de Fiches Produits DM'Sports
+# Version: 2.0.0
+# Usage: docker-compose up -d
+
+version: '3.8'
+
+services:
+  # Base de données MongoDB
+  mongodb:
+    image: mongo:4.4
+    container_name: dmsports-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: dmsports_products
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - dmsports-network
+    healthcheck:
+      test: echo 'db.runCommand("ismaster").ismaster' | mongo --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Backend FastAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dmsports-backend
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - DB_NAME=dmsports_products
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_SEARCH_API_KEY=${GOOGLE_SEARCH_API_KEY}
+      - GOOGLE_SEARCH_CX=${GOOGLE_SEARCH_CX}
+    volumes:
+      - ./backend:/app
+      - backend_logs:/app/logs
+    networks:
+      - dmsports-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:8001/api/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_BACKEND_URL=http://localhost:8001
+    container_name: dmsports-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - frontend_logs:/app/logs
+    networks:
+      - dmsports-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:3000 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Redis (optionnel, pour le cache)
+  redis:
+    image: redis:6-alpine
+    container_name: dmsports-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dmsports-network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: redis-cli ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Nginx Reverse Proxy (production)
+  nginx:
+    image: nginx:alpine
+    container_name: dmsports-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/ssl/certs:ro
+      - nginx_logs:/var/log/nginx
+    networks:
+      - dmsports-network
+    depends_on:
+      - backend
+      - frontend
+    profiles:
+      - production
+
+# Réseaux
+networks:
+  dmsports-network:
+    driver: bridge
+    name: dmsports-network
+
+# Volumes persistants
+volumes:
+  mongodb_data:
+    name: dmsports-mongodb-data
+    driver: local
+  
+  redis_data:
+    name: dmsports-redis-data
+    driver: local
+  
+  backend_logs:
+    name: dmsports-backend-logs
+    driver: local
+  
+  frontend_logs:
+    name: dmsports-frontend-logs
+    driver: local
+  
+  nginx_logs:
+    name: dmsports-nginx-logs
+    driver: local
