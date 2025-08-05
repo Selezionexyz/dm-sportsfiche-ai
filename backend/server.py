@@ -305,6 +305,7 @@ async def generate_product_from_ean(request: EANGenerateRequest):
             sheet_info = await AIService.generate_product_sheet(product)
             product_sheet = ProductSheet(
                 product_id=product.id,
+                weight_info=product.weight_by_type,
                 **sheet_info
             )
             await db.product_sheets.insert_one(product_sheet.dict())
